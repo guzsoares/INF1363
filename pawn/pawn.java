@@ -12,14 +12,14 @@ class Pawn {
     }
 
     public boolean canMove(int diceNumber, List<Pawn> pawnsOnBoard ){
-        if (diceNumber == 6 && position == -1){ // -1 significa que o peão está na casa inicial e pode ir para a casa de saída
+        if (diceNumber == 5 && position == -1){ // -1 significa que o peão está na casa inicial e pode ir para a casa de saída
             return true;
         }
         else if (position >= 0) { // Verifica se o peão pode ir para uma nova posição
             
             int newPosition = position + diceNumber;
 
-            if (newPosition <= 51) { // 51 é o valor da última possição que um peão pode se movimentar, sendo 52 a última posição possível
+            if (newPosition < 52) { // 52 é a última casa do tabuleiro
                 for (Pawn otherPawn : pawnsOnBoard){
                     if (otherPawn.getPosition() == newPosition && otherPawn.getColor() != this.color) {
                         // Esse condicional verifica se existe alguma peça ocupando o destino do peão
@@ -38,21 +38,15 @@ class Pawn {
         return false;
     }
 
-    public void move(int diceNumber) {
-        if (diceNumber == 6 && this.position == -1) {
-            // Se o dado for 6 e o peão ainda não estiver no tabuleiro, pode se mover para a casa de saída
-            this.position = 0;
-        } else if (position >= 0) {
-            // Move o peão para a nova posição
-            this.position += diceNumber;
-        }
+    public void setPosition(int newPosition){
+        this.position = newPosition;
     }
 
-    public int getPosition(){
+    public int getPosition(){ // Retorna a posição atual do peão, isso pode ser acessado por outras classes no pacote Model
         return this.position;
     }
 
-    public int getColor(){
+    public int getColor(){ // Retorna a cor do peão, isso pode ser acessado por outras classes no pacote Model
         return this.color;
     }
 
