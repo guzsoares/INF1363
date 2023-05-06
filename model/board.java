@@ -1,7 +1,10 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class Board {
-    
+    private List<Square> playableSquares = new ArrayList<Square>(52);
 }
 
 

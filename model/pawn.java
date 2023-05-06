@@ -1,10 +1,10 @@
-package pawn;
+package model;
 
 import java.util.List;
 
 class Pawn {
     private int position;
-    private final int color;
+    private final int color; // 0 = azul, 1 = verde, 2 = vermelho, 3 = amarelo
     
     public Pawn(int color, int initialPosition){ // Construtor da classe Peao, onde é definida as propriedades do peão, como cor e posição inicial
         this.color = color;
