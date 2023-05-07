@@ -6,7 +6,7 @@ import java.util.ArrayList;
 class Square{
     private final int num;
     private List<Pawn> pawns;
-    private int squareType; // 0 = casa comum, 1 = casa abrigo, 2 = reta final, 3 = barreira, 4 = casa final, 5 = casa saida
+    private SquareType squareType;
 
     public Square(int num) {
         this.num = num;
@@ -38,80 +38,46 @@ class Square{
     }
 
     public boolean isCommon(){ // verifica se a casa é comum
-        if (this.squareType == 0){
+        if (this.squareType == SquareType.cComum){
             return true;
         }
         return false;
     }
 
     public boolean isAbrigo(){ // verifica se a casa é abrigo
-        if (this.squareType == 1){
+        if (this.squareType == SquareType.cAbrigo){
             return true;
         }
         return false;
     }
 
     public boolean isRetaFinal(){ // verifica se a casa é abrigo
-        if (this.squareType == 2){
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isBarrier(){ // verifica se é uma barreira
-        if (this.squareType == 3) {
+        if (this.squareType == SquareType.rFinal){
             return true;
         }
         return false;
     }
 
     public boolean isFinal(){ // verifica se a casa é final
-        if (this.squareType == 4){
+        if (this.squareType == SquareType.cFinal){
             return true;
         }
         return false;
     }
 
     public boolean isSaida(){ // verifica se a casa é saida
-        if (this.squareType == 5){
+        if (this.squareType == SquareType.cSaida){
             return true;
         }
         return false;
     }
 
 
-
-    // verificar se esta na classe correta
-
-    public void setCommon(){ 
-        this.squareType = 0;
-
-    }
-
-    public void setAbrigo(){ 
-        this.squareType = 1;
-
-    }
-
-    public void setRetaFinal(){ 
-        this.squareType = 2;
-
-    }
-
-    public void setBarrier(){
+    public boolean isBarrier(){
         if (numPawns() == 2 && pawns.get(0).getColor() == pawns.get(1).getColor() && isSaida() == false) {
-            this.squareType = 3;
+            return true;
         }
-    }
-
-    public void setFinal(){ 
-            this.squareType = 4;
-
-    }
-
-    public void setSaida(){ 
-        this.squareType = 5;
-
+        return false;
     }
 
 
@@ -121,4 +87,6 @@ class Square{
         }
         return false;
     }
+    
+
 }

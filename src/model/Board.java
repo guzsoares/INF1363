@@ -27,4 +27,11 @@ class Board {
 |  /  |  /  |  /  |  /  |  /  |  /  |  26 |  25 |  24 |  /  |  /  |  /  |  /  |  /  |  /  |
 -------------------------------------------------------------------------------------------
 
+DIREITA CIMA-->VERDE
+DIREITA BAIXO -->AMARELO
+
+ESQUERDA CIMA--> VERMELHO
+
+
+ESQUERDA BAIXO -->AZUL
 */
