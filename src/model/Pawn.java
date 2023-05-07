@@ -93,7 +93,10 @@ class Pawn {
         return false;
     }
 
-	public void movePawn(int dieNumber, Square[] boardSquares,Square[][] finalSquares){
+	public void movePawn(int dieNumber, Square[] boardSquares,Square[][] finalSquares, Pawn[] pawnsOnBoard){
+		if (!canMove(dieNumber, pawnsOnBoard, boardSquares)){
+			return;
+		}
 		int newPosition = position + dieNumber;
 		newPosition = newPosition % 51;
 
@@ -143,8 +146,11 @@ class Pawn {
 		this.steps += dieNumber;
 	}
 
-	public void outInitialSquare(int dieNumber, Square[] initialSquares, Square[] boardSquares){
-		if (dieNumber == 5 && position == -1){
+	public void outInitialSquare(int dieNumber, Square[] initialSquares, Square[] boardSquares, Pawn[] pawnsOnBoard){
+		if (!canMove(dieNumber, pawnsOnBoard, boardSquares)){
+			return;
+		}
+		if (dieNumber == 5 && position == -1 && canMove(dieNumber, pawnsOnBoard, boardSquares)){
 			switch(this.color){
 				case AZUL:
 				initialSquares[2].removePawn(this);
