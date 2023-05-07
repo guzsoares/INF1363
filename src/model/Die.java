@@ -1,16 +1,20 @@
 package model;
+
 import java.util.Random;
 
 class Die {
-    private int valor;
+    private int dieNumber;
     private Random random = new Random();
     
-    public int rolar(){ //retorna valor 0 ate 6
-    	valor = random.nextInt(5) +1;
-    	return valor;
+    public void rollDie(){ //retorna valor 0 ate 6
+    	this.dieNumber = random.nextInt(5) +1;
     }
     
-    public int getValor() {
-    	return valor;
+    public int getDieNumber() {
+    	return dieNumber;
+    }
+
+    public void setDieNumber(int num){
+        this.dieNumber = num;
     }
 }

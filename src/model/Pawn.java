@@ -6,6 +6,7 @@ import java.util.List;
 
 class Pawn {
     private int position;
+	private int steps;
     private final Color color;
     
     public Pawn(Color color, int initialPosition){ // Construtor da classe Peao, onde é definida as propriedades do peão, como cor e posição inicial
@@ -34,24 +35,38 @@ class Pawn {
 				}
 
 				if (boardSquares[i].isBarrier()){
+					// caso seja uma barreira 
 					return false;
 				}
 			}
 
 
 			if (boardSquares[futurePosition].isAbrigo() && boardSquares[futurePosition].numPawns() == 2){
+				// caso seja um abrigo e ja esteja ocupado por dois peoes
 				return false;
 			}
 
 			if (boardSquares[futurePosition].isSaida() && boardSquares[futurePosition].numPawns() == 2){
+				// caso seja uma saida e ja esteja ocupada por dois peoes
+				
 				return false;
 			}
 
+			if (steps > 51){
+				// caso esteja na reta final
+				if ((steps + dieNumber) - 57 == 0){
+					return true;
+				}
+			}
 
-
+			return true;
 		}
         return false;
     }
+
+	public void movePawn(){
+		
+	}
 
     public void setPosition(int newPosition){
         this.position = newPosition;
