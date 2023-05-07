@@ -3,7 +3,7 @@ package model;
 class player {
     private Color color;
 	private boolean myTurn;
-	private Die myDie;
+	private Die myDie = new Die();
     
 	public void playerTurn(){
 		if (myTurn == true){

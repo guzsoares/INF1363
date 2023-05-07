@@ -19,28 +19,28 @@ class Pawn {
 			switch (this.color){
 				case AMARELO:
 				for (Pawn otherPawn : pawnsOnBoard){
-					if (otherPawn.getColor() == this.color && position == 13){
+					if (otherPawn.getColor() == this.color && otherPawn.getPosition() == 13){
 						return false;
 					}
 				}
 				return true;
 				case AZUL:
 				for (Pawn otherPawn : pawnsOnBoard){
-					if (otherPawn.getColor() == this.color && position == 26){
+					if (otherPawn.getColor() == this.color && otherPawn.getPosition() == 26){
 						return false;
 					}
 				}
 				return true;
 				case VERMELHO:
 				for (Pawn otherPawn : pawnsOnBoard){
-					if (otherPawn.getColor() == this.color && position == 39){
+					if (otherPawn.getColor() == this.color && otherPawn.getPosition() == 39){
 						return false;
 					}
 				}
 				return true;
 				case VERDE:
 				for (Pawn otherPawn : pawnsOnBoard){
-					if (otherPawn.getColor() == this.color && position == 0){
+					if (otherPawn.getColor() == this.color && otherPawn.getPosition() == 0){
 						return false;
 					}
 				}
@@ -95,15 +95,23 @@ class Pawn {
 
 	public void movePawn(int dieNumber, Square[] initialSquares, Square[] boardSquares[],Square[][] finalSquares){
 		if (dieNumber == 5 && position == -1){
-			switch (color){
+			switch (this.color){
 				case AMARELO:
-				break;
+				this.steps += 1;
+				this.setPosition(13);
+				return;
 				case AZUL:
-				break;
+				this.steps += 1;
+				this.setPosition(26);
+				return;
 				case VERMELHO:
-				break;
+				this.steps += 1;
+				this.setPosition(39);
+				return;
 				case VERDE:
-				break;
+				this.steps += 1;
+				this.setPosition(0);
+				return;
 			}
 		}
 

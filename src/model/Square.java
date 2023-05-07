@@ -16,6 +16,10 @@ class Square{
         this.squareType = squareType;
     }
 
+    public SquareType getSquareType(){
+        return this.squareType;
+    }
+
     public int numPawns() { // numero de peoes ocupando a casa
         return pawns.size();
     }
@@ -77,6 +81,10 @@ class Square{
 
     public void setSquareColor(Color color){
         this.squareColor = color;
+    }
+
+    public Color getSquareColor(){
+        return this.squareColor;
     }
 
 }
