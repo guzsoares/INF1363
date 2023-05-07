@@ -94,9 +94,6 @@ class Pawn {
     }
 
 	public void movePawn(int dieNumber, Square[] boardSquares,Square[][] finalSquares, Pawn[] pawnsOnBoard){
-		if (!canMove(dieNumber, pawnsOnBoard, boardSquares)){
-			return;
-		}
 		int newPosition = position + dieNumber;
 		newPosition = newPosition % 51;
 
@@ -146,11 +143,8 @@ class Pawn {
 		this.steps += dieNumber;
 	}
 
-	public void outInitialSquare(int dieNumber, Square[] initialSquares, Square[] boardSquares, Pawn[] pawnsOnBoard){
-		if (!canMove(dieNumber, pawnsOnBoard, boardSquares)){
-			return;
-		}
-		if (dieNumber == 5 && position == -1 && canMove(dieNumber, pawnsOnBoard, boardSquares)){
+	public boolean outInitialSquare(int dieNumber, Square[] initialSquares, Square[] boardSquares, Pawn[] pawnsOnBoard){
+		if (dieNumber == 5 && position == -1){
 			switch(this.color){
 				case AZUL:
 				initialSquares[2].removePawn(this);
@@ -175,12 +169,17 @@ class Pawn {
 			}
 
 			this.steps += 1;
+			return true;
 		}
+		return false;
 	}
 
 	public void capturePawn(int dieNumber, Square[] boardSquares, Square[] initialSquares){
 		int newPosition = this.position + dieNumber;
 
+		if (boardSquares[newPosition].numPawns() == 0){
+			return;
+		}
 		List<Pawn> pawns = boardSquares[newPosition].getPawns();
 		Pawn capturedPawn = pawns.get(0);
 

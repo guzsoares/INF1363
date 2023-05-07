@@ -5,8 +5,11 @@ class Board {
     private Square[] playableSquares = new Square[52];
     private Square[][] finalSquares = new Square[4][6];
     private Square[] initialSquares = new Square[4];
+    private Die boardDie;
 
     public Board(){
+        // inicializa dado
+        this.boardDie = new Die();
         // inicializa quadrados
         for (int i = 0; i < playableSquares.length; i++) {
             playableSquares[i] = new Square();
@@ -127,6 +130,18 @@ class Board {
 
     public Square[][] getFinalSquares(){
         return this.finalSquares;
+    }
+
+    public boolean makeMoves(Pawn movingPawn){
+        if (movingPawn.canMove(boardDie.getDieNumber(), pawnsOnBoard, initialSquares)){
+            if(movingPawn.outInitialSquare(boardDie.getDieNumber(), initialSquares, initialSquares, pawnsOnBoard)){
+                return true;
+            } else {
+                movingPawn.movePawn(boardDie.getDieNumber(), initialSquares, finalSquares, pawnsOnBoard);
+                return true;
+            }
+        }
+        return false;
     }
 }
 
