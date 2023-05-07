@@ -9,9 +9,13 @@ class player {
 		if (myTurn == true){
 			// primeira vez do jogador
 			myDie.rollDie();
-
-			// mover o peao numero do dado
-
+			
+			//verificar se die.value == 5
+				//verificar se casa inicial tem peao
+					//verificar se tem peoes da propria cor ocupando casa de saida.
+			
+			// mover o peao numero do dado(andando e verificando)
+			
 			// verifica s efoi um 6 para repetir a vez
 			if (myDie.getDieNumber() != 6){
 				myTurn = false;
