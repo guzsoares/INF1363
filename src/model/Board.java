@@ -11,7 +11,23 @@ class Board {
     private Square[] initialSquares = new Square[4];
 
     public Board(){
-        for (int i = 0; i < playableSquares.length; i++){
+        // inicializa quadrados
+        for (int i = 0; i < playableSquares.length; i++) {
+            playableSquares[i] = new Square();
+        }
+        
+        for (int i = 0; i < initialSquares.length; i++) {
+            initialSquares[i] = new Square();
+        }
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 5; j++) {
+                finalSquares[i][j] = new Square();
+            }
+            finalSquares[i][5] = new Square();
+        }
+
+        for (int i = 0; i < playableSquares.length ; i++){
             playableSquares[i].setSquareType(SquareType.cComum);
         }
 
@@ -63,6 +79,22 @@ class Board {
         }
 
 
+    }
+
+    public Pawn[] getPawnsOnBoard(){
+        return this.pawnsOnBoard;
+    }
+
+    public Pawn getPawnOnIndex(int index){
+        return pawnsOnBoard[index];
+    }
+
+    public void setPawnOnIndexPosition(int index, int position){
+        getPawnOnIndex(index).setPosition(position);
+    }
+
+    public Square[] getSquares(){
+        return this.playableSquares;
     }
 }
 

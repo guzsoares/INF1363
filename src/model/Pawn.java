@@ -16,7 +16,36 @@ class Pawn {
 
     public boolean canMove(int dieNumber, Pawn[] pawnsOnBoard, Square[] boardSquares){
 		if (dieNumber == 5 && position == -1){
-			return true;
+			switch (this.color){
+				case AMARELO:
+				for (Pawn otherPawn : pawnsOnBoard){
+					if (otherPawn.getColor() == this.color && position == 13){
+						return false;
+					}
+				}
+				return true;
+				case AZUL:
+				for (Pawn otherPawn : pawnsOnBoard){
+					if (otherPawn.getColor() == this.color && position == 26){
+						return false;
+					}
+				}
+				return true;
+				case VERMELHO:
+				for (Pawn otherPawn : pawnsOnBoard){
+					if (otherPawn.getColor() == this.color && position == 39){
+						return false;
+					}
+				}
+				return true;
+				case VERDE:
+				for (Pawn otherPawn : pawnsOnBoard){
+					if (otherPawn.getColor() == this.color && position == 0){
+						return false;
+					}
+				}
+				return true;
+			}
 		}
 		else if (position >= 0){
 			int futurePosition = dieNumber + position;
@@ -64,8 +93,20 @@ class Pawn {
         return false;
     }
 
-	public void movePawn(){
-		
+	public void movePawn(int dieNumber, Square[] initialSquares, Square[] boardSquares[],Square[][] finalSquares){
+		if (dieNumber == 5 && position == -1){
+			switch (color){
+				case AMARELO:
+				break;
+				case AZUL:
+				break;
+				case VERMELHO:
+				break;
+				case VERDE:
+				break;
+			}
+		}
+
 	}
 
     public void setPosition(int newPosition){
