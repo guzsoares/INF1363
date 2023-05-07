@@ -63,17 +63,45 @@ class Board {
 
         for (int i = 0; i < 4; i++){
             pawnsOnBoard[i] = new Pawn(Color.VERDE, -1);
+            initialSquares[0].addPawn(pawnsOnBoard[i]);
         }
         for (int i = 0; i < 4; i++){
             pawnsOnBoard[i+4] = new Pawn(Color.AMARELO, -1);
+            initialSquares[1].addPawn(pawnsOnBoard[i+4]);
         }
         for (int i = 0; i < 4; i++){
             pawnsOnBoard[i+8] = new Pawn(Color.AZUL, -1);
+            initialSquares[2].addPawn(pawnsOnBoard[i+8]);
         }
         for (int i = 0; i < 4; i++){
             pawnsOnBoard[i+12] = new Pawn(Color.VERMELHO, -1);
+            initialSquares[3].addPawn(pawnsOnBoard[i+12]);
         }
 
+        setUpBoard();
+    }
+
+    private void setUpBoard(){ // coloca 1 peão em cada casa de saída
+        
+        pawnsOnBoard[0].setPosition(0);
+        pawnsOnBoard[0].addSteps(1);
+        playableSquares[0].addPawn(pawnsOnBoard[0]);
+        initialSquares[0].removePawn(pawnsOnBoard[0]);
+
+        pawnsOnBoard[4].setPosition(13);
+        pawnsOnBoard[4].addSteps(1);
+        playableSquares[13].addPawn(pawnsOnBoard[4]);
+        initialSquares[1].removePawn(pawnsOnBoard[4]);
+
+        pawnsOnBoard[8].setPosition(26);
+        pawnsOnBoard[8].addSteps(1);
+        playableSquares[26].addPawn(pawnsOnBoard[8]);
+        initialSquares[2].removePawn(pawnsOnBoard[8]);
+
+        pawnsOnBoard[12].setPosition(39);
+        pawnsOnBoard[12].addSteps(1);
+        playableSquares[39].addPawn(pawnsOnBoard[12]);
+        initialSquares[3].removePawn(pawnsOnBoard[12]);
 
     }
 
@@ -91,6 +119,14 @@ class Board {
 
     public Square[] getSquares(){
         return this.playableSquares;
+    }
+
+    public Square[] getInitialSquares(){
+        return this.initialSquares;
+    }
+
+    public Square[][] getFinalSquares(){
+        return this.finalSquares;
     }
 }
 

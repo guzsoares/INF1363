@@ -83,7 +83,7 @@ class Pawn {
 
 			if (steps > 51){
 				// caso esteja na reta final
-				if ((steps + dieNumber) - 57 >= 0){
+				if ((steps + dieNumber) - 57 <= 0){
 					return true;
 				}
 			}
@@ -93,28 +93,109 @@ class Pawn {
         return false;
     }
 
-	public void movePawn(int dieNumber, Square[] initialSquares, Square[] boardSquares[],Square[][] finalSquares){
-		if (dieNumber == 5 && position == -1){
-			switch (this.color){
-				case AMARELO:
-				this.steps += 1;
-				this.setPosition(13);
-				return;
+	public void movePawn(int dieNumber, Square[] boardSquares,Square[][] finalSquares){
+		int newPosition = position + dieNumber;
+		newPosition = newPosition % 51;
+
+
+		if (this.steps + dieNumber > 51){
+			int overflow = (this.steps + dieNumber) - 51;
+			switch(this.color){
 				case AZUL:
-				this.steps += 1;
-				this.setPosition(26);
-				return;
+				boardSquares[position].removePawn(this);
+				finalSquares[2][overflow].addPawn(this);
+				break;
 				case VERMELHO:
-				this.steps += 1;
-				this.setPosition(39);
-				return;
+				boardSquares[position].removePawn(this);
+				finalSquares[3][overflow].addPawn(this);
+				break;
+				case AMARELO:
+				boardSquares[position].removePawn(this);
+				finalSquares[1][overflow].addPawn(this);
+				break;
 				case VERDE:
-				this.steps += 1;
-				this.setPosition(0);
-				return;
+				boardSquares[position].removePawn(this);
+				finalSquares[0][overflow].addPawn(this);
+				break;
 			}
+		}else if (this.steps > 51) {
+			int overflow = (this.steps + dieNumber) - 51;
+			switch(this.color){
+				case AZUL:
+				finalSquares[2][this.steps - 51].removePawn(this);
+				finalSquares[2][overflow].addPawn(this);
+				case VERMELHO:
+				finalSquares[3][this.steps - 51].removePawn(this);
+				finalSquares[3][overflow].addPawn(this);
+				case AMARELO:
+				finalSquares[1][this.steps - 51].removePawn(this);
+				finalSquares[1][overflow].addPawn(this);
+				case VERDE:
+				finalSquares[0][this.steps - 51].removePawn(this);
+				finalSquares[0][overflow].addPawn(this);
+			}
+		}else {
+			boardSquares[position].removePawn(this);
+			boardSquares[newPosition].addPawn(this);
 		}
 
+		this.position = newPosition;
+		this.steps += dieNumber;
+	}
+
+	public void outInitialSquare(int dieNumber, Square[] initialSquares, Square[] boardSquares){
+		if (dieNumber == 5 && position == -1){
+			switch(this.color){
+				case AZUL:
+				initialSquares[2].removePawn(this);
+				boardSquares[26].addPawn(this);
+				this.position = 26;
+				break;
+				case VERMELHO:
+				initialSquares[3].removePawn(this);
+				boardSquares[39].addPawn(this);
+				this.position = 39;
+				break;
+				case AMARELO:
+				initialSquares[1].removePawn(this);
+				boardSquares[13].addPawn(this);
+				this.position = 13;
+				break;
+				case VERDE:
+				initialSquares[0].removePawn(this);
+				boardSquares[0].addPawn(this);
+				this.position = 0;
+				break;
+			}
+
+			this.steps += 1;
+		}
+	}
+
+	public void capturePawn(int dieNumber, Square[] boardSquares, Square[] initialSquares){
+		int newPosition = this.position + dieNumber;
+
+		List<Pawn> pawns = boardSquares[newPosition].getPawns();
+		Pawn capturedPawn = pawns.get(0);
+
+		boardSquares[capturedPawn.position].removePawn(capturedPawn);
+		switch(capturedPawn.getColor()){
+			case AZUL:
+			initialSquares[2].addPawn(capturedPawn);
+			break;
+			case VERMELHO:
+			initialSquares[3].addPawn(capturedPawn);
+			break;
+			case AMARELO:
+			initialSquares[1].addPawn(capturedPawn);
+			break;
+			case VERDE:
+			initialSquares[0].addPawn(capturedPawn);
+			break;
+		}
+
+		capturedPawn.setSteps(0);
+		capturedPawn.setPosition(-1);
 	}
 
     public void setPosition(int newPosition){
@@ -129,5 +210,20 @@ class Pawn {
         return this.color;
     }
     
+	public void setSteps(int steps){
+		this.steps = steps;
+	}
+
+	public void addSteps(int steps){
+		this.steps += steps;
+	}
+
+	public int getSteps(int steps){
+		return this.steps;
+	}
+
+	public Pawn getPawn(){
+		return this;
+	}
 
 }

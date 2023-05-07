@@ -7,11 +7,12 @@ public class Teste {
 
         tabuleiro.setPawnOnIndexPosition(1, 2);
     
-        Die myDie = new Die();
 
-        myDie.rollDie();
-
-        System.out.println(myDie.getDieNumber());
+        Square[] teste = tabuleiro.getSquares();
+    
+        for (int i = 0; i < tabuleiro.getSquares().length; i++){
+            System.out.println(teste[i].getSquareType());
+        }
     }
 }
 
