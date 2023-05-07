@@ -83,7 +83,7 @@ class Pawn {
 
 			if (steps > 51){
 				// caso esteja na reta final
-				if ((steps + dieNumber) - 57 == 0){
+				if ((steps + dieNumber) - 57 >= 0){
 					return true;
 				}
 			}
