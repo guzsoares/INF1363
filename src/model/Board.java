@@ -120,6 +120,10 @@ class Board {
         getPawnOnIndex(index).setPosition(position);
     }
 
+    public void setPawnOnIndexSquare(int index, Square[] boardSquares){
+        getPawnOnIndex(index).setSquare(boardSquares);
+    }
+
     public Square[] getSquares(){
         return this.playableSquares;
     }

@@ -205,7 +205,12 @@ class Pawn {
 
     public void setPosition(int newPosition){
         this.position = newPosition;
+
     }
+
+	public void setSquare(Square[] boardSquares){
+		boardSquares[this.position].addPawn(this);
+	}
 
     public int getPosition(){ // Retorna a posição atual do peão, isso pode ser acessado por outras classes no pacote Model
         return this.position;
