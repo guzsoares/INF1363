@@ -6,6 +6,7 @@ import java.util.ArrayList;
 class Square{
     private List<Pawn> pawns = new ArrayList<>();
     private SquareType squareType;
+    private Color squareColor;
 
     public boolean isEmpty() { // casa esta ocupada
         return pawns.isEmpty();
@@ -72,6 +73,10 @@ class Square{
             return true;
         }
         return false;
+    }
+
+    public void setSquareColor(Color color){
+        this.squareColor = color;
     }
 
 }

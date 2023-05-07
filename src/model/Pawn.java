@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 
+
+
 class Pawn {
     private int position;
     private final Color color;
@@ -11,89 +13,43 @@ class Pawn {
         this.position = initialPosition;
     }
 
-    public boolean canMove(int diceNumber, Pawn[] pawnsOnBoard, Square[] boardSquares){
-        if (diceNumber == 5 && position == -1){ // -1 significa que o peão está na casa inicial e pode ir para a casa de saída
-            return true;
-        }
-        else if (position >= 0) { // Verifica se o peão pode ir para uma nova posição
-            
-            int newPosition = position + diceNumber;
-            
-            if(newPosition > 51) {	//corrigir a questao de ser somente 1 vetor para as 4 cores
-            	newPosition = newPosition - 51;
-            }
-            switch(color){
-				case AMARELO:
-					if(newPosition != 24) {
-		                for (Pawn otherPawn : pawnsOnBoard){
-		                    if (otherPawn.getPosition() == newPosition && otherPawn.getColor() != color) {
-		                        // Esse condicional verifica se existe alguma peça ocupando o destino do peão
-		                        // Caso o peão seja inimigo, ele pode ser capturado
-		                        return true;
-		                    }
-		                }
-		                // Esse significa que não existe nenhuma peça na casa de destino
-		                return true;
-		            }
-					break;
-					
-				case AZUL:
-					if(newPosition != 11) { // 51 
-		                for (Pawn otherPawn : pawnsOnBoard){
-		                    if (otherPawn.getPosition() == newPosition && otherPawn.getColor() != color) {
-		                        // Esse condicional verifica se existe alguma peça ocupando o destino do peão
-		                        // Caso o peão seja inimigo, ele pode ser capturado
-		                        return true;
-		                    }
-		                }
-		                // Esse significa que não existe nenhuma peça na casa de destino
-		                return true;
-		            }
-					break;
-				case VERDE:
-					if(newPosition != 50) { // 51 
-		                for (Pawn otherPawn : pawnsOnBoard){
-		                    if (otherPawn.getPosition() == newPosition && otherPawn.getColor() != color) {
-		                        // Esse condicional verifica se existe alguma peça ocupando o destino do peão
-		                        // Caso o peão seja inimigo, ele pode ser capturado
-		                        return true;
-		                    }
-		                }
-		                // Esse significa que não existe nenhuma peça na casa de destino
-		                return true;
-		            }
-					break;
-				case VERMELHO:
-					if(newPosition != 37) { // 51 
-		                for (Pawn otherPawn : pawnsOnBoard){
-		                    if (otherPawn.getPosition() == newPosition && otherPawn.getColor() != color) {
-		                        // Esse condicional verifica se existe alguma peça ocupando o destino do peão
-		                        // Caso o peão seja inimigo, ele pode ser capturado
-		                        return true;
-		                    }
-		                }
-		                // Esse significa que não existe nenhuma peça na casa de destino
-		                return true;
-		            }
-					break;
-				
-            }
-            if (newPosition < 52) { // 52 é a última casa do tabuleiro
-                for (Pawn otherPawn : pawnsOnBoard){
-                    if (otherPawn.getPosition() == newPosition && otherPawn.getColor() != this.color) {
-                        // Esse condicional verifica se existe alguma peça ocupando o destino do peão
-                        // Caso o peão seja inimigo, ele pode ser capturado
+    public boolean canMove(int dieNumber, Pawn[] pawnsOnBoard, Square[] boardSquares){
+		if (dieNumber == 5 && position == -1){
+			return true;
+		}
+		else if (position >= 0){
+			int futurePosition = dieNumber + position;
 
-                        return true;
-                    }
-                }
-                // Esse significa que não existe nenhuma peça na casa de destino
+			// ajustando a posicao futura para no caso de passar do ultimo ponto do vetor
 
-                return true;
-            }
-        }
-        // O peão não tem movimentos possíveis
+			// TODO: FAZER CASO PARA O AZUL
+			if (futurePosition > 51){
+				futurePosition = futurePosition - 51;
+			}
 
+			// caso exista barreira no caminho (return false)
+			for (int i = position; i < dieNumber; i++){
+				if (i > 51){
+					i = i - 52;
+				}
+
+				if (boardSquares[i].isBarrier()){
+					return false;
+				}
+			}
+
+
+			if (boardSquares[futurePosition].isAbrigo() && boardSquares[futurePosition].numPawns() == 2){
+				return false;
+			}
+
+			if (boardSquares[futurePosition].isSaida() && boardSquares[futurePosition].numPawns() == 2){
+				return false;
+			}
+
+
+
+		}
         return false;
     }
 
