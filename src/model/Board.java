@@ -2,9 +2,15 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import model.Square;
 
 class Board {
-    private List<Square> playableSquares = new ArrayList<Square>(52);
+    private Pawn[] pawnsOnBoard = new Pawn[16];
+    private Square[] playableSquares = new Square[52];
+    private Square[][] finalSquares = new Square[4][6];
+
+    public Board(){
+    }
 }
 
 

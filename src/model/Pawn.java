@@ -4,14 +4,14 @@ import java.util.List;
 
 class Pawn {
     private int position;
-    private final Color color; // 0 = azul, 1 = verde, 2 = vermelho, 3 = amarelo
+    private final Color color;
     
     public Pawn(Color color, int initialPosition){ // Construtor da classe Peao, onde é definida as propriedades do peão, como cor e posição inicial
         this.color = color;
         this.position = initialPosition;
     }
 
-    public boolean canMove(int diceNumber, List<Pawn> pawnsOnBoard ){
+    public boolean canMove(int diceNumber, Pawn[] pawnsOnBoard, Square[] boardSquares){
         if (diceNumber == 5 && position == -1){ // -1 significa que o peão está na casa inicial e pode ir para a casa de saída
             return true;
         }
@@ -24,7 +24,7 @@ class Pawn {
             }
             switch(color){
 				case AMARELO:
-					if(newPosition != 24) { // 50 
+					if(newPosition != 24) {
 		                for (Pawn otherPawn : pawnsOnBoard){
 		                    if (otherPawn.getPosition() == newPosition && otherPawn.getColor() != color) {
 		                        // Esse condicional verifica se existe alguma peça ocupando o destino do peão

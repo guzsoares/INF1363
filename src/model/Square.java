@@ -4,21 +4,15 @@ import java.util.List;
 import java.util.ArrayList;
 
 class Square{
-    private final int num;
-    private List<Pawn> pawns;
+    private List<Pawn> pawns = new ArrayList<>();
     private SquareType squareType;
 
-    public Square(int num) {
-        this.num = num;
-        this.pawns = new ArrayList<>();
-    }
-
-    public int getNum() { // numero da casa atual
-        return num;
-    }
-
-    public boolean isOccupied() { // casa esta ocupada 
+    public boolean isEmpty() { // casa esta ocupada
         return pawns.isEmpty();
+    }
+
+    public void setSquareType(SquareType squareType) {
+        this.squareType = squareType;
     }
 
     public int numPawns() { // numero de peoes ocupando a casa
@@ -79,14 +73,5 @@ class Square{
         }
         return false;
     }
-
-
-    public boolean isCapture(){ // verifica se é uma captura
-        if (numPawns() == 2 && isAbrigo() == false && isSaida() == false && pawns.get(0).getColor() != pawns.get(1).getColor()){
-            return true;
-        }
-        return false;
-    }
-    
 
 }
