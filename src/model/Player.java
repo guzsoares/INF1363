@@ -42,7 +42,9 @@ class player {
 				myTurn = false;
 				return;
 			}
-			// move o peao para casa inicial
+			// verifica se o ultimo peao movido ta na reta final
+				//se tiver move outro qlqr para casa inicial
+				//se nn tiver mover ele para inicial
 			myTurn = false;
 			return;
 		}
