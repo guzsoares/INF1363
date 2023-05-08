@@ -109,7 +109,9 @@ class Pawn {
 		}
 		int newPosition = position + dieNumber;
 		newPosition = newPosition % 51;
-
+		if (canCapture(dieNumber, boardSquares)){
+			capturePawn(dieNumber, boardSquares, boardSquares);
+		}
 
 		if (this.steps + dieNumber > 51){
 			int overflow = (this.steps + dieNumber) - 51;
@@ -153,9 +155,7 @@ class Pawn {
 		}
 
 
-		if (canCapture(dieNumber, boardSquares)){
-			capturePawn(dieNumber, boardSquares, boardSquares);
-		}
+	
 		this.position = newPosition;
 		this.steps += dieNumber;
 		return true;

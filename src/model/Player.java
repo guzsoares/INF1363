@@ -63,4 +63,9 @@ class Player {
 		int result = playerPawns[0].getSteps() + playerPawns[1].getSteps() + playerPawns[2].getSteps() + playerPawns[3].getSteps();
 		return result;
 	}
+
+	public Color getColor() {
+		// TODO Auto-generated method stub
+		return this.color;
+	}
 }

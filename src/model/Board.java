@@ -9,16 +9,7 @@ class Board {
     private Player[] players = new Player[4];
 
     public Board(){
-        // inicializa players
-        for (int i = 0; i < 4; i++){
-            Pawn[] playersPawns = new Pawn[4];
-            playersPawns[i] = pawnsOnBoard[4*i];
-            playersPawns[i + 1] = pawnsOnBoard[4*i + 1];
-            playersPawns[i + 2] = pawnsOnBoard[4*i + 2];
-            playersPawns[i + 3] = pawnsOnBoard[4*i + 3];
-            players[0] = new Player(Color.VERDE, playersPawns, this);
-        }
-
+        
         // inicializa dado
         this.boardDie = new Die();
         // inicializa quadrados
@@ -91,10 +82,32 @@ class Board {
             pawnsOnBoard[i+12] = new Pawn(Color.VERMELHO, -1);
             initialSquares[3].addPawn(pawnsOnBoard[i+12]);
         }
-
+     // inicializa players
+        for (int i = 0; i < 4; i++){
+            Pawn[] playersPawns = new Pawn[4];
+            playersPawns[0] = pawnsOnBoard[4*i];
+            playersPawns[1] = pawnsOnBoard[4*i + 1];
+            playersPawns[2] = pawnsOnBoard[4*i + 2];
+            playersPawns[3] = pawnsOnBoard[4*i + 3];
+            switch(i) {
+            	case(0):
+            		players[i] = new Player(Color.VERDE, playersPawns, this);
+            		break;
+            	case(1):
+            		players[i] = new Player(Color.AMARELO, playersPawns, this);
+            		break;
+            	case(2):
+            		players[i] = new Player(Color.AZUL, playersPawns, this);
+            		break;
+            	case(3):
+            		players[i] = new Player(Color.VERMELHO, playersPawns, this);
+            		break;
+            }
+        }
+        
         setUpBoard();
     }
-
+    
     private void setUpBoard(){ // coloca 1 peão em cada casa de saída
         
         pawnsOnBoard[0].setPosition(0);
@@ -170,7 +183,7 @@ class Board {
         ranking = players;
 
         for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4 - i; j++) {
+            for (int j = 0; j < 3 - i; j++) {
                 if (ranking[j].stepsCount() < ranking[j + 1].stepsCount()) {
                     Player temp = ranking[j];
                     ranking[j] = ranking[j + 1];
@@ -192,6 +205,11 @@ class Board {
         }
         return false;
     }
+
+	public Player[] getPlayers() {
+		
+		return this.players;
+	}
 }
 
 
