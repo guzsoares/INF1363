@@ -6,7 +6,6 @@ class Board {
     private Square[][] finalSquares = new Square[4][6];
     private Square[] initialSquares = new Square[4];
     private Die boardDie;
-<<<<<<< HEAD
     private Player[] players = new Player[4];
 
     public Board(){
@@ -20,10 +19,6 @@ class Board {
             players[0] = new Player(Color.VERDE, playersPawns, this);
         }
 
-=======
-
-    public Board(){
->>>>>>> parent of 3c98abf (Novos testes)
         // inicializa dado
         this.boardDie = new Die();
         // inicializa quadrados
@@ -152,7 +147,6 @@ class Board {
         return this.finalSquares;
     }
 
-<<<<<<< HEAD
     public void rollDie(){
         this.boardDie.rollDie();
     }
@@ -187,8 +181,6 @@ class Board {
         return ranking;
     }
 
-=======
->>>>>>> parent of 3c98abf (Novos testes)
     public boolean makeMoves(Pawn movingPawn){
         if (movingPawn.canMove(boardDie.getDieNumber(), pawnsOnBoard, initialSquares)){
             if(movingPawn.outInitialSquare(boardDie.getDieNumber(), initialSquares, initialSquares, pawnsOnBoard)){
