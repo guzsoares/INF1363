@@ -15,9 +15,12 @@ class Pawn {
     }
 
     public boolean canMove(int dieNumber, Pawn[] pawnsOnBoard, Square[] boardSquares){
+<<<<<<< HEAD
 		if (steps == 57){
 			return false;
 		}
+=======
+>>>>>>> parent of 3c98abf (Novos testes)
 		if (dieNumber == 5 && position == -1){
 			switch (this.color){
 				case AMARELO:
@@ -73,17 +76,26 @@ class Pawn {
 			}
 
 
+<<<<<<< HEAD
 			if (boardSquares[futurePosition].isAbrigo() && boardSquares[futurePosition].numPawns() >= 2){
+=======
+			if (boardSquares[futurePosition].isAbrigo() && boardSquares[futurePosition].numPawns() == 2){
+>>>>>>> parent of 3c98abf (Novos testes)
 				// caso seja um abrigo e ja esteja ocupado por dois peoes
 				return false;
 			}
 
+<<<<<<< HEAD
 			if (boardSquares[futurePosition].isSaida() && boardSquares[futurePosition].numPawns() >= 2){
+=======
+			if (boardSquares[futurePosition].isSaida() && boardSquares[futurePosition].numPawns() == 2){
+>>>>>>> parent of 3c98abf (Novos testes)
 				// caso seja uma saida e ja esteja ocupada por dois peoes
 				
 				return false;
 			}
 
+<<<<<<< HEAD
 			if (boardSquares[futurePosition].isSaida() && boardSquares[futurePosition].numPawns() == 1){
 				List<Pawn> pawns = boardSquares[futurePosition].getPawns();
 				if (pawns.get(0).getColor() != boardSquares[futurePosition].getSquareColor()){
@@ -91,6 +103,8 @@ class Pawn {
 				}
 			}
 
+=======
+>>>>>>> parent of 3c98abf (Novos testes)
 			if (steps > 51){
 				// caso esteja na reta final
 				if ((steps + dieNumber) - 57 <= 0){
@@ -103,10 +117,14 @@ class Pawn {
         return false;
     }
 
+<<<<<<< HEAD
 	public boolean movePawn(int dieNumber, Square[] boardSquares,Square[][] finalSquares, Pawn[] pawnsOnBoard){
 		if (!canMove(dieNumber, pawnsOnBoard, boardSquares)){
 			return false;
 		}
+=======
+	public void movePawn(int dieNumber, Square[] boardSquares,Square[][] finalSquares, Pawn[] pawnsOnBoard){
+>>>>>>> parent of 3c98abf (Novos testes)
 		int newPosition = position + dieNumber;
 		newPosition = newPosition % 51;
 
@@ -152,6 +170,7 @@ class Pawn {
 			boardSquares[newPosition].addPawn(this);
 		}
 
+<<<<<<< HEAD
 
 		if (canCapture(dieNumber, boardSquares)){
 			capturePawn(dieNumber, boardSquares, boardSquares);
@@ -163,6 +182,13 @@ class Pawn {
 
 	public boolean outInitialSquare(int dieNumber, Square[] initialSquares, Square[] boardSquares, Pawn[] pawnsOnBoard){
 
+=======
+		this.position = newPosition;
+		this.steps += dieNumber;
+	}
+
+	public boolean outInitialSquare(int dieNumber, Square[] initialSquares, Square[] boardSquares, Pawn[] pawnsOnBoard){
+>>>>>>> parent of 3c98abf (Novos testes)
 		if (dieNumber == 5 && position == -1){
 			switch(this.color){
 				case AZUL:
@@ -193,6 +219,7 @@ class Pawn {
 		return false;
 	}
 
+<<<<<<< HEAD
 	public boolean canCapture(int dieNumber, Square[] boardSquares){
 		int newPosition = this.position + dieNumber;
 
@@ -209,6 +236,8 @@ class Pawn {
 		return false;
 	}
 
+=======
+>>>>>>> parent of 3c98abf (Novos testes)
 	public void capturePawn(int dieNumber, Square[] boardSquares, Square[] initialSquares){
 		int newPosition = this.position + dieNumber;
 
@@ -263,7 +292,11 @@ class Pawn {
 		this.steps += steps;
 	}
 
+<<<<<<< HEAD
 	public int getSteps(){
+=======
+	public int getSteps(int steps){
+>>>>>>> parent of 3c98abf (Novos testes)
 		return this.steps;
 	}
 
