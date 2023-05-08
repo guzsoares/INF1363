@@ -6,8 +6,19 @@ class Board {
     private Square[][] finalSquares = new Square[4][6];
     private Square[] initialSquares = new Square[4];
     private Die boardDie;
+    private Player[] players = new Player[4];
 
     public Board(){
+        // inicializa players
+        for (int i = 0; i < 4; i++){
+            Pawn[] playersPawns = new Pawn[4];
+            playersPawns[i] = pawnsOnBoard[4*i];
+            playersPawns[i + 1] = pawnsOnBoard[4*i + 1];
+            playersPawns[i + 2] = pawnsOnBoard[4*i + 2];
+            playersPawns[i + 3] = pawnsOnBoard[4*i + 3];
+            players[0] = new Player(Color.VERDE, playersPawns, this);
+        }
+
         // inicializa dado
         this.boardDie = new Die();
         // inicializa quadrados
@@ -134,6 +145,40 @@ class Board {
 
     public Square[][] getFinalSquares(){
         return this.finalSquares;
+    }
+
+    public void rollDie(){
+        this.boardDie.rollDie();
+    }
+
+    public int getDieNumber(){
+        return this.boardDie.getDieNumber();
+    }
+
+    public boolean isGameOver(){
+        for (int i = 0; i < 4; i++){
+            if(finalSquares[i][5].numPawns() == 4){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Player[] playersResults(Player[] players){
+        Player[] ranking = new Player[4];
+
+        ranking = players;
+
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4 - i; j++) {
+                if (ranking[j].stepsCount() < ranking[j + 1].stepsCount()) {
+                    Player temp = ranking[j];
+                    ranking[j] = ranking[j + 1];
+                    ranking[j + 1] = temp;
+                }
+            }
+        }
+        return ranking;
     }
 
     public boolean makeMoves(Pawn movingPawn){
