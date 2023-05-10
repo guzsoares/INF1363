@@ -17,4 +17,5 @@ class Die {
     public void setDieNumber(int num){
         this.dieNumber = num;
     }
+    
 }

@@ -14,7 +14,98 @@ class Pawn {
         this.position = initialPosition;
     }
 
-    public boolean canMove(int dieNumber, Pawn[] pawnsOnBoard, Square[] boardSquares){
+	public boolean movePawn(int dieNumber, Square[] boardSquares,Square[][] finalSquares, Pawn[] pawnsOnBoard){
+
+		/* Primeiro a função calcula o overflow (caso o peão esteja na reta final, a nova posição de acordo com o dado
+		 e ele realiza uma normalização no vetor para estar correspondente a casa do peão, depois a função vai verificar se 
+		 é possível mover esse peão, caso sim, ele verifica se está na casa inicial, caso sim, ele define a nova posição do 
+		 peão como sua casa de saída, se o peão puder realizar uma captura, ele captura o peão na casa destino e reseta seus
+		 status para os status iniciais do jogo
+
+		 A função realiza a mesma lógica para o tabuleiro nos quadrados que não são iniciais
+		 */
+
+		int overflow = (this.steps + dieNumber) - 51;
+		int newPosition = position + dieNumber;
+		newPosition = newPosition % 51;
+
+		if (!canMove(dieNumber, pawnsOnBoard, boardSquares)){
+			return false;
+		}
+
+		if (this.position == -1 && dieNumber == 5){
+			switch (this.color){
+				case AZUL:
+				newPosition = 26;
+				break;
+				case VERMELHO:
+				newPosition = 39;
+				break;
+				case AMARELO:
+				newPosition = 13;
+				break;
+				case VERDE:
+				newPosition = 0;
+				break;
+			}
+		}
+
+		if (canCapture(boardSquares, newPosition)){
+			capturePawn(boardSquares, boardSquares, newPosition);
+		}
+
+		if (outInitialSquare(dieNumber, boardSquares, boardSquares, pawnsOnBoard)){
+			return true;
+		}
+
+		if (this.position >= 0){
+
+
+		if (this.steps + dieNumber > 51){
+			switch(this.color){
+				case AZUL:
+				boardSquares[position].removePawn(this);
+				finalSquares[2][overflow].addPawn(this);
+				break;
+				case VERMELHO:
+				boardSquares[position].removePawn(this);
+				finalSquares[3][overflow].addPawn(this);
+				break;
+				case AMARELO:
+				boardSquares[position].removePawn(this);
+				finalSquares[1][overflow].addPawn(this);
+				break;
+				case VERDE:
+				boardSquares[position].removePawn(this);
+				finalSquares[0][overflow].addPawn(this);
+				break;
+			}
+		} else if (this.steps > 51) {
+			switch(this.color){
+				case AZUL:
+				finalSquares[2][this.steps - 51].removePawn(this);
+				finalSquares[2][overflow].addPawn(this);
+				case VERMELHO:
+				finalSquares[3][this.steps - 51].removePawn(this);
+				finalSquares[3][overflow].addPawn(this);
+				case AMARELO:
+				finalSquares[1][this.steps - 51].removePawn(this);
+				finalSquares[1][overflow].addPawn(this);
+				case VERDE:
+				finalSquares[0][this.steps - 51].removePawn(this);
+				finalSquares[0][overflow].addPawn(this);
+			}
+		} else {
+			boardSquares[position].removePawn(this);
+			boardSquares[newPosition].addPawn(this);
+		}
+	}
+		this.setPosition(newPosition);
+		this.addSteps(dieNumber);
+		return true;
+	}
+
+	public boolean canMove(int dieNumber, Pawn[] pawnsOnBoard, Square[] boardSquares){
 		if (steps == 57){
 			return false;
 		}
@@ -103,101 +194,47 @@ class Pawn {
         return false;
     }
 
-	public boolean movePawn(int dieNumber, Square[] boardSquares,Square[][] finalSquares, Pawn[] pawnsOnBoard){
-		if (!canMove(dieNumber, pawnsOnBoard, boardSquares)){
-			return false;
-		}
-		int newPosition = position + dieNumber;
-		newPosition = newPosition % 51;
-		if (canCapture(dieNumber, boardSquares)){
-			capturePawn(dieNumber, boardSquares, boardSquares);
-		}
-
-		if (this.steps + dieNumber > 51){
-			int overflow = (this.steps + dieNumber) - 51;
-			switch(this.color){
-				case AZUL:
-				boardSquares[position].removePawn(this);
-				finalSquares[2][overflow].addPawn(this);
-				break;
-				case VERMELHO:
-				boardSquares[position].removePawn(this);
-				finalSquares[3][overflow].addPawn(this);
-				break;
-				case AMARELO:
-				boardSquares[position].removePawn(this);
-				finalSquares[1][overflow].addPawn(this);
-				break;
-				case VERDE:
-				boardSquares[position].removePawn(this);
-				finalSquares[0][overflow].addPawn(this);
-				break;
-			}
-		}else if (this.steps > 51) {
-			int overflow = (this.steps + dieNumber) - 51;
-			switch(this.color){
-				case AZUL:
-				finalSquares[2][this.steps - 51].removePawn(this);
-				finalSquares[2][overflow].addPawn(this);
-				case VERMELHO:
-				finalSquares[3][this.steps - 51].removePawn(this);
-				finalSquares[3][overflow].addPawn(this);
-				case AMARELO:
-				finalSquares[1][this.steps - 51].removePawn(this);
-				finalSquares[1][overflow].addPawn(this);
-				case VERDE:
-				finalSquares[0][this.steps - 51].removePawn(this);
-				finalSquares[0][overflow].addPawn(this);
-			}
-		}else {
-			boardSquares[position].removePawn(this);
-			boardSquares[newPosition].addPawn(this);
-		}
-
-
-	
-		this.position = newPosition;
-		this.steps += dieNumber;
-		return true;
-	}
-
 	public boolean outInitialSquare(int dieNumber, Square[] initialSquares, Square[] boardSquares, Pawn[] pawnsOnBoard){
 
-		if (dieNumber == 5 && position == -1){
+		if (dieNumber == 5 && this.position == -1){
+
 			switch(this.color){
 				case AZUL:
 				initialSquares[2].removePawn(this);
 				boardSquares[26].addPawn(this);
-				this.position = 26;
+				this.setPosition(26);
 				break;
 				case VERMELHO:
 				initialSquares[3].removePawn(this);
 				boardSquares[39].addPawn(this);
-				this.position = 39;
+				this.setPosition(39);
 				break;
 				case AMARELO:
 				initialSquares[1].removePawn(this);
 				boardSquares[13].addPawn(this);
-				this.position = 13;
+				this.setPosition(13);
 				break;
 				case VERDE:
 				initialSquares[0].removePawn(this);
 				boardSquares[0].addPawn(this);
-				this.position = 0;
+				this.setPosition(0);
 				break;
 			}
 
-			this.steps += 1;
+			this.addSteps(1);
 			return true;
 		}
+
 		return false;
 	}
 
-	public boolean canCapture(int dieNumber, Square[] boardSquares){
-		int newPosition = this.position + dieNumber;
+	public boolean canCapture(Square[] boardSquares, int newPosition){
 
 		if (boardSquares[newPosition].numPawns() == 1){
-			if (boardSquares[newPosition].isAbrigo() || boardSquares[newPosition].isSaida()){
+			if (this.position == -1){
+				// condicional para verificar se o peão está saindo da casa inicial dele
+			}
+			else if (boardSquares[newPosition].isAbrigo() || boardSquares[newPosition].isSaida()){
 				return false;
 			}
 			List<Pawn> pawns = boardSquares[newPosition].getPawns();
@@ -209,8 +246,7 @@ class Pawn {
 		return false;
 	}
 
-	public void capturePawn(int dieNumber, Square[] boardSquares, Square[] initialSquares){
-		int newPosition = this.position + dieNumber;
+	public void capturePawn(Square[] boardSquares, Square[] initialSquares, int newPosition){
 
 		if (boardSquares[newPosition].numPawns() == 0){
 			return;
@@ -238,37 +274,37 @@ class Pawn {
 		capturedPawn.setPosition(-1);
 	}
 
-    public void setPosition(int newPosition){
+    public void setPosition(int newPosition){ // define a posicao do peao
         this.position = newPosition;
 
     }
 
-	public void setSquare(Square[] boardSquares){
-		boardSquares[this.position].addPawn(this);
-	}
-
-    public int getPosition(){ // Retorna a posição atual do peão, isso pode ser acessado por outras classes no pacote Model
+    public int getPosition(){ // retorna a posicao do peao
         return this.position;
     }
 
-    public Color getColor(){ // Retorna a cor do peão, isso pode ser acessado por outras classes no pacote Model
+    public Color getColor(){ // retorna a cor do peao
         return this.color;
     }
     
-	public void setSteps(int steps){
+	public void setSteps(int steps){ // define o numero de passos
 		this.steps = steps;
 	}
 
-	public void addSteps(int steps){
+	public void addSteps(int steps){ // adiciona o numero de passos
 		this.steps += steps;
 	}
 
-	public int getSteps(){
+	public int getSteps(){ // retorna o numero de passos
 		return this.steps;
 	}
 
-	public Pawn getPawn(){
+	public Pawn getPawn(){ // retorna o peao
 		return this;
+	}
+
+	public void setSquare(Square[] boardSquares){ // metodo criada para testes
+		boardSquares[this.position].addPawn(this);
 	}
 
 }

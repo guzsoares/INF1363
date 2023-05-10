@@ -194,20 +194,7 @@ class Board {
         return ranking;
     }
 
-    public boolean makeMoves(Pawn movingPawn){
-        if (movingPawn.canMove(boardDie.getDieNumber(), pawnsOnBoard, initialSquares)){
-            if(movingPawn.outInitialSquare(boardDie.getDieNumber(), initialSquares, initialSquares, pawnsOnBoard)){
-                return true;
-            } else {
-                movingPawn.movePawn(boardDie.getDieNumber(), initialSquares, finalSquares, pawnsOnBoard);
-                return true;
-            }
-        }
-        return false;
-    }
-
 	public Player[] getPlayers() {
-		
 		return this.players;
 	}
 }
