@@ -17,6 +17,7 @@ public class SquareTest {
 		assertFalse(test.isBarrier());
 		
 	}
+
 	@Test
 	public void test_common_barrier(){
 		Square test = new Square();
@@ -28,6 +29,7 @@ public class SquareTest {
 		assertTrue(test.isBarrier());
 		
 	}
+
 	@Test
 	public void test_common_barrier_2(){
 		Square test = new Square();
