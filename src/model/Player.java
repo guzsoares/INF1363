@@ -77,3 +77,4 @@ class Player {
 	public Pawn[] getPlayerPawns(){
 		return playerPawns;
 	}
+}
