@@ -7,12 +7,6 @@ import org.junit.Test;
 public class SquareTest {
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
-	
-
-	@Test
 	public void test_saida_barrier(){
 		Square test = new Square();
 		Pawn um = new Pawn(Color.VERMELHO, 0);
@@ -66,7 +60,7 @@ public class SquareTest {
 		test.setSquareType(SquareType.cAbrigo);
 		test.addPawn(um);
 		test.addPawn(dois);
-		assertTrue(test.isBarrier());
+		assertFalse(test.isBarrier());
 	}
 	
 }

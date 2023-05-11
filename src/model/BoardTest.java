@@ -6,12 +6,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class BoardTest {
-
-	@Test
-	public void test() {
-		Board tab = new Board();
-		fail("Not yet implemented");
-	}
 	
 	@Test
 	public void test_casas_iniciais() {
@@ -62,9 +56,6 @@ public class BoardTest {
 		assertEquals("Amarelo fora do ranking",aux[2].getColor(),Color.AMARELO);
 		assertEquals("Azul fora do ranking",aux[1].getColor(),Color.AZUL);
 		assertEquals("Vermelho fora do ranking",aux[3].getColor(),Color.VERMELHO);
-		
-		
-		
 		
 	}
 

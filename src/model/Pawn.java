@@ -2,8 +2,6 @@ package model;
 
 import java.util.List;
 
-
-
 class Pawn {
     private int position;
 	private int steps;

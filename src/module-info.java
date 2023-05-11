@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author leo
- *
- */
-module Ludo {
-}
