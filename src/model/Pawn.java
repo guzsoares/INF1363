@@ -24,8 +24,7 @@ class Pawn {
 		 */
 
 		int overflow = (this.steps + dieNumber) - 51;
-		int newPosition = position + dieNumber;
-		newPosition = newPosition % 51;
+		int newPosition = (position + dieNumber) % 51;
 
 		if (!canMove(dieNumber, pawnsOnBoard, boardSquares)){
 			return false;
@@ -57,7 +56,6 @@ class Pawn {
 		}
 
 		if (this.position >= 0){
-
 
 		if (this.steps + dieNumber > 51){
 			switch(this.color){
@@ -138,8 +136,7 @@ class Pawn {
 				}
 				return true;
 			}
-		}
-		else if (position >= 0){
+		} else if (position >= 0){
 			int futurePosition = dieNumber + position;
 
 			// ajustando a posicao futura para no caso de passar do ultimo ponto do vetor
@@ -160,7 +157,6 @@ class Pawn {
 					return false;
 				}
 			}
-
 
 			if (boardSquares[futurePosition].isAbrigo() && boardSquares[futurePosition].numPawns() >= 2){
 				// caso seja um abrigo e ja esteja ocupado por dois peoes

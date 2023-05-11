@@ -2,52 +2,59 @@ package model;
 
 class Player {
     private Color color;
-	private boolean myTurn = false;
 	private Pawn[] playerPawns;
 	private Board playerBoard;
-	private int choice;
 	private boolean[] choices = new	boolean[4];
-	private int turnCount = 0;
+	private boolean myTurn = false;
 
-	public Player(Color color, Pawn[] pawns, Board playerBord){
+	public Player(Color color, Pawn[] pawns, Board playerBoard){
 		this.color = color;
 		this.playerPawns = pawns;
-		this.playerBoard = playerBord;
+		this.playerBoard = playerBoard;
 	}
 
 	public void playerTurn(){
-		if (myTurn == true){
-			turnCount++;
+		if (this.myTurn == true){ // inicio do turno
 			playerBoard.rollDie();
+			updateChoices();
 
-			for (int i = 0; i < 4; i++){
-				if(playerPawns[i].canMove(i, playerPawns, playerBoard.getSquares())){
-					choices[i] = true;
-				}else {
-					choices[i] = false;
-				}
-
+			if (verifyChoices() == false && playerBoard.getDieNumber() < 6){
+				myTurn = false;
+				return; // encerra o turno
 			}
 
-			if (!verifyChoices() && playerBoard.getDieNumber() < 6){
-				return;
-			}
 
-			if (verifyChoices() && playerBoard.getDieNumber() < 6){
 
-				return;
+
+
+
+
+
+
+
+
+		}
+	}
+
+	public void updateChoices(){
+
+		for (int i = 0; i < 4; i++){
+			if (playerPawns[i].canMove(playerBoard.getDieNumber(), playerBoard.getPawnsOnBoard(), playerBoard.getSquares())){
+				choices[i] = true;
+			} else {
+				choices[i] = false;
 			}
 		}
-		playerBoard.isGameOver();
 	}
 
-    
-	public void setTurn(boolean turn){
-		this.myTurn = turn;
-	}
+	public boolean makeMove(int choice){
 
-	public boolean getTurn(){
-		return this.myTurn;
+		if (playerPawns[choice].movePawn(playerBoard.getDieNumber(), playerBoard.getSquares(), playerBoard.getFinalSquares(), playerBoard.getPawnsOnBoard())){
+			playerBoard.updatePawnsOnBoard();
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean verifyChoices(){
@@ -60,12 +67,13 @@ class Player {
 	}
 	
 	public int stepsCount(){
-		int result = playerPawns[0].getSteps() + playerPawns[1].getSteps() + playerPawns[2].getSteps() + playerPawns[3].getSteps();
-		return result;
+		return playerPawns[0].getSteps() + playerPawns[1].getSteps() + playerPawns[2].getSteps() + playerPawns[3].getSteps();
 	}
 
 	public Color getColor() {
-		// TODO Auto-generated method stub
 		return this.color;
 	}
-}
+	
+	public Pawn[] getPlayerPawns(){
+		return playerPawns;
+	}

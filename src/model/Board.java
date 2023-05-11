@@ -9,7 +9,12 @@ class Board {
     private Player[] players = new Player[4];
 
     public Board(){
-        
+        setupBoard();
+        setupPawns();
+    }
+
+    private void setupBoard(){
+
         // inicializa dado
         this.boardDie = new Die();
         // inicializa quadrados
@@ -104,11 +109,18 @@ class Board {
             		break;
             }
         }
-        
-        setUpBoard();
+    }
+
+    public void updatePawnsOnBoard(){
+        for (int i = 0; i < 4; i++){
+            pawnsOnBoard[4*i] = players[i].getPlayerPawns()[0];
+            pawnsOnBoard[4*i + 1] = players[i].getPlayerPawns()[1];
+            pawnsOnBoard[4*i + 2] = players[i].getPlayerPawns()[2];
+            pawnsOnBoard[4*i + 3] = players[i].getPlayerPawns()[3];
+        }
     }
     
-    private void setUpBoard(){ // coloca 1 peão em cada casa de saída
+    private void setupPawns(){ // coloca 1 peão em cada casa de saída
         
         pawnsOnBoard[0].setPosition(0);
         pawnsOnBoard[0].addSteps(1);
@@ -137,7 +149,7 @@ class Board {
     }
 
     public Pawn getPawnOnIndex(int index){
-        return pawnsOnBoard[index];
+        return this.pawnsOnBoard[index];
     }
 
     public void setPawnOnIndexPosition(int index, int position){
