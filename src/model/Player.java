@@ -6,6 +6,7 @@ class Player {
 	private Board playerBoard;
 	private boolean[] choices = new	boolean[4];
 	private boolean myTurn = false;
+	private int choice;
 
 	public Player(Color color, Pawn[] pawns, Board playerBoard){
 		this.color = color;
@@ -15,25 +16,61 @@ class Player {
 
 	public void playerTurn(){
 		if (this.myTurn == true){ // inicio do turno
+
 			playerBoard.rollDie();
 			updateChoices();
 
-			if (verifyChoices() == false && playerBoard.getDieNumber() < 6){
-				myTurn = false;
-				return; // encerra o turno
+			playTurn();
+
+			if (playerBoard.getDieNumber() != 6){
+				this.myTurn = false;
+				return;
+			}
+
+			playerBoard.rollDie();
+			updateChoices();
+
+			playTurn();
+
+			if (playerBoard.getDieNumber() != 6){
+				this.myTurn = false;
+			}
+
+			playerBoard.rollDie();
+			updateChoices();
+
+			if (playerBoard.getDieNumber() == 6){
+				// punish last pawn
+				this.myTurn = false;
+			} else {
+				playTurn();
+				this.myTurn = false;
+				return;
+			}
+			
+		}
+	}
+
+
+	public boolean playTurn(){
+
+		if (verifyChoices() == false){
+			return false; // nao fez jogada
+		}
+		else if (verifyChoices() == true){
+
+			while (choices[choice] == false){
+				// redo choice
 			}
 
 
-
-
-
-
-
-
-
-
+			if(playerPawns[choice].movePawn(playerBoard.getDieNumber(), playerBoard.getSquares(), playerBoard.getFinalSquares(), playerBoard.getPawnsOnBoard())){
+				return true; // fez jogada
+			}
 
 		}
+
+		return false; // nao fez jogada
 	}
 
 	public void updateChoices(){
