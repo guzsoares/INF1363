@@ -10,14 +10,6 @@ class GameScreen extends JFrame{
     private BoardBuilder boardBuilder;
     private GameMenu gameMenu;
 
-    private JButton dieButton;
-    private JButton newGameButton;
-    private JButton loadGameButton;
-    private JButton saveGameButton;
-
-    private JLabel textLabel;
-
-
     public GameScreen() {
         this.gameMenu = new GameMenu();
         this.boardBuilder = new BoardBuilder();
@@ -49,5 +41,8 @@ class GameScreen extends JFrame{
 
     public static void main(String[] args) {
         GameScreen frame = new GameScreen();
+        while(true){
+            frame.redraw();
+        }
     }
 }
