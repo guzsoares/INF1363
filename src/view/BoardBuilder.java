@@ -4,22 +4,34 @@ import javax.swing.*;
 import java.awt.*;
  
 class BoardBuilder{
-    private final int xScreen;
-    private final int yScreen;
-    private final int xMenu = 600;
-    private final int yMenu = 630;
-    private final int offset = 29;
+    private JPanel boardPanel;
+    private final int boardSize = 600;
+    private final int offset = 0;
 
-    public BoardBuilder(int xScreen, int yScreen) {
-        this.xScreen = xScreen;
-        this.yScreen = yScreen;
+    public BoardBuilder() {
+        createBoardPanel();
+    }
+
+    private void createBoardPanel() {
+        boardPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                drawBoard(g2d);
+            }
+        };
+        boardPanel.setPreferredSize(new Dimension(600, 600));
+        boardPanel.setBackground(Color.WHITE);
+    }
+
+    public JPanel getBoardPanel() {
+        return boardPanel;
     }
 
     public void drawBoard(Graphics2D g2d){
-        final int TAMANHO_QUADRADO = (yScreen - offset) / 15;
+        final int TAMANHO_QUADRADO = (boardSize) / 15;
         final int QUADRADO_MAIOR = TAMANHO_QUADRADO * 6;
-
-        //g2d.fillRect(xMenu, 0, 250, yMenu);
 
         drawInitialAndFinals(g2d, TAMANHO_QUADRADO);
         drawGrid(g2d, TAMANHO_QUADRADO);

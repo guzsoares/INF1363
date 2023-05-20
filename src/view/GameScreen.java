@@ -5,7 +5,7 @@ import java.awt.*;
 
 class GameScreen extends JFrame{
     public final int xScreen = 850;
-    public final int yScreen = 630;
+    public final int yScreen = 628;
 
     private BoardBuilder boardBuilder;
     private GameMenu gameMenu;
@@ -20,8 +20,7 @@ class GameScreen extends JFrame{
 
     public GameScreen() {
         this.gameMenu = new GameMenu();
-        this.boardBuilder = new BoardBuilder(xScreen, yScreen);
-        createMenu();
+        this.boardBuilder = new BoardBuilder();
 
 
         setTitle("Ludo, O Jogo");
@@ -31,36 +30,22 @@ class GameScreen extends JFrame{
         setLayout(null);
         setResizable(false);
 
+        JPanel contentPane = new JPanel();
+        contentPane.setLayout(new BorderLayout());
+        setContentPane(contentPane);
+
+        JPanel boardPanel = boardBuilder.getBoardPanel();
+        JPanel menuPanel = gameMenu.getMenuPanel();
+        contentPane.add(boardPanel);
+        contentPane.add(menuPanel, BorderLayout.EAST);
+
         setVisible(true);
         
-    }
-
-    @Override
-    public void paint(Graphics g){
-        super.paint(g);
-
-        Graphics2D g2d = (Graphics2D) g;
-        boardBuilder.drawBoard(g2d);
     }
 
     public void redraw(){
         repaint();
     }
-
-    private void createMenu() {
-        dieButton = gameMenu.dieButton();
-        newGameButton = gameMenu.newGameButton();
-        loadGameButton = gameMenu.loadGameButton();
-        saveGameButton = gameMenu.saveGameButton();
-        textLabel = gameMenu.textLabel();
-
-        add(textLabel);
-        add(dieButton);
-        add(newGameButton);
-        add(loadGameButton);
-        add(saveGameButton);
-    }
-
 
     public static void main(String[] args) {
         GameScreen frame = new GameScreen();
