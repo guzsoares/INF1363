@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GameMenu {
 
@@ -8,6 +9,16 @@ public class GameMenu {
         JButton button = new JButton("Lancar Dado");
         button.setBounds(625, 420, 200, 50);
         return button;
+    }
+
+    public JLabel textLabel() {
+        JLabel label = new JLabel("Á Lançar:");
+        label.setBounds(650, 250, 200, 50);
+        Font font = label.getFont();
+        float tamanhoFonte = font.getSize() + 20; // aumentar o tamanho da fonte em 4 pontos
+        Font novaFonte = font.deriveFont(tamanhoFonte);
+        label.setFont(novaFonte);
+        return label;
     }
 
     public JButton newGameButton() {

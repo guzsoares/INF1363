@@ -21,7 +21,7 @@ class GameScreen extends JFrame{
     public GameScreen() {
         this.gameMenu = new GameMenu();
         this.boardBuilder = new BoardBuilder(xScreen, yScreen);
-        createButtons();
+        createMenu();
 
 
         setTitle("Ludo, O Jogo");
@@ -37,21 +37,24 @@ class GameScreen extends JFrame{
 
     @Override
     public void paint(Graphics g){
-        boardBuilder.paint(g);
-
         super.paint(g);
+
+        Graphics2D g2d = (Graphics2D) g;
+        boardBuilder.drawBoard(g2d);
     }
 
     public void redraw(){
         repaint();
     }
 
-    private void createButtons() {
+    private void createMenu() {
         dieButton = gameMenu.dieButton();
         newGameButton = gameMenu.newGameButton();
         loadGameButton = gameMenu.loadGameButton();
         saveGameButton = gameMenu.saveGameButton();
+        textLabel = gameMenu.textLabel();
 
+        add(textLabel);
         add(dieButton);
         add(newGameButton);
         add(loadGameButton);

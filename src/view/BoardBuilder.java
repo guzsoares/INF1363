@@ -3,7 +3,7 @@ package view;
 import javax.swing.*;
 import java.awt.*;
  
-class BoardBuilder extends JFrame{
+class BoardBuilder{
     private final int xScreen;
     private final int yScreen;
     private final int xMenu = 600;
@@ -15,36 +15,17 @@ class BoardBuilder extends JFrame{
         this.yScreen = yScreen;
     }
 
-    @Override
-    public void paint(Graphics g) {
+    public void drawBoard(Graphics2D g2d){
         final int TAMANHO_QUADRADO = (yScreen - offset) / 15;
         final int QUADRADO_MAIOR = TAMANHO_QUADRADO * 6;
-        super.paint(g);
 
-        Graphics2D g2d = (Graphics2D) g;
+        //g2d.fillRect(xMenu, 0, 250, yMenu);
 
-        // Configuração de antialiasing para melhorar a qualidade gráfica
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-        // desenha fundo do menu
-        g2d.setColor(Color.LIGHT_GRAY);
-        g2d.fillRect(xMenu, offset, xScreen - xMenu, yMenu);
-
-        // desenha reta final e inicial
         drawInitialAndFinals(g2d, TAMANHO_QUADRADO);
-
-        // draw grid
         drawGrid(g2d, TAMANHO_QUADRADO);
-
-        // desenha abrigos
         drawAbrigo(g2d, TAMANHO_QUADRADO);
-
-        // desenha quadrados iniciais
         drawSpawns(g2d, QUADRADO_MAIOR, TAMANHO_QUADRADO);
-
-        // desenha triangulos casas finais
         drawTriangles(g2d, TAMANHO_QUADRADO);
-
     }
 
     private void drawSpawns(Graphics2D g2d, int QUADRADO_MAIOR, int TAMANHO_QUADRADO){ // Função para desenhar os quadrados iniciais
@@ -77,7 +58,7 @@ class BoardBuilder extends JFrame{
         }
     }
 
-    public void drawGrid(Graphics2D g2d, int TAMANHO_QUADRADO){
+    private void drawGrid(Graphics2D g2d, int TAMANHO_QUADRADO){
         g2d.setColor(Color.BLACK);
         for (int i = 0; i < 15; i++) {
             for (int j = 0; j < 15; j++) {
@@ -89,14 +70,14 @@ class BoardBuilder extends JFrame{
 
     }
 
-    public void drawAbrigo(Graphics2D g2d, int TAMANHO_QUADRADO){
+    private void drawAbrigo(Graphics2D g2d, int TAMANHO_QUADRADO){
         g2d.fillRect(TAMANHO_QUADRADO, TAMANHO_QUADRADO * 8 + offset, TAMANHO_QUADRADO, TAMANHO_QUADRADO);
         g2d.fillRect(TAMANHO_QUADRADO * 6, TAMANHO_QUADRADO + offset, TAMANHO_QUADRADO, TAMANHO_QUADRADO);
         g2d.fillRect(TAMANHO_QUADRADO * 13, TAMANHO_QUADRADO * 6 + offset, TAMANHO_QUADRADO, TAMANHO_QUADRADO);
         g2d.fillRect(TAMANHO_QUADRADO * 8, TAMANHO_QUADRADO * 13 + offset, TAMANHO_QUADRADO, TAMANHO_QUADRADO);
     }
 
-    public void drawTriangles(Graphics2D g2d, int TAMANHO_QUADRADO){
+    private void drawTriangles(Graphics2D g2d, int TAMANHO_QUADRADO){
         g2d.setColor(Color.GREEN);
 
         int[] greenXPoints = {6 * TAMANHO_QUADRADO, 9 * TAMANHO_QUADRADO, 7 * TAMANHO_QUADRADO + TAMANHO_QUADRADO/2};
@@ -145,7 +126,7 @@ class BoardBuilder extends JFrame{
         g2d.drawPolygon(yellowXPoints,yellowYPoints, 3);
     }
 
-    public void drawInitialAndFinals(Graphics2D g2d, int TAMANHO_QUADRADO){
+    private void drawInitialAndFinals(Graphics2D g2d, int TAMANHO_QUADRADO){
         // desenha retas finais e casas de saida
         g2d.setColor(Color.RED);
         for (int i = 0; i < 5; i ++){
