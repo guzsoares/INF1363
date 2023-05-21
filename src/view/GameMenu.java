@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.io.*;
 
 public class GameMenu {
     private Image dieImage;
@@ -66,6 +66,11 @@ public class GameMenu {
     public JButton saveGameButton() {
         JButton button = new JButton("Salvar Jogo");
         button.setBounds(25, 160, 200, 50);
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Realizar salvamento do jogo!");
+            }
+        });
         return button;
     }
 

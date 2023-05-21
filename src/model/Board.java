@@ -206,6 +206,10 @@ class Board {
         return ranking;
     }
 
+    public Board getBoard(){
+        return this;
+    }
+
 	public Player[] getPlayers() {
 		return this.players;
 	}
