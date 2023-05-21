@@ -43,6 +43,11 @@ public class GameMenu {
     public JButton newGameButton() {
         JButton button = new JButton("Novo Jogo");
         button.setBounds(25, 20, 200, 50);
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Realizar criação de novo jogo!");
+            }
+        });
         return button;
     }
 

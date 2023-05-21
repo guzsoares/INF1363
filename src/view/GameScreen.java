@@ -9,10 +9,12 @@ class GameScreen extends JFrame{
 
     private BoardBuilder boardBuilder;
     private GameMenu gameMenu;
+    private GameActions gameActions;
 
     public GameScreen() {
         this.gameMenu = new GameMenu();
         this.boardBuilder = new BoardBuilder();
+        this.gameActions = new GameActions();
 
 
         setTitle("Ludo, O Jogo");
@@ -26,10 +28,13 @@ class GameScreen extends JFrame{
         contentPane.setLayout(new BorderLayout());
         setContentPane(contentPane);
 
-        JPanel boardPanel = boardBuilder.getBoardPanel();
+        //JPanel boardPanel = boardBuilder.getBoardPanel();
         JPanel menuPanel = gameMenu.getMenuPanel();
-        contentPane.add(boardPanel);
+        JPanel actionsPanel = gameActions.getActionPanel();
+
+        //contentPane.add(boardPanel);
         contentPane.add(menuPanel, BorderLayout.EAST);
+        contentPane.add(actionsPanel);
 
         setVisible(true);
         
