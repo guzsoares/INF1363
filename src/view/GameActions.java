@@ -28,7 +28,7 @@ class GameActions {
     }
 
     private void createAction(Graphics2D g2d){
-        drawAbrigo(g2d, Color.GREEN, Color.RED);
+        drawAbrigo(g2d, Color.BLACK, Color.BLACK);
     }
 
     private void drawBarreira(Graphics2D g2d, Color pawnColor){

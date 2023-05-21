@@ -8,7 +8,6 @@ import java.io.*;
 
 public class GameMenu {
     private Image dieImage;
-    private File lastFile;
     private JPanel menuPanel;
     private DieShow dieShow = new DieShow();
     private Color turnColor = Color.RED;
@@ -34,7 +33,7 @@ public class GameMenu {
         JLabel label = new JLabel("Á Jogar:");
         label.setBounds(55, 220, 200, 50);
         Font font = label.getFont();
-        float tamanhoFonte = font.getSize() + 20; // aumentar o tamanho da fonte em 4 pontos
+        float tamanhoFonte = font.getSize() + 20;
         Font novaFonte = font.deriveFont(tamanhoFonte);
         label.setFont(novaFonte);
         return label;
@@ -60,7 +59,9 @@ public class GameMenu {
                 JFileChooser fileChooser = new JFileChooser();
                 int result = fileChooser.showOpenDialog(null);
                 if (result == JFileChooser.APPROVE_OPTION) {
-                    lastFile = fileChooser.getSelectedFile();
+                    //TODO: FUNCAO DE CARREGAMENTO DE ARQUIVO
+                    System.out.println(fileChooser.getSelectedFile());
+                    System.out.println("Carregar arquivo selecionado");
                 }
             }
         });
@@ -73,14 +74,11 @@ public class GameMenu {
         button.setBounds(25, 160, 200, 50);
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                //TODO: FUNCAO DE SALVAR JOGO
                 System.out.println("Realizar salvamento do jogo!");
             }
         });
         return button;
-    }
-
-    public File getFile(){
-        return lastFile;
     }
 
     private void createMenu(JPanel menuPanel) {

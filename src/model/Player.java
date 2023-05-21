@@ -34,14 +34,16 @@ class Player {
 
 			if (playerBoard.getDieNumber() != 6){
 				this.myTurn = false;
+				return;
 			}
 
 			playerBoard.rollDie();
 			updateChoices();
 
 			if (playerBoard.getDieNumber() == 6){
-				// punish last pawn
+				//TODO: LAST PAWN MOVED MUST RETURN TO INITIAL HOUSE
 				this.myTurn = false;
+				return;
 			} else {
 				playTurn();
 				this.myTurn = false;

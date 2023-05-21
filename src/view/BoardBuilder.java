@@ -136,6 +136,30 @@ class BoardBuilder{
         g2d.setColor(Color.BLACK);
 
         g2d.drawPolygon(yellowXPoints,yellowYPoints, 3);
+
+
+        // desenha triangulos de saida
+        g2d.setColor(Color.WHITE);
+
+        int[] whiteXPoints = {8 * TAMANHO_QUADRADO + 3, 9 * TAMANHO_QUADRADO - 3, 8 * TAMANHO_QUADRADO + TAMANHO_QUADRADO/2};
+        int[] whiteYPoints= {TAMANHO_QUADRADO + 5, TAMANHO_QUADRADO + 5, TAMANHO_QUADRADO + TAMANHO_QUADRADO - 5};
+
+        g2d.fillPolygon(whiteXPoints,whiteYPoints, 3);
+
+        int[] whiteXPoints1 = {6 * TAMANHO_QUADRADO + 3, 7 * TAMANHO_QUADRADO - 3, 6 * TAMANHO_QUADRADO + TAMANHO_QUADRADO/2};
+        int[] whiteYPoints1 = { 13 * TAMANHO_QUADRADO + TAMANHO_QUADRADO - 5, 13 * TAMANHO_QUADRADO + TAMANHO_QUADRADO - 5, 13 * TAMANHO_QUADRADO + 5};
+
+        g2d.fillPolygon(whiteXPoints1,whiteYPoints1, 3);
+
+        int[] whiteXPoints2 = { TAMANHO_QUADRADO + 5, TAMANHO_QUADRADO + 5, TAMANHO_QUADRADO + TAMANHO_QUADRADO - 5};
+        int[] whiteYPoints2 = {6 * TAMANHO_QUADRADO + 3, 7 * TAMANHO_QUADRADO - 3, 6 * TAMANHO_QUADRADO + TAMANHO_QUADRADO/2};
+
+        g2d.fillPolygon(whiteXPoints2,whiteYPoints2, 3);
+
+        int[] whiteXPoints3 = { 13 * TAMANHO_QUADRADO + TAMANHO_QUADRADO - 5,13 * TAMANHO_QUADRADO + TAMANHO_QUADRADO - 5,13 * TAMANHO_QUADRADO + 5};
+        int[] whiteYPoints3 = {8 * TAMANHO_QUADRADO + 3, 9 * TAMANHO_QUADRADO - 3, 8 * TAMANHO_QUADRADO + TAMANHO_QUADRADO/2};
+
+        g2d.fillPolygon(whiteXPoints3,whiteYPoints3, 3);
     }
 
     private void drawInitialAndFinals(Graphics2D g2d, int TAMANHO_QUADRADO){
@@ -167,6 +191,7 @@ class BoardBuilder{
             g2d.fillRect(7 * TAMANHO_QUADRADO,(i * TAMANHO_QUADRADO) + 9 * TAMANHO_QUADRADO  + offset, TAMANHO_QUADRADO, TAMANHO_QUADRADO);
         }
         g2d.fillRect(TAMANHO_QUADRADO * 6, TAMANHO_QUADRADO * 13  + offset, TAMANHO_QUADRADO, TAMANHO_QUADRADO);
+
     }
 
 }

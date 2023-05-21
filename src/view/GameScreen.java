@@ -28,20 +28,31 @@ class GameScreen extends JFrame{
         contentPane.setLayout(new BorderLayout());
         setContentPane(contentPane);
 
-        //JPanel boardPanel = boardBuilder.getBoardPanel();
+        JPanel boardPanel = boardBuilder.getBoardPanel();
         JPanel menuPanel = gameMenu.getMenuPanel();
-        JPanel actionsPanel = gameActions.getActionPanel();
 
-        //contentPane.add(boardPanel);
-        contentPane.add(menuPanel, BorderLayout.EAST);
-        contentPane.add(actionsPanel);
+        contentPane.add(menuPanel, BorderLayout.LINE_END);
+        contentPane.add(boardPanel, BorderLayout.LINE_START);
 
         setVisible(true);
+
+        showMessage("verde");
         
     }
 
     public void redraw(){
         repaint();
+    }
+
+    public void showMessage(String jogadorVencedor){
+        JOptionPane.showMessageDialog(null, "O jogo foi encerrado, o jogador " + jogadorVencedor + " venceu!" );
+
+        int answer = JOptionPane.showOptionDialog(null, "Deseja jogar outra partida?", "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+        if (answer == JOptionPane.YES_OPTION) {
+            System.out.println("Usuário escolheu 'Sim'");
+        } else {
+            System.out.println("Usuário escolheu 'Não'");
+        }
     }
 
     public static void main(String[] args) {
@@ -50,4 +61,5 @@ class GameScreen extends JFrame{
             frame.redraw();
         }
     }
+
 }

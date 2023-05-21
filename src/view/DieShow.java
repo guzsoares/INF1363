@@ -13,7 +13,7 @@ class DieShow{
     }
 
     private String getDiceImagePath(int diceValue) {
-        // Substitua "caminho/para/as/imagens/" pelo caminho real onde as imagens do dado estão armazenadas
-        return "/Users/gustavo/Documents/PUC-Rio/INF1363/Imagens/Dado" + diceValue + ".png";
+        String dir = System.getProperty("user.dir");
+        return dir + "/Imagens/Dado" + diceValue + ".png";
     }
 }
