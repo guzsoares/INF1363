@@ -2,9 +2,9 @@ package model;
 
 class Game {
     private static Game instance;
-    private Player[] players;
-    private Die die;
-    private Board board;
+    public Player[] players;
+    public Die die;
+    public Board board;
 
 
     public Game(){
@@ -95,12 +95,9 @@ class Game {
 
     public static void main(String[] args) {
         Game game = new Game();
-        game.rollDie();
-        System.out.println(game.players[0].getPlayerPawns()[0].getPosition());
-        System.out.println(game.board.getPawnsOnBoard()[0].getPosition());
-        boolean moved = game.players[0].makeMove(0);
-        System.out.println(moved);
-        System.out.println(game.players[0].getPlayerPawns()[0].getPosition());
-        System.out.println(game.board.getPawnsOnBoard()[0].getPosition());
+        game.die.setDieNumber(5);
+        game.players[0].makeMove(0);
+        boolean moved = game.players[0].makeMove(1);
+        System.out.println(game.players[0].getPlayerPawns()[1].getPosition());
     }
 }
