@@ -3,44 +3,43 @@ package model;
 class Player {
     private Color color;
 	private Pawn[] playerPawns;
-	private Board playerBoard;
+	private Game game = Game.getInstance();
 	private boolean[] choices = new	boolean[4];
 	private boolean myTurn = false;
 	private int choice;
 
-	public Player(Color color, Pawn[] pawns, Board playerBoard){
+	public Player(Color color, Pawn[] pawns){
 		this.color = color;
 		this.playerPawns = pawns;
-		this.playerBoard = playerBoard;
 	}
 
 	public void playerTurn(){
 		if (this.myTurn == true){ // inicio do turno
 
-			playerBoard.rollDie();
+			game.rollDie();
 			updateChoices();
 
 			playTurn();
 
-			if (playerBoard.getDieNumber() != 6){
+			if (game.getDieNumber() != 6){
 				this.myTurn = false;
 				return;
 			}
 
-			playerBoard.rollDie();
+			game.rollDie();
 			updateChoices();
 
 			playTurn();
 
-			if (playerBoard.getDieNumber() != 6){
+			if (game.getDieNumber() != 6){
 				this.myTurn = false;
 				return;
 			}
 
-			playerBoard.rollDie();
+			game.rollDie();
 			updateChoices();
 
-			if (playerBoard.getDieNumber() == 6){
+			if (game.getDieNumber() == 6){
 				//TODO: LAST PAWN MOVED MUST RETURN TO INITIAL HOUSE
 				this.myTurn = false;
 				return;
@@ -66,7 +65,7 @@ class Player {
 			}
 
 
-			if(playerPawns[choice].movePawn(playerBoard.getDieNumber(), playerBoard.getSquares(), playerBoard.getFinalSquares(), playerBoard.getPawnsOnBoard())){
+			if(playerPawns[choice].movePawn(game.getDieNumber(), game.getGameBoard().getSquares(), game.getGameBoard().getFinalSquares(), game.getGameBoard().getPawnsOnBoard())){
 				return true; // fez jogada
 			}
 
@@ -78,7 +77,7 @@ class Player {
 	public void updateChoices(){
 
 		for (int i = 0; i < 4; i++){
-			if (playerPawns[i].canMove(playerBoard.getDieNumber(), playerBoard.getPawnsOnBoard(), playerBoard.getSquares())){
+			if (playerPawns[i].canMove(game.getDieNumber(), game.getGameBoard().getPawnsOnBoard(), game.getGameBoard().getSquares())){
 				choices[i] = true;
 			} else {
 				choices[i] = false;
@@ -88,8 +87,8 @@ class Player {
 
 	public boolean makeMove(int choice){
 
-		if (playerPawns[choice].movePawn(playerBoard.getDieNumber(), playerBoard.getSquares(), playerBoard.getFinalSquares(), playerBoard.getPawnsOnBoard())){
-			playerBoard.updatePawnsOnBoard();
+		if (playerPawns[choice].movePawn(game.getDieNumber(), game.getGameBoard().getSquares(), game.getGameBoard().getFinalSquares(), game.getGameBoard().getPawnsOnBoard())){
+			game.updateInfo();
 			return true;
 		}
 

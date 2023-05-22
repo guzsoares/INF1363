@@ -28,36 +28,6 @@ public class BoardTest {
 		assertEquals("Vermelho não está na casa de saídas",ini[39].numPawns(),1);
 		
 	}
-	@Test
-	public void test_end_game() {
-		Board tab = new Board();
-		Square[][] fin = tab.getFinalSquares();
-		fin[0][5].addPawn(tab.getPawnOnIndex(0));
-		fin[0][5].addPawn(tab.getPawnOnIndex(1));
-		fin[0][5].addPawn(tab.getPawnOnIndex(2));
-		fin[0][5].addPawn(tab.getPawnOnIndex(3));
-		assertTrue("O verde não ganhou",tab.isGameOver());
-		
-	}
-	
-	@Test
-	public void test_ranking() {
-		Board tab = new Board();
-		Square[][] fin = tab.getFinalSquares();
-		fin[0][5].addPawn(tab.getPawnOnIndex(0));
-		fin[0][5].addPawn(tab.getPawnOnIndex(1));
-		fin[0][5].addPawn(tab.getPawnOnIndex(2));
-		fin[1][5].addPawn(tab.getPawnOnIndex(6));
-		fin[2][5].addPawn(tab.getPawnOnIndex(7));
-		fin[2][5].addPawn(tab.getPawnOnIndex(9));
-		Player[] aux = new Player[4];
-		aux = tab.playersResults(tab.getPlayers());
-		assertEquals("Verde fora do ranking",aux[0].getColor(),Color.VERDE);
-		assertEquals("Amarelo fora do ranking",aux[2].getColor(),Color.AMARELO);
-		assertEquals("Azul fora do ranking",aux[1].getColor(),Color.AZUL);
-		assertEquals("Vermelho fora do ranking",aux[3].getColor(),Color.VERMELHO);
-		
-	}
 
 }
 
