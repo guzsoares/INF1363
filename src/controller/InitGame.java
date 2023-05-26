@@ -1,10 +1,20 @@
 package controller;
 
+import model.ModelAPI;
 import view.ViewAPI;
 
 class InitGame {
-    private ViewAPI viewAPI = ViewAPI.getInstance();
     public static void main(String[] args) {
-        GameScreen frame = viewAPI.getGameScreen();
+        ModelAPI modelAPI = new ModelAPI();
+        ViewAPI viewAPI = new ViewAPI();
+        modelAPI.createGame();
+        viewAPI.createView();
+
+        modelAPI.addSubscriber(viewAPI.getMenuSubscriber());
+
+        while (true){
+            viewAPI.redraw();
+            modelAPI.rollDie();
+        }
     }
 }

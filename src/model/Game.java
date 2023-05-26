@@ -1,14 +1,14 @@
 package model;
 
-class Game {
-    private static Game instance;
+import controller.AbstractPublisher;
+
+class Game extends AbstractPublisher{
     public Player[] players;
     public Die die;
     public Board board;
 
 
     public Game(){
-        instance = this;
         players = new Player[4];
         die = new Die();
         board = new Board();
@@ -36,19 +36,9 @@ class Game {
         }
     }
 
-    public static Game getInstance() {
-        if (instance == null) {
-            synchronized (Game.class) {
-                if (instance == null) {
-                    instance = new Game();
-                }
-            }
-        }
-        return instance;
-    }
-
     public void rollDie(){
         die.rollDie();
+        notifySubscribers(getDieNumber());
     }
 
     public int getDieNumber(){
@@ -91,13 +81,5 @@ class Game {
 
     public void updateInfo(){
         board.updatePawnsOnBoard(players);
-    }
-
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.die.setDieNumber(5);
-        game.players[0].makeMove(0);
-        boolean moved = game.players[0].makeMove(1);
-        System.out.println(game.players[0].getPlayerPawns()[1].getPosition());
     }
 }

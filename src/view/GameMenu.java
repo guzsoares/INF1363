@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.io.*;
 
 public class GameMenu implements Subscriber{
-    private GameScreen gameScreen = GameScreen.getInstance();
     private Subscriber subscriber;
     private Image dieImage;
     private JPanel menuPanel;
@@ -137,7 +136,6 @@ public class GameMenu implements Subscriber{
     @Override
     public void update(int newValue){
         this.dieNumber = newValue;
-        gameScreen.redraw();
     }
 
 }

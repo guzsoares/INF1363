@@ -3,7 +3,6 @@ package model;
 class Player {
     private Color color;
 	private Pawn[] playerPawns;
-	private Game game = Game.getInstance();
 	private boolean[] choices = new	boolean[4];
 	private boolean myTurn = false;
 	private int choice;
@@ -13,23 +12,13 @@ class Player {
 		this.playerPawns = pawns;
 	}
 
-	public void playerTurn(){
+	public void playerTurn(Game game){
 		if (this.myTurn == true){ // inicio do turno
 
 			game.rollDie();
-			updateChoices();
+			updateChoices(game);
 
-			playTurn();
-
-			if (game.getDieNumber() != 6){
-				this.myTurn = false;
-				return;
-			}
-
-			game.rollDie();
-			updateChoices();
-
-			playTurn();
+			playTurn(game);
 
 			if (game.getDieNumber() != 6){
 				this.myTurn = false;
@@ -37,14 +26,24 @@ class Player {
 			}
 
 			game.rollDie();
-			updateChoices();
+			updateChoices(game);
+
+			playTurn(game);
+
+			if (game.getDieNumber() != 6){
+				this.myTurn = false;
+				return;
+			}
+
+			game.rollDie();
+			updateChoices(game);
 
 			if (game.getDieNumber() == 6){
 				//TODO: LAST PAWN MOVED MUST RETURN TO INITIAL HOUSE
 				this.myTurn = false;
 				return;
 			} else {
-				playTurn();
+				playTurn(game);
 				this.myTurn = false;
 				return;
 			}
@@ -53,7 +52,7 @@ class Player {
 	}
 
 
-	public boolean playTurn(){
+	public boolean playTurn(Game game){
 
 		if (verifyChoices() == false){
 			return false; // nao fez jogada
@@ -74,7 +73,7 @@ class Player {
 		return false; // nao fez jogada
 	}
 
-	public void updateChoices(){
+	public void updateChoices(Game game){
 
 		for (int i = 0; i < 4; i++){
 			if (playerPawns[i].canMove(game.getDieNumber(), game.getGameBoard().getPawnsOnBoard(), game.getGameBoard().getSquares())){
@@ -85,7 +84,7 @@ class Player {
 		}
 	}
 
-	public boolean makeMove(int choice){
+	public boolean makeMove(int choice, Game game){
 
 		if (playerPawns[choice].movePawn(game.getDieNumber(), game.getGameBoard().getSquares(), game.getGameBoard().getFinalSquares(), game.getGameBoard().getPawnsOnBoard())){
 			game.updateInfo();

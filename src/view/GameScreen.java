@@ -55,11 +55,7 @@ class GameScreen extends JFrame{
         }
     }
 
-    public static void main(String[] args) {
-        GameScreen frame = new GameScreen();
-        while(true){
-            frame.redraw();
-        }
+    public GameMenu getGameMenu(){
+        return this.gameMenu;
     }
-
 }
