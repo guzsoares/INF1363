@@ -139,10 +139,16 @@ public class GameMenu implements Subscriber{
     }
 
     @Override
-    public void update(int newValue){
+    public void updateDie(int newValue){
         this.dieNumber = newValue;
         viewAPI.redraw();
         System.out.println(modelAPI.getDieNumber());
+    }
+
+    @Override
+    public void updateTurn(Color color){
+        this.turnColor = color;
+        viewAPI.redraw();
     }
 
 }

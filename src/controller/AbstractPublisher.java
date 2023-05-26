@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.*;
+import java.awt.Color;
 
 public class AbstractPublisher implements Publisher{
     private List<Subscriber> subscribers;
@@ -19,9 +20,15 @@ public class AbstractPublisher implements Publisher{
         subscribers.remove(subscriber);
     }
 
-    protected void notifySubscribers(int newValue){
+    protected void notifySubscribersDie(int newValue){
         for (Subscriber subscriber : subscribers) {
-            subscriber.update(newValue);
+            subscriber.updateDie(newValue);
+        }
+    }
+
+    protected void notifySubscribersTurn(java.awt.Color color){
+        for (Subscriber subscriber : subscribers) {
+            subscriber.updateTurn(color);
         }
     }
 }

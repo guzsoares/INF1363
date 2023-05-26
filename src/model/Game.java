@@ -1,11 +1,14 @@
 package model;
 
 import controller.AbstractPublisher;
+import java.awt.Color;
 
 class Game extends AbstractPublisher{
     public Player[] players;
     public Die die;
     public Board board;
+    public int turn = 0;
+    private int plays = 0;
 
 
     public Game(){
@@ -21,16 +24,16 @@ class Game extends AbstractPublisher{
             playersPawns[3] = board.getPawnOnIndex(4*i + 3);
             switch(i) {
             	case(0):
-            		players[i] = new Player(Color.VERDE, playersPawns);
+            		players[i] = new Player(model.Color.VERDE, playersPawns);
             		break;
             	case(1):
-            		players[i] = new Player(Color.AMARELO, playersPawns);
+            		players[i] = new Player(model.Color.AMARELO, playersPawns);
             		break;
             	case(2):
-            		players[i] = new Player(Color.AZUL, playersPawns);
+            		players[i] = new Player(model.Color.AZUL, playersPawns);
             		break;
             	case(3):
-            		players[i] = new Player(Color.VERMELHO, playersPawns);
+            		players[i] = new Player(model.Color.VERMELHO, playersPawns);
             		break;
             }
         }
@@ -38,7 +41,7 @@ class Game extends AbstractPublisher{
 
     public void rollDie(){
         die.rollDie();
-        notifySubscribers(getDieNumber());
+        notifySubscribersDie(getDieNumber());
     }
 
     public int getDieNumber(){
@@ -82,4 +85,76 @@ class Game extends AbstractPublisher{
     public void updateInfo(){
         board.updatePawnsOnBoard(players);
     }
+
+    public Color getCurrentPlayerColor(){
+        switch(players[turn].getColor()){
+            case VERDE:
+            return Color.GREEN;
+
+            case AZUL:
+            return Color.BLUE;
+
+            case VERMELHO:
+            return Color.RED;
+
+            case AMARELO:
+            return Color.YELLOW;
+            
+            default:
+            return Color.WHITE;
+        }
+    }
+
+    public void playerTurn(){
+        turn = (turn % 3);
+
+        if (plays == 0){
+
+            //players[turn].updateChoices(this);
+            //players[turn].playTurn(this);
+
+            if (getDieNumber() != 6){
+                plays = 0;
+                turn++;
+                notifySubscribersTurn(getCurrentPlayerColor());
+                return;
+            }
+            plays++;
+
+        } else if (plays == 1){
+
+		    //players[turn].updateChoices(this);
+		    //players[turn].playTurn(this);
+
+		    if (getDieNumber() != 6){
+                plays = 0;
+			    turn++;
+                notifySubscribersTurn(getCurrentPlayerColor());
+			    return;
+		    }
+
+            plays++;
+            
+
+        } else if (plays == 2){
+
+		    //players[turn].updateChoices(this);
+
+		    if (getDieNumber() == 6){
+			    //TODO: LAST PAWN MOVED MUST RETURN TO INITIAL HOUSE
+                plays = 0;
+			    turn++;
+                notifySubscribersTurn(getCurrentPlayerColor());
+			    return;
+		    } else {
+			    //players[turn].playTurn(this);
+                plays = 0;
+			    turn++;
+                notifySubscribersTurn(getCurrentPlayerColor());
+			    return;
+		    }
+
+        }
+			
+	}
 }

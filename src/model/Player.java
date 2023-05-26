@@ -4,51 +4,11 @@ class Player {
     private Color color;
 	private Pawn[] playerPawns;
 	private boolean[] choices = new	boolean[4];
-	private boolean myTurn = false;
 	private int choice;
 
 	public Player(Color color, Pawn[] pawns){
 		this.color = color;
 		this.playerPawns = pawns;
-	}
-
-	public void playerTurn(Game game){
-		if (this.myTurn == true){ // inicio do turno
-
-			game.rollDie();
-			updateChoices(game);
-
-			playTurn(game);
-
-			if (game.getDieNumber() != 6){
-				this.myTurn = false;
-				return;
-			}
-
-			game.rollDie();
-			updateChoices(game);
-
-			playTurn(game);
-
-			if (game.getDieNumber() != 6){
-				this.myTurn = false;
-				return;
-			}
-
-			game.rollDie();
-			updateChoices(game);
-
-			if (game.getDieNumber() == 6){
-				//TODO: LAST PAWN MOVED MUST RETURN TO INITIAL HOUSE
-				this.myTurn = false;
-				return;
-			} else {
-				playTurn(game);
-				this.myTurn = false;
-				return;
-			}
-			
-		}
 	}
 
 

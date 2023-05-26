@@ -1,6 +1,7 @@
 package model;
 
 import controller.Subscriber;
+import java.awt.Color;
 
 public class ModelAPI {
     private static ModelAPI instance;
@@ -23,6 +24,8 @@ public class ModelAPI {
 
     public void rollDie(){
         game.rollDie();
+
+        game.playerTurn();
     }
 
     public void addSubscriber(Subscriber subscriber){
@@ -31,5 +34,9 @@ public class ModelAPI {
 
     public int getDieNumber(){
         return game.getDieNumber();
+    }
+
+    public Color getCurrentPlayerColor(){
+        return game.getCurrentPlayerColor();
     }
 }

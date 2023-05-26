@@ -7,7 +7,7 @@ class Die {
     private Random random = new Random();
     
     public void rollDie(){ //retorna valor 0 ate 6
-    	this.dieNumber = random.nextInt(5) +1;
+    	this.dieNumber = random.nextInt(6) +1;
     }
     
     public int getDieNumber() {

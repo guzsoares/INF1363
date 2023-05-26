@@ -1,5 +1,8 @@
 package controller;
 
+import java.awt.Color;
+
 public interface Subscriber {
-    void update(int newValue);
+    void updateDie(int newValue);
+    void updateTurn(Color color);
 }
