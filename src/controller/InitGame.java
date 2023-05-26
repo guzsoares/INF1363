@@ -12,9 +12,5 @@ class InitGame {
 
         modelAPI.addSubscriber(viewAPI.getMenuSubscriber());
 
-        while (true){
-            viewAPI.redraw();
-            modelAPI.rollDie();
-        }
     }
 }

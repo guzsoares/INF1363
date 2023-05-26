@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 
 import controller.Subscriber;
+import model.ModelAPI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,12 +11,14 @@ import java.awt.event.ActionListener;
 import java.io.*;
 
 public class GameMenu implements Subscriber{
+    private ModelAPI modelAPI = ModelAPI.getInstance();
+    private ViewAPI viewAPI = ViewAPI.getInstance();
     private Subscriber subscriber;
     private Image dieImage;
     private JPanel menuPanel;
     private DieShow dieShow = new DieShow();
     private Color turnColor = Color.RED;
-    private int dieNumber = 4;
+    private int dieNumber;
 
     public GameMenu(){
         this.subscriber = this;
@@ -28,6 +31,7 @@ public class GameMenu implements Subscriber{
 
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                modelAPI.rollDie();
                 dieImage = dieShow.showDiceImage(dieNumber);
             }
         });
@@ -136,6 +140,8 @@ public class GameMenu implements Subscriber{
     @Override
     public void update(int newValue){
         this.dieNumber = newValue;
+        viewAPI.redraw();
+        System.out.println(modelAPI.getDieNumber());
     }
 
 }
