@@ -13,10 +13,11 @@ import java.io.*;
 public class GameMenu implements Subscriber{
     private ModelAPI modelAPI = ModelAPI.getInstance();
     private ViewAPI viewAPI = ViewAPI.getInstance();
+    private DieShow dieShow = new DieShow();
+
     private Subscriber subscriber;
     private Image dieImage;
     private JPanel menuPanel;
-    private DieShow dieShow = new DieShow();
     private Color turnColor = Color.RED;
     private int dieNumber;
 
