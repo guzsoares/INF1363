@@ -1,12 +1,17 @@
 package view;
 
 import javax.swing.*;
+
+import controller.Subscriber;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-public class GameMenu {
+public class GameMenu implements Subscriber{
+    private GameScreen gameScreen = GameScreen.getInstance();
+    private Subscriber subscriber;
     private Image dieImage;
     private JPanel menuPanel;
     private DieShow dieShow = new DieShow();
@@ -14,6 +19,7 @@ public class GameMenu {
     private int dieNumber = 4;
 
     public GameMenu(){
+        this.subscriber = this;
         createMenuPanel();
     }
 
@@ -122,6 +128,16 @@ public class GameMenu {
 
     public void setNumber(int Number){
         this.dieNumber = Number;
+    }
+
+    public Subscriber getSubscriber(){
+        return subscriber;
+    }
+
+    @Override
+    public void update(int newValue){
+        this.dieNumber = newValue;
+        gameScreen.redraw();
     }
 
 }
