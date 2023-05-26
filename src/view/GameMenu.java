@@ -122,22 +122,6 @@ public class GameMenu implements Subscriber{
         createMenu(menuPanel);
     }
 
-    public JPanel getMenuPanel() {
-        return menuPanel;
-    }
-
-    public void setColor(Color color){
-        this.turnColor = color;
-    }
-
-    public void setNumber(int Number){
-        this.dieNumber = Number;
-    }
-
-    public Subscriber getSubscriber(){
-        return subscriber;
-    }
-
     @Override
     public void updateDie(int newValue){
         this.dieNumber = newValue;
@@ -149,6 +133,22 @@ public class GameMenu implements Subscriber{
     public void updateTurn(Color color){
         viewAPI.redraw();
         this.turnColor = color;
+    }
+
+    public Subscriber getSubscriber(){
+        return subscriber;
+    }
+
+    public JPanel getMenuPanel() {
+        return menuPanel;
+    }
+
+    public void setColor(Color color){
+        this.turnColor = color;
+    }
+
+    public void setNumber(int Number){
+        this.dieNumber = Number;
     }
 
 }

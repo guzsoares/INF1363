@@ -268,10 +268,9 @@ class Pawn {
 		capturedPawn.setPosition(-1);
 	}
 
-    public void setPosition(int newPosition){ // define a posicao do peao
-        this.position = newPosition;
-
-    }
+	public void addSteps(int steps){ // adiciona o numero de passos
+		this.steps += steps;
+	}
 
     public int getPosition(){ // retorna a posicao do peao
         return this.position;
@@ -280,14 +279,6 @@ class Pawn {
     public Color getColor(){ // retorna a cor do peao
         return this.color;
     }
-    
-	public void setSteps(int steps){ // define o numero de passos
-		this.steps = steps;
-	}
-
-	public void addSteps(int steps){ // adiciona o numero de passos
-		this.steps += steps;
-	}
 
 	public int getSteps(){ // retorna o numero de passos
 		return this.steps;
@@ -300,5 +291,14 @@ class Pawn {
 	public void setSquare(Square[] boardSquares){ // metodo criada para testes
 		boardSquares[this.position].addPawn(this);
 	}
+
+	public void setSteps(int steps){ // define o numero de passos
+		this.steps = steps;
+	}
+	
+	public void setPosition(int newPosition){ // define a posicao do peao
+        this.position = newPosition;
+
+    }
 
 }

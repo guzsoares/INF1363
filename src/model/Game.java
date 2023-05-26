@@ -44,10 +44,6 @@ class Game extends AbstractPublisher{
         notifySubscribersDie(getDieNumber());
     }
 
-    public int getDieNumber(){
-        return die.getDieNumber();
-    }
-
     public boolean isGameOver(){
         for (int i = 0; i < 4; i++){
             if(board.getFinalSquares()[i][5].numPawns() == 4){
@@ -74,35 +70,8 @@ class Game extends AbstractPublisher{
         return ranking;
     }
 
-    public Board getGameBoard(){
-        return board;
-    }
-
-    public Player[] getPlayers(){
-        return players;
-    }
-
     public void updateInfo(){
         board.updatePawnsOnBoard(players);
-    }
-
-    public Color getCurrentPlayerColor(){
-        switch(players[turn].getColor()){
-            case VERDE:
-            return Color.GREEN;
-
-            case AZUL:
-            return Color.BLUE;
-
-            case VERMELHO:
-            return Color.RED;
-
-            case AMARELO:
-            return Color.YELLOW;
-            
-            default:
-            return Color.WHITE;
-        }
     }
 
     public void playerTurn(){
@@ -155,4 +124,35 @@ class Game extends AbstractPublisher{
         }
 			
 	}
+
+    public Color getCurrentPlayerColor(){
+        switch(players[turn].getColor()){
+            case VERDE:
+            return Color.GREEN;
+
+            case AZUL:
+            return Color.BLUE;
+
+            case VERMELHO:
+            return Color.RED;
+
+            case AMARELO:
+            return Color.YELLOW;
+            
+            default:
+            return Color.WHITE;
+        }
+    }
+
+    public Board getGameBoard(){
+        return board;
+    }
+
+    public Player[] getPlayers(){
+        return players;
+    }
+
+    public int getDieNumber(){
+        return die.getDieNumber();
+    }
 }

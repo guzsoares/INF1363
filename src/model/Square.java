@@ -79,12 +79,12 @@ class Square{
         return false;
     }
 
-    public void setSquareColor(Color color){
-        this.squareColor = color;
-    }
-
     public Color getSquareColor(){
         return this.squareColor;
+    }
+
+    public void setSquareColor(Color color){
+        this.squareColor = color;
     }
 
 }

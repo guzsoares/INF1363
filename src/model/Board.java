@@ -126,14 +126,6 @@ class Board {
         return this.pawnsOnBoard[index];
     }
 
-    public void setPawnOnIndexPosition(int index, int position){
-        getPawnOnIndex(index).setPosition(position);
-    }
-
-    public void setPawnOnIndexSquare(int index, Square[] boardSquares){
-        getPawnOnIndex(index).setSquare(boardSquares);
-    }
-
     public Square[] getSquares(){
         return this.playableSquares;
     }
@@ -144,6 +136,14 @@ class Board {
 
     public Square[][] getFinalSquares(){
         return this.finalSquares;
+    }
+
+    public void setPawnOnIndexPosition(int index, int position){
+        getPawnOnIndex(index).setPosition(position);
+    }
+
+    public void setPawnOnIndexSquare(int index, Square[] boardSquares){
+        getPawnOnIndex(index).setSquare(boardSquares);
     }
 }
 
@@ -169,9 +169,6 @@ class Board {
 
 DIREITA CIMA-->VERDE
 DIREITA BAIXO -->AMARELO
-
 ESQUERDA CIMA--> VERMELHO
-
-
 ESQUERDA BAIXO -->AZUL
 */
