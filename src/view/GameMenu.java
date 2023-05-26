@@ -18,7 +18,7 @@ public class GameMenu implements Subscriber{
     private Subscriber subscriber;
     private Image dieImage;
     private JPanel menuPanel;
-    private Color turnColor = Color.RED;
+    private Color turnColor = Color.GREEN;
     private int dieNumber;
 
     public GameMenu(){
@@ -147,8 +147,8 @@ public class GameMenu implements Subscriber{
 
     @Override
     public void updateTurn(Color color){
-        this.turnColor = color;
         viewAPI.redraw();
+        this.turnColor = color;
     }
 
 }

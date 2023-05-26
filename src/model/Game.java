@@ -106,7 +106,8 @@ class Game extends AbstractPublisher{
     }
 
     public void playerTurn(){
-        turn = (turn % 3);
+        turn = (turn % 4);
+        notifySubscribersTurn(getCurrentPlayerColor());
 
         if (plays == 0){
 
@@ -116,7 +117,6 @@ class Game extends AbstractPublisher{
             if (getDieNumber() != 6){
                 plays = 0;
                 turn++;
-                notifySubscribersTurn(getCurrentPlayerColor());
                 return;
             }
             plays++;
@@ -129,7 +129,7 @@ class Game extends AbstractPublisher{
 		    if (getDieNumber() != 6){
                 plays = 0;
 			    turn++;
-                notifySubscribersTurn(getCurrentPlayerColor());
+                
 			    return;
 		    }
 
@@ -144,13 +144,11 @@ class Game extends AbstractPublisher{
 			    //TODO: LAST PAWN MOVED MUST RETURN TO INITIAL HOUSE
                 plays = 0;
 			    turn++;
-                notifySubscribersTurn(getCurrentPlayerColor());
 			    return;
 		    } else {
 			    //players[turn].playTurn(this);
                 plays = 0;
 			    turn++;
-                notifySubscribersTurn(getCurrentPlayerColor());
 			    return;
 		    }
 

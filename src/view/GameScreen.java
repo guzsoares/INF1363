@@ -36,7 +36,7 @@ class GameScreen extends JFrame{
 
         setVisible(true);
 
-        showMessage("verde");
+        //showMessage("verde");
         
     }
 
