@@ -7,7 +7,7 @@ class BoardBuilder{
     private JPanel boardPanel;
     private final int boardSize = 600;
     private final int offset = 0;
-    private final int pawnSize = 20;
+    private PawnShow pawnShow = new PawnShow();
 
     public BoardBuilder() {
         createBoardPanel();
@@ -39,7 +39,7 @@ class BoardBuilder{
         drawAbrigo(g2d, TAMANHO_QUADRADO);
         drawSpawns(g2d, QUADRADO_MAIOR, TAMANHO_QUADRADO);
         drawTriangles(g2d, TAMANHO_QUADRADO);
-        drawPawns(g2d);
+        pawnShow.drawPawns(g2d);
     }
 
     private void drawSpawns(Graphics2D g2d, int QUADRADO_MAIOR, int TAMANHO_QUADRADO){ // Função para desenhar os quadrados iniciais
@@ -195,35 +195,4 @@ class BoardBuilder{
         g2d.fillRect(TAMANHO_QUADRADO * 6, TAMANHO_QUADRADO * 13  + offset, TAMANHO_QUADRADO, TAMANHO_QUADRADO);
 
     }
-
-    public void drawPawns(Graphics2D g2d){
-        drawPawn(g2d, Color.RED, 50, 50);
-        drawPawn(g2d, Color.RED, 170, 50);
-        drawPawn(g2d, Color.RED, 170, 170);
-        drawPawn(g2d, Color.RED, 50, 170);
-
-        drawPawn(g2d, Color.BLUE, 410, 50);
-        drawPawn(g2d, Color.BLUE, 530, 50);
-        drawPawn(g2d, Color.BLUE, 410, 170);
-        drawPawn(g2d, Color.BLUE, 530, 170);
-
-        drawPawn(g2d, Color.GREEN, 50, 410);
-        drawPawn(g2d, Color.GREEN, 170, 410);
-        drawPawn(g2d, Color.GREEN, 50, 530);
-        drawPawn(g2d, Color.GREEN, 170, 530);
-
-        drawPawn(g2d, Color.YELLOW, 410, 410);
-        drawPawn(g2d, Color.YELLOW, 530, 410);
-        drawPawn(g2d, Color.YELLOW, 410, 530);
-        drawPawn(g2d, Color.YELLOW, 530, 530);
-
-    }
-
-    private void drawPawn(Graphics2D g2d, Color pawnColor, int x, int y){
-        g2d.setColor(Color.BLACK);
-        g2d.fillOval(x - 2, y - 2, pawnSize + 4, pawnSize + 4);
-        g2d.setColor(pawnColor);
-        g2d.fillOval(x, y, pawnSize, pawnSize);
-    }
-
 }
