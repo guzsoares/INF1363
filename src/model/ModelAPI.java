@@ -49,4 +49,42 @@ public class ModelAPI {
         numPawns[3] = game.board.getInitialSquares()[3].numPawns();
         return numPawns;
     }
+
+    public int[] pawnsPosition(){
+        int[] pawnsPosition = new int[16];
+        for (int i = 0; i < 16; i++){
+            pawnsPosition[i] = game.getGameBoard().getPawnsOnBoard()[i].getPosition();
+            System.out.println(pawnsPosition[i]);
+        }
+        return pawnsPosition;
+    }
+
+    public Color[] pawnsColor(){
+        Color[] pawnsColor = new Color[16];
+        for (int i = 0; i < 16; i++){
+            switch (game.getGameBoard().getPawnsOnBoard()[i].getColor()){
+
+            case VERDE:
+            pawnsColor[i] = Color.GREEN;
+            break;
+
+            case AZUL:
+            pawnsColor[i] = Color.BLUE;
+            break;
+
+            case VERMELHO:
+            pawnsColor[i] = Color.RED;
+            break;
+
+            case AMARELO:
+            pawnsColor[i] = Color.YELLOW;
+            break;
+            
+            default:
+            System.out.print("Erro");
+            }
+            System.out.println(pawnsColor[i]);
+        }
+        return pawnsColor;
+    }
 }

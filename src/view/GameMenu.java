@@ -126,7 +126,6 @@ public class GameMenu implements Subscriber{
     public void updateDie(int newValue){
         this.dieNumber = newValue;
         viewAPI.redraw();
-        System.out.println(modelAPI.getDieNumber());
     }
 
     @Override
