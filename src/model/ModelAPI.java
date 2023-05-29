@@ -1,6 +1,7 @@
 package model;
 
-import controller.Subscriber;
+import controller.MenuSubscriber;
+import controller.BoardSubscriber;
 import java.awt.Color;
 
 public class ModelAPI {
@@ -28,8 +29,12 @@ public class ModelAPI {
         game.playerTurn();
     }
 
-    public void addSubscriber(Subscriber subscriber){
+    public void addSubscriber(MenuSubscriber subscriber){
         game.addSubscriber(subscriber);
+    }
+
+    public void addBoardSubscriber(BoardSubscriber subscriber){
+        game.addBoardSubscriber(subscriber);
     }
 
     public int getDieNumber(){
@@ -54,7 +59,6 @@ public class ModelAPI {
         int[] pawnsPosition = new int[16];
         for (int i = 0; i < 16; i++){
             pawnsPosition[i] = game.getGameBoard().getPawnsOnBoard()[i].getPosition();
-            System.out.println(pawnsPosition[i]);
         }
         return pawnsPosition;
     }
@@ -83,7 +87,6 @@ public class ModelAPI {
             default:
             System.out.print("Erro");
             }
-            System.out.println(pawnsColor[i]);
         }
         return pawnsColor;
     }

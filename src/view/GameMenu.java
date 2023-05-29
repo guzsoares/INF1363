@@ -2,7 +2,7 @@ package view;
 
 import javax.swing.*;
 
-import controller.Subscriber;
+import controller.MenuSubscriber;
 import model.ModelAPI;
 
 import java.awt.*;
@@ -10,12 +10,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-public class GameMenu implements Subscriber{
+public class GameMenu implements MenuSubscriber{
     private ModelAPI modelAPI = ModelAPI.getInstance();
     private ViewAPI viewAPI = ViewAPI.getInstance();
     private DieShow dieShow = new DieShow();
 
-    private Subscriber subscriber;
+    private MenuSubscriber subscriber;
     private Image dieImage;
     private JPanel menuPanel;
     private Color turnColor = Color.GREEN;
@@ -134,7 +134,7 @@ public class GameMenu implements Subscriber{
         this.turnColor = color;
     }
 
-    public Subscriber getSubscriber(){
+    public MenuSubscriber getSubscriber(){
         return subscriber;
     }
 

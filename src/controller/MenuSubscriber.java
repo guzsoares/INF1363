@@ -2,7 +2,7 @@ package controller;
 
 import java.awt.Color;
 
-public interface Subscriber {
+public interface MenuSubscriber {
     void updateDie(int newValue);
     void updateTurn(Color color);
 }

@@ -1,6 +1,7 @@
 package view;
 
-import controller.Subscriber;
+import controller.MenuSubscriber;
+import controller.BoardSubscriber;
 
 public class ViewAPI {
     private static ViewAPI instance;
@@ -25,7 +26,11 @@ public class ViewAPI {
         gameView.redraw();
     }
 
-    public Subscriber getMenuSubscriber() {
+    public MenuSubscriber getMenuSubscriber() {
         return gameView.getGameMenu().getSubscriber();
+    }
+
+    public BoardSubscriber getBoardSubscriber() {
+        return gameView.getGameBoard().getBoardSubscriber();
     }
 }

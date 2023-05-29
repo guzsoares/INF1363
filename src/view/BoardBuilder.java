@@ -1,15 +1,21 @@
 package view;
 
 import javax.swing.*;
+
+import controller.BoardSubscriber;
+
 import java.awt.*;
  
-class BoardBuilder{
+class BoardBuilder implements BoardSubscriber{
     private JPanel boardPanel;
     private final int boardSize = 600;
     private final int offset = 0;
     private PawnShow pawnShow = new PawnShow();
+    private ViewAPI viewAPI = ViewAPI.getInstance();
+    private BoardSubscriber subscriber;
 
     public BoardBuilder() {
+        this.subscriber = this;
         createBoardPanel();
     }
 
@@ -194,5 +200,15 @@ class BoardBuilder{
         }
         g2d.fillRect(TAMANHO_QUADRADO * 6, TAMANHO_QUADRADO * 13  + offset, TAMANHO_QUADRADO, TAMANHO_QUADRADO);
 
+    }
+
+    public BoardSubscriber getBoardSubscriber(){
+        return subscriber;
+    }
+
+    @Override
+    public void updateBoard(){
+        //System.out.println("Tabuleiro atualizado");
+        viewAPI.redraw();
     }
 }

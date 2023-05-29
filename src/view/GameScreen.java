@@ -58,4 +58,8 @@ class GameScreen extends JFrame{
     public GameMenu getGameMenu(){
         return this.gameMenu;
     }
+    
+    public BoardBuilder getGameBoard() {
+        return this.boardBuilder;
+    }
 }

@@ -41,6 +41,8 @@ class Game extends AbstractPublisher{
 
     public void rollDie(){
         die.rollDie();
+        die.setDieNumber(1);
+        players[0].makeMove(0, this);
         notifySubscribersDie(getDieNumber());
     }
 
@@ -77,6 +79,7 @@ class Game extends AbstractPublisher{
     public void playerTurn(){
         turn = (turn % 4);
         notifySubscribersTurn(getCurrentPlayerColor());
+        notifyBoardUpdate();
 
         if (plays == 0){
 

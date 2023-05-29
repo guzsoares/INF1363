@@ -11,6 +11,7 @@ class InitGame {
         viewAPI.createView();
 
         modelAPI.addSubscriber(viewAPI.getMenuSubscriber());
+        modelAPI.addBoardSubscriber(viewAPI.getBoardSubscriber());
 
     }
 }

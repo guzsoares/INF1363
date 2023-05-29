@@ -26,7 +26,7 @@ class Pawn {
 		int overflow = (this.steps + dieNumber) - 51;
 		int newPosition = (position + dieNumber) % 51;
 
-		if (!canMove(dieNumber, pawnsOnBoard, boardSquares)){
+		if (canMove(dieNumber, pawnsOnBoard, boardSquares) == false){
 			return false;
 		}
 
@@ -98,6 +98,9 @@ class Pawn {
 	}
 		this.setPosition(newPosition);
 		this.addSteps(dieNumber);
+
+		System.out.println(boardSquares[position].numPawns());
+		System.out.println(boardSquares[newPosition].numPawns());
 		return true;
 	}
 
@@ -147,11 +150,10 @@ class Pawn {
 			}
 
 			// caso exista barreira no caminho (return false)
-			for (int i = position; i < dieNumber; i++){
+			for (int i = position; i < futurePosition; i++){
 				if (i > 51){
 					i = i - 52;
 				}
-
 				if (boardSquares[i].isBarrier()){
 					// caso seja uma barreira 
 					return false;
