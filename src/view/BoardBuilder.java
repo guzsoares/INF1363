@@ -3,8 +3,10 @@ package view;
 import javax.swing.*;
 
 import controller.BoardSubscriber;
+import controller.MyMouseListener;
 
 import java.awt.*;
+import java.awt.event.MouseListener;
  
 class BoardBuilder implements BoardSubscriber{
     private JPanel boardPanel;
@@ -28,6 +30,7 @@ class BoardBuilder implements BoardSubscriber{
                 drawBoard(g2d);
             }
         };
+        boardPanel.addMouseListener(new MyMouseListener());
         boardPanel.setPreferredSize(new Dimension(600, 600));
         boardPanel.setBackground(Color.WHITE);
     }

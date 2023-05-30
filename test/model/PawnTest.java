@@ -12,7 +12,7 @@ public class PawnTest {
 		Board tab = new Board();
 		tab.setPawnOnIndexPosition(0,12);
 		tab.setPawnOnIndexSquare(0,tab.getSquares());
-		tab.getPawnOnIndex(0).movePawn(5,tab.getSquares(),tab.getFinalSquares() ,tab.getPawnsOnBoard());
+		tab.getPawnOnIndex(0).movePawn(5,tab.getSquares(),tab.getFinalSquares() ,tab.getPawnsOnBoard(), tab.getInitialSquares());
 		assertEquals("Não chegou no destino",tab.getPawnOnIndex(0).getPosition(),17);
 		assertEquals("Não há peão no destino",tab.getSquares()[17].getPawns().size(),1);
 	}
@@ -24,7 +24,7 @@ public class PawnTest {
 		tab.setPawnOnIndexPosition(5,10);
 		tab.setPawnOnIndexSquare(0,tab.getSquares());
 		tab.setPawnOnIndexSquare(5,tab.getSquares());
-		tab.getPawnOnIndex(5).movePawn(2,tab.getSquares(),tab.getFinalSquares() ,tab.getPawnsOnBoard());
+		tab.getPawnOnIndex(5).movePawn(2,tab.getSquares(),tab.getFinalSquares() ,tab.getPawnsOnBoard(), tab.getInitialSquares());
 		assertEquals("Não capturou",tab.getSquares()[12].getPawns().size(),1);
 		assertEquals("Não voltou pra casa inicial",tab.getPawnOnIndex(0).getPosition(),-1);
 	}
@@ -35,7 +35,7 @@ public class PawnTest {
 		tab.setPawnOnIndexPosition(5,10);
 		tab.setPawnOnIndexSquare(0,tab.getSquares());
 		tab.setPawnOnIndexSquare(5,tab.getSquares());
-		tab.getPawnOnIndex(5).movePawn(4,tab.getSquares(),tab.getFinalSquares() ,tab.getPawnsOnBoard());
+		tab.getPawnOnIndex(5).movePawn(4,tab.getSquares(),tab.getFinalSquares() ,tab.getPawnsOnBoard(), tab.getInitialSquares());
 		assertEquals("Capturou",tab.getSquares()[12].getPawns().size(),1);
 		assertNotSame("Voltou pra casa inicial",tab.getPawnOnIndex(0).getPosition(),-1);
 		assertEquals("Não chegou",tab.getSquares()[14].getPawns().size(),1);
@@ -49,11 +49,8 @@ public class PawnTest {
 		tab.setPawnOnIndexSquare(0,tab.getSquares());
 		tab.setPawnOnIndexSquare(1,tab.getSquares());
 		tab.setPawnOnIndexSquare(5,tab.getSquares());
-		if(tab.getPawnOnIndex(5).canMove(5,tab.getPawnsOnBoard(),tab.getSquares())) {
-			tab.getPawnOnIndex(5).movePawn(5,tab.getSquares(),tab.getFinalSquares() ,tab.getPawnsOnBoard());
-		}
-		assertTrue("Ele pode se mover",tab.getPawnOnIndex(5).canMove(5,tab.getPawnsOnBoard(),tab.getSquares()));
-		assertNotSame("Não permaneceu na primeira casa",tab.getPawnOnIndex(0).getPosition(),9);
+		assertFalse("Ele pode se mover",tab.getPawnOnIndex(5).canMove(5,tab.getPawnsOnBoard(),tab.getSquares()));
+		assertEquals("Não permaneceu na primeira casa",tab.getPawnOnIndex(5).getPosition(),9);
 	}
 	
 }

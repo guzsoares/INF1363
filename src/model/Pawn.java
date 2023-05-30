@@ -12,7 +12,7 @@ class Pawn {
         this.position = initialPosition;
     }
 
-	public boolean movePawn(int dieNumber, Square[] boardSquares,Square[][] finalSquares, Pawn[] pawnsOnBoard){
+	public boolean movePawn(int dieNumber, Square[] boardSquares,Square[][] finalSquares, Pawn[] pawnsOnBoard, Square[] initialSquares){
 
 		/* Primeiro a função calcula o overflow (caso o peão esteja na reta final, a nova posição de acordo com o dado
 		 e ele realiza uma normalização no vetor para estar correspondente a casa do peão, depois a função vai verificar se 
@@ -48,10 +48,10 @@ class Pawn {
 		}
 
 		if (canCapture(boardSquares, newPosition)){
-			capturePawn(boardSquares, boardSquares, newPosition);
+			capturePawn(boardSquares, initialSquares, newPosition);
 		}
 
-		if (outInitialSquare(dieNumber, boardSquares, boardSquares, pawnsOnBoard)){
+		if (outInitialSquare(dieNumber, initialSquares, boardSquares, pawnsOnBoard)){
 			return true;
 		}
 
@@ -244,6 +244,8 @@ class Pawn {
 
 	public void capturePawn(Square[] boardSquares, Square[] initialSquares, int newPosition){
 
+		System.out.println("aqui");
+
 		if (boardSquares[newPosition].numPawns() == 0){
 			return;
 		}
@@ -268,6 +270,8 @@ class Pawn {
 
 		capturedPawn.setSteps(0);
 		capturedPawn.setPosition(-1);
+
+		System.out.println("alo" + initialSquares[1].numPawns());
 	}
 
 	public void addSteps(int steps){ // adiciona o numero de passos
