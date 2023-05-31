@@ -23,8 +23,8 @@ class Pawn {
 		 A função realiza a mesma lógica para o tabuleiro nos quadrados que não são iniciais
 		 */
 
-		int overflow = (this.steps + dieNumber) - 51;
-		int newPosition = (position + dieNumber) % 51;
+		int overflow = (this.steps + dieNumber) - 52;
+		int newPosition = (position + dieNumber) % 52;
 
 		if (canMove(dieNumber, pawnsOnBoard, boardSquares) == false){
 			return false;
@@ -99,8 +99,6 @@ class Pawn {
 		this.setPosition(newPosition);
 		this.addSteps(dieNumber);
 
-		System.out.println(boardSquares[position].numPawns());
-		System.out.println(boardSquares[newPosition].numPawns());
 		return true;
 	}
 
@@ -150,7 +148,7 @@ class Pawn {
 			}
 
 			// caso exista barreira no caminho (return false)
-			for (int i = position; i < futurePosition; i++){
+			for (int i = position + 1; i <= futurePosition; i++){
 				if (i > 51){
 					i = i - 52;
 				}

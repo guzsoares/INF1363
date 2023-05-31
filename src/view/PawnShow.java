@@ -2,6 +2,8 @@ package view;
 
 import java.awt.*;
 import model.ModelAPI;
+import java.util.List;
+import java.util.ArrayList;
 
 class PawnShow {
     private final int pawnSize = 20;
@@ -9,6 +11,7 @@ class PawnShow {
     final int boardSize = 600;
     final int TAMANHO_QUADRADO = (boardSize) / 15;
     final int offset = 10;
+    private final int squareSize = 40;
 
     public void drawPawns(Graphics2D g2d){
         int[] numPawns = modelAPI.getInitialSquaresNumPawns();
@@ -68,12 +71,31 @@ class PawnShow {
         int[] pawnsPosition = modelAPI.pawnsPosition();
         Color[] pawnsColor = modelAPI.pawnsColor();
 
+        List<Integer> duplicatePawns = getDuplicateIndices(pawnsPosition);
+
         for (int i = 0; i < 16; i++){
 
             if (pawnsPosition[i] >= 0 && pawnsPosition[i] <= 51){
                 Point coords = convertPosition(pawnsPosition[i]);
 
                 drawPawn(g2d, pawnsColor[i], coords.x + offset, coords.y + offset);
+            }
+        }
+
+        if (!duplicatePawns.isEmpty()){
+            for (int i = 0; i < duplicatePawns.size()/2;  i = i + 2 ){
+                int id1 = duplicatePawns.get(i);
+                int id2 = duplicatePawns.get(i + 1);
+
+                if (pawnsColor[id1] == pawnsColor[id2]){
+                    Point coords = convertPosition(pawnsPosition[id1]);
+                    drawBarreira(g2d, pawnsColor[id1], coords.x, coords.y);
+                } else {
+                    Point coords = convertPosition(pawnsPosition[id1]);
+                    drawAbrigo(g2d, pawnsColor[id1], pawnsColor[id2], coords.x, coords.y);
+                }
+
+
             }
         }
 
@@ -123,11 +145,47 @@ class PawnShow {
             coords.x = TAMANHO_QUADRADO * 6;
             coords.y = TAMANHO_QUADRADO * 5 - TAMANHO_QUADRADO * (position - 44);
         } else if (position >= 50 && position <= 51){
-            coords.x = TAMANHO_QUADRADO * 7 + TAMANHO_QUADRADO + (position - 51);
+            coords.x = TAMANHO_QUADRADO * 6 + TAMANHO_QUADRADO * (position - 49);
             coords.y = 0;
         }
 
         return coords;
+    }
+
+    private void drawBarreira(Graphics2D g2d, Color pawnColor, int x, int y){
+        g2d.setColor(pawnColor);
+
+        g2d.fillOval(x + 6, y + 6, pawnSize + 8, pawnSize + 8);
+
+        g2d.setColor(Color.WHITE);
+        g2d.fillOval(x + 8, y + 8, pawnSize + 4, pawnSize + 4);
+
+        g2d.setColor(pawnColor);
+        g2d.fillOval(x + 10, y + 10, pawnSize, pawnSize);
+    }
+
+    private void drawAbrigo(Graphics2D g2d, Color pawnColor1, Color pawnColor2, int x , int y){
+        g2d.setColor(pawnColor1);
+
+        g2d.fillOval(x + 6, y + 6, pawnSize + 8, pawnSize + 8);
+
+        g2d.setColor(pawnColor2);
+        g2d.fillOval(x + 10, y + 10, pawnSize, pawnSize);
+    }
+
+    public List<Integer> getDuplicateIndices(int[] array) {
+        List<Integer> duplicateIndices = new ArrayList<>();
+
+        for (int i = 0; i < array.length - 1; i++) {
+            for (int j = i + 1; j < array.length; j++) {
+                if (array[i] == array[j] && array[i] > 0 && array[i] < 52) {
+                    duplicateIndices.add(i); // Adiciona o índice ao resultado
+                    duplicateIndices.add(j);
+                }
+            }
+        }
+
+        return duplicateIndices;
     }
     
 }

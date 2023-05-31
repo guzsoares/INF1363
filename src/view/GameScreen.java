@@ -9,12 +9,10 @@ class GameScreen extends JFrame{
 
     private BoardBuilder boardBuilder;
     private GameMenu gameMenu;
-    private GameActions gameActions;
 
     public GameScreen() {
         this.gameMenu = new GameMenu();
         this.boardBuilder = new BoardBuilder();
-        this.gameActions = new GameActions();
 
 
         setTitle("Ludo, O Jogo");
