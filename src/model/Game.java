@@ -41,7 +41,6 @@ class Game extends AbstractPublisher{
 
     public void rollDie(){
         die.rollDie();
-        players[2].makeMove(0, this);
         notifySubscribersDie(getDieNumber());
     }
 

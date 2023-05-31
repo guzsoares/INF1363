@@ -153,10 +153,7 @@ class Pawn {
 			}
 		} else if (position >= 0 && position <= 51){
 			int futurePosition = dieNumber + position;
-
-			// ajustando a posicao futura para no caso de passar do ultimo ponto do vetor
-
-			// TODO: FAZER CASO PARA O AZUL
+			
 			if (futurePosition > 51){
 				futurePosition = futurePosition % 52;
 			}
