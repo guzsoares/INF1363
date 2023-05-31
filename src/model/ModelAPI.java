@@ -90,4 +90,8 @@ public class ModelAPI {
         }
         return pawnsColor;
     }
+    public void printClick(int squareClicked) {
+    	System.out.println("O quadrado clicado foi" + squareClicked);
+    	game.check_move(squareClicked);
+    }
 }

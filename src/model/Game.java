@@ -158,4 +158,27 @@ class Game extends AbstractPublisher{
     public int getDieNumber(){
         return die.getDieNumber();
     }
+    public void check_move(int Square) {
+    	System.out.println("O quadrado clicado foi "+Square);
+    	/*if(this.getGameBoard().getSquares()[Square].isEmpty() == false) {
+    		if(this.getPlays() == 3 && this.getDieNumber() == 6) {
+        		for(int i = 0; i < this.getGameBoard().getSquares()[Square].numPawns();i++) {
+        			if(this.getGameBoard().getSquares()[Square].getPawns().get(i).getColor() == this.players[turn/4].getColor()) {
+        				this.getGameBoard().getSquares()[Square].getPawns().get(i).setPosition(-(turn/4));
+        			}
+        		}
+        	}
+    		else {
+    			for(int i = 0; i < this.getGameBoard().getSquares()[Square].numPawns();i++) {
+        			if(this.getGameBoard().getSquares()[Square].getPawns().get(i).getColor() == this.players[turn/4].getColor()){
+        				if(this.getGameBoard().getSquares()[Square].getPawns().get(i).canMove(getDieNumber(),this.getGameBoard().getPawnsOnBoard(),this.getGameBoard().getSquares())) {
+        					this.getGameBoard().getSquares()[Square].getPawns().get(i).movePawn(getDieNumber(),this.getGameBoard().getSquares(),this.getGameBoard().getFinalSquares(),this.getGameBoard().getPawnsOnBoard(),this.getGameBoard().getInitialSquares());
+        				}
+        			}
+    			}
+    		}
+    	
+    	
+    	*/
+    	}
 }
