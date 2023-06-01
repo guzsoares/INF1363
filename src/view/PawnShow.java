@@ -75,9 +75,8 @@ class PawnShow {
 
         for (int i = 0; i < 16; i++){
 
-            if (pawnsPosition[i] >= 0 && pawnsPosition[i] <= 51){
+            if (pawnsPosition[i] >= 0){
                 Point coords = convertPosition(pawnsPosition[i]);
-
                 drawPawn(g2d, pawnsColor[i], coords.x + offset, coords.y + offset);
             }
         }
@@ -147,6 +146,18 @@ class PawnShow {
         } else if (position >= 50 && position <= 51){
             coords.x = TAMANHO_QUADRADO * 6 + TAMANHO_QUADRADO * (position - 49);
             coords.y = 0;
+        } else if (position >= 100 && position <= 105) {
+            coords.x = TAMANHO_QUADRADO * 7;
+            coords.y = TAMANHO_QUADRADO + TAMANHO_QUADRADO * (position - 100);
+        } else if (position >= 200 && position <= 205) {
+            coords.x = TAMANHO_QUADRADO * 8 - TAMANHO_QUADRADO * (position - 205);
+            coords.y = TAMANHO_QUADRADO * 7;
+        } else if (position >= 400 && position <= 405) {
+            coords.x = TAMANHO_QUADRADO + TAMANHO_QUADRADO * (position - 400);
+            coords.y = TAMANHO_QUADRADO * 7;
+        } else if (position >= 300 && position <= 305) {
+            coords.x = TAMANHO_QUADRADO * 7;
+            coords.y = TAMANHO_QUADRADO * 8 - TAMANHO_QUADRADO * (position - 305);
         }
 
         return coords;

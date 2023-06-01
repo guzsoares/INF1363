@@ -23,7 +23,7 @@ class Pawn {
 		 A função realiza a mesma lógica para o tabuleiro nos quadrados que não são iniciais
 		 */
 
-		int overflow = (this.steps + dieNumber) - 52;
+		int overflow = (this.steps + dieNumber) - 51;
 		int newPosition = (position + dieNumber) % 52;
 
 		if (canMove(dieNumber, pawnsOnBoard, boardSquares) == false){
@@ -47,49 +47,63 @@ class Pawn {
 			}
 		}
 
-		if (canCapture(boardSquares, newPosition)){
-			capturePawn(boardSquares, initialSquares, newPosition);
-		}
-
-		if (outInitialSquare(dieNumber, initialSquares, boardSquares, pawnsOnBoard)){
-			return true;
+		if (this.position < 52){
+			if (canCapture(boardSquares, newPosition)){
+				capturePawn(boardSquares, initialSquares, newPosition);
+			}
+	
+			if (outInitialSquare(dieNumber, initialSquares, boardSquares, pawnsOnBoard)){
+				return true;
+			}
 		}
 
 		if (this.position >= 0){
 
-		if (this.steps + dieNumber > 51){
+		if (this.steps + dieNumber > 51 && this.steps < 51){
 			switch(this.color){
 				case AZUL:
 				boardSquares[position].removePawn(this);
-				finalSquares[2][overflow].addPawn(this);
+				finalSquares[2][overflow - 1].addPawn(this);
+				newPosition = 299 + overflow;
 				break;
 				case VERMELHO:
 				boardSquares[position].removePawn(this);
-				finalSquares[3][overflow].addPawn(this);
+				finalSquares[3][overflow - 1].addPawn(this);
+				newPosition = 399 + overflow;
 				break;
 				case AMARELO:
 				boardSquares[position].removePawn(this);
-				finalSquares[1][overflow].addPawn(this);
+				finalSquares[1][overflow - 1].addPawn(this);
+				newPosition = 199 + overflow;
 				break;
 				case VERDE:
 				boardSquares[position].removePawn(this);
-				finalSquares[0][overflow].addPawn(this);
+				finalSquares[0][overflow - 1].addPawn(this);
+				newPosition = 99 + overflow;
 				break;
 			}
-		} else if (this.steps > 51) {
+		} else if (this.steps >= 51) {
 			switch(this.color){
 				case AZUL:
 				finalSquares[2][this.steps - 51].removePawn(this);
-				finalSquares[2][overflow].addPawn(this);
+				finalSquares[2][overflow - 1].addPawn(this);
+				newPosition = 299 + overflow;
+				break;
 				case VERMELHO:
 				finalSquares[3][this.steps - 51].removePawn(this);
-				finalSquares[3][overflow].addPawn(this);
+				finalSquares[3][overflow - 1].addPawn(this);
+				newPosition = 399 + overflow;
+				break;
 				case AMARELO:
 				finalSquares[1][this.steps - 51].removePawn(this);
-				finalSquares[1][overflow].addPawn(this);
+				finalSquares[1][overflow - 1].addPawn(this);
+				newPosition = 199 + overflow;
+				break;
 				case VERDE:
 				finalSquares[0][this.steps - 51].removePawn(this);
-				finalSquares[0][overflow].addPawn(this);
+				finalSquares[0][overflow - 1].addPawn(this);
+				newPosition = 99 + overflow;
+				break;
 			}
 		} else {
 			boardSquares[position].removePawn(this);
@@ -137,14 +151,11 @@ class Pawn {
 				}
 				return true;
 			}
-		} else if (position >= 0){
+		} else if (position >= 0 && position <= 51){
 			int futurePosition = dieNumber + position;
-
-			// ajustando a posicao futura para no caso de passar do ultimo ponto do vetor
-
-			// TODO: FAZER CASO PARA O AZUL
+			
 			if (futurePosition > 51){
-				futurePosition = futurePosition - 51;
+				futurePosition = futurePosition % 52;
 			}
 
 			// caso exista barreira no caminho (return false)
@@ -175,15 +186,12 @@ class Pawn {
 					return false;
 				}
 			}
-
-			if (steps > 51){
-				// caso esteja na reta final
-				if ((steps + dieNumber) - 57 <= 0){
-					return true;
-				}
-			}
-
 			return true;
+		} else if (steps > 51){
+			// caso esteja na reta final
+			if ((steps + dieNumber) - 57 == 0){
+				return true;
+			}
 		}
         return false;
     }
