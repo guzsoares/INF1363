@@ -80,7 +80,6 @@ class Game extends AbstractPublisher{
 
     public void isGameOver(){
         for (int i = 0; i < 4; i++){
-            System.out.println(board.getFinalSquares()[i][5].numPawns());
             if(board.getFinalSquares()[i][5].numPawns() == 4){
                 this.isGameOver = true;
             }

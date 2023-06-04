@@ -33,4 +33,8 @@ public class ViewAPI {
     public BoardSubscriber getBoardSubscriber() {
         return gameView.getGameBoard().getBoardSubscriber();
     }
+
+    public void endGameMessage(String winner){
+        gameView.showMessage(winner);
+    }
 }

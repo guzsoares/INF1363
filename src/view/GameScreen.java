@@ -7,7 +7,6 @@ import model.ModelAPI;
 import java.awt.*;
 
 class GameScreen extends JFrame{
-    private ModelAPI modelAPI = ModelAPI.getInstance();
     public final int xScreen = 850;
     public final int yScreen = 628;
 
@@ -37,10 +36,6 @@ class GameScreen extends JFrame{
         contentPane.add(boardPanel, BorderLayout.LINE_START);
 
         setVisible(true);
-
-        if (modelAPI.isGameOver()){
-            showMessage("teste");
-        }
         
     }
 
