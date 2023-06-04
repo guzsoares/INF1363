@@ -10,6 +10,7 @@ class Game extends AbstractPublisher{
     public int turn = 0;
     private int plays = 0;
     private boolean playing = false;
+    private boolean isGameOver = false;
 
 
     public Game(){
@@ -48,30 +49,47 @@ class Game extends AbstractPublisher{
             notifySubscribersTurn(getCurrentPlayerColor());
 
             players[turn].updateChoices(this);
+
+            if (plays == 2 && getDieNumber() == 6){
+                players[turn].punishPlayer(board.getSquares(), board.getInitialSquares());
+                notifyBoardUpdate();
+                playing = false;
+                playerTurn();
+                return;
+            }
             
             if (players[turn].verifyChoices() == false){
                 notifyBoardUpdate();
                 playing = false;
                 playerTurn();
+                return;
             }
 
+            turn = (turn % 4);
             if (players[turn].getNumChoices() == 1){
                 players[turn].makeMove(players[turn].getFirstChoice(), this);
 
                 notifyBoardUpdate();
                 playing = false;
                 playerTurn();
+                return;
             }
+
         }
     }
 
-    public boolean isGameOver(){
+    public void isGameOver(){
         for (int i = 0; i < 4; i++){
+            System.out.println(board.getFinalSquares()[i][5].numPawns());
             if(board.getFinalSquares()[i][5].numPawns() == 4){
-                return true;
+                this.isGameOver = true;
             }
         }
-        return false;
+        this.isGameOver = false;
+    }
+
+    public boolean getGameOver(){
+        return this.isGameOver;
     }
 
     public Player[] playersResults(Player[] players){
@@ -124,7 +142,6 @@ class Game extends AbstractPublisher{
         } else if (plays == 2){
 
 		    if (getDieNumber() == 6){
-			    //TODO: LAST PAWN MOVED MUST RETURN TO INITIAL HOUSE
                 plays = 0;
 			    turn++;
 			    return;

@@ -82,9 +82,9 @@ class PawnShow {
         }
 
         if (!duplicatePawns.isEmpty()){
-            for (int i = 0; i < duplicatePawns.size()/2;  i = i + 2 ){
-                int id1 = duplicatePawns.get(i);
-                int id2 = duplicatePawns.get(i + 1);
+            while (duplicatePawns.size() != 0){
+                int id1 = duplicatePawns.get(0);
+                int id2 = duplicatePawns.get(1);
 
                 if (pawnsColor[id1] == pawnsColor[id2]){
                     Point coords = convertPosition(pawnsPosition[id1]);
@@ -94,6 +94,8 @@ class PawnShow {
                     drawAbrigo(g2d, pawnsColor[id1], pawnsColor[id2], coords.x, coords.y);
                 }
 
+                duplicatePawns.remove(1);
+                duplicatePawns.remove(0);
 
             }
         }

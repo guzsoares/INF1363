@@ -27,6 +27,10 @@ public class ModelAPI {
         game.rollDie();
     }
 
+    public boolean isGameOver(){
+        return game.getGameOver();
+    }
+
     public void addSubscriber(MenuSubscriber subscriber){
         game.addSubscriber(subscriber);
     }

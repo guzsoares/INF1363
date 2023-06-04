@@ -163,9 +163,8 @@ class Pawn {
 
 			// caso exista barreira no caminho (return false)
 			for (int i = position + 1; i <= futurePosition; i++){
-				if (i > 51){
-					i = i - 52;
-				}
+				i = i % 52;
+
 				if (boardSquares[i].isBarrier()){
 					// caso seja uma barreira 
 					return false;
@@ -235,6 +234,10 @@ class Pawn {
 
 	public boolean canCapture(Square[] boardSquares, int newPosition){
 
+		if (this.position > 99 || newPosition > 99){
+			return false;
+		}
+
 		if (boardSquares[newPosition].numPawns() == 1){
 			if (this.position == -1){
 				// condicional para verificar se o peão está saindo da casa inicial dele
@@ -290,13 +293,19 @@ class Pawn {
 
 	public void capturePawn(Square[] boardSquares, Square[] initialSquares, int newPosition){
 
-		System.out.println("aqui");
+		if (this.position > 99 || newPosition > 99){
+			return;
+		}
 
 		if (boardSquares[newPosition].numPawns() == 0){
 			return;
 		}
 		List<Pawn> pawns = boardSquares[newPosition].getPawns();
 		Pawn capturedPawn = pawns.get(0);
+
+		if (capturedPawn.position > 99){
+			return;
+		}
 
 		boardSquares[capturedPawn.position].removePawn(capturedPawn);
 		switch(capturedPawn.getColor()){
@@ -316,8 +325,6 @@ class Pawn {
 
 		capturedPawn.setSteps(0);
 		capturedPawn.setPosition(-1);
-
-		System.out.println("alo" + initialSquares[1].numPawns());
 	}
 
 	public void addSteps(int steps){ // adiciona o numero de passos

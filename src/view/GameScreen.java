@@ -1,9 +1,13 @@
 package view;
 
 import javax.swing.*;
+
+import model.ModelAPI;
+
 import java.awt.*;
 
 class GameScreen extends JFrame{
+    private ModelAPI modelAPI = ModelAPI.getInstance();
     public final int xScreen = 850;
     public final int yScreen = 628;
 
@@ -34,7 +38,9 @@ class GameScreen extends JFrame{
 
         setVisible(true);
 
-        //showMessage("verde");
+        if (modelAPI.isGameOver()){
+            showMessage("teste");
+        }
         
     }
 
