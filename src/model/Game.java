@@ -247,12 +247,64 @@ class Game extends AbstractPublisher{
 
                 if (position >= 100 && position <= 105){
                     Square[] gFinalSquares = finalSquares[0];
+
+                    int index  = position - 100;
+
+                    for (Pawn pawns: gFinalSquares[index].getPawns()){
+
+                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                            notifyBoardUpdate();
+                            playing = false;
+                            playerTurn();
+                            return;
+                        }
+
+                    }
                 } else if (position >= 200 && position <= 205){
-                    Square[] gFinalSquares = finalSquares[0];
+                    Square[] yFinalSquares = finalSquares[1];
+
+                    int index  = position - 200;
+
+                    for (Pawn pawns: yFinalSquares[index].getPawns()){
+
+                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                            notifyBoardUpdate();
+                            playing = false;
+                            playerTurn();
+                            return;
+                        }
+                        
+                    }
                 } else if (position >= 300 && position <= 305){
-                    Square[] gFinalSquares = finalSquares[0];
+                    Square[] bFinalSquares = finalSquares[2];
+
+                    int index  = position - 300;
+
+                    for (Pawn pawns: bFinalSquares[index].getPawns()){
+
+                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                            notifyBoardUpdate();
+                            playing = false;
+                            playerTurn();
+                            return;
+                        }
+                        
+                    }
                 } else if (position >= 400 && position <= 405){
-                    Square[] gFinalSquares = finalSquares[0];
+                    Square[] rFinalSquares = finalSquares[3];
+
+                    int index  = position - 400;
+
+                    for (Pawn pawns: rFinalSquares[index].getPawns()){
+
+                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                            notifyBoardUpdate();
+                            playing = false;
+                            playerTurn();
+                            return;
+                        }
+                        
+                    }
                 }
             }
         }
