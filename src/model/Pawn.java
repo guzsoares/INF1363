@@ -122,6 +122,7 @@ class Pawn {
 		if (steps == 57){
 			return false;
 		}
+
 		if (dieNumber == 5 && position == -1){
 			switch (this.color){
 				case AMARELO:
@@ -246,6 +247,43 @@ class Pawn {
 				return false;
 			}
 			return true;
+		}
+		return false;
+	}
+
+	public boolean canMoveOutInitial(int dieNumber, Pawn[] pawnsOnBoard) {
+
+		if (dieNumber == 5 && position == -1){
+			switch (this.color){
+				case AMARELO:
+				for (Pawn otherPawn : pawnsOnBoard){
+					if (otherPawn.getColor() == this.color && otherPawn.getPosition() == 13){
+						return false;
+					}
+				}
+				return true;
+				case AZUL:
+				for (Pawn otherPawn : pawnsOnBoard){
+					if (otherPawn.getColor() == this.color && otherPawn.getPosition() == 26){
+						return false;
+					}
+				}
+				return true;
+				case VERMELHO:
+				for (Pawn otherPawn : pawnsOnBoard){
+					if (otherPawn.getColor() == this.color && otherPawn.getPosition() == 39){
+						return false;
+					}
+				}
+				return true;
+				case VERDE:
+				for (Pawn otherPawn : pawnsOnBoard){
+					if (otherPawn.getColor() == this.color && otherPawn.getPosition() == 0){
+						return false;
+					}
+				}
+				return true;
+			}
 		}
 		return false;
 	}

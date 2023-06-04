@@ -48,7 +48,16 @@ class Game extends AbstractPublisher{
             notifySubscribersTurn(getCurrentPlayerColor());
 
             players[turn].updateChoices(this);
+            
             if (players[turn].verifyChoices() == false){
+                notifyBoardUpdate();
+                playing = false;
+                playerTurn();
+            }
+
+            if (players[turn].getNumChoices() == 1){
+                players[turn].makeMove(players[turn].getFirstChoice(), this);
+
                 notifyBoardUpdate();
                 playing = false;
                 playerTurn();
@@ -179,7 +188,8 @@ class Game extends AbstractPublisher{
 
                 for (Pawn pawns : boardSquares[position].getPawns()){
                     if (pawns.getColor() == players[turn].getColor()){
-                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                        if (players[turn].getChoice(pawns.getId()) == true){
+                            players[turn].makeMove(pawns.getId(), this);
                             notifyBoardUpdate();
                             playing = false;
                             playerTurn();
@@ -193,7 +203,8 @@ class Game extends AbstractPublisher{
 
                 if (position == -1){
                     for (Pawn pawns : initialSquares[0].getPawns()){
-                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                        if (players[turn].getChoice(pawns.getId()) == true){
+                            players[turn].makeMove(pawns.getId(), this);
                             notifyBoardUpdate();
                             playing = false;
                             playerTurn();
@@ -203,7 +214,8 @@ class Game extends AbstractPublisher{
 
                 } else if (position == -2){
                     for (Pawn pawns : initialSquares[1].getPawns()){
-                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                        if (players[turn].getChoice(pawns.getId()) == true){
+                            players[turn].makeMove(pawns.getId(), this);
                             notifyBoardUpdate();
                             playing = false;
                             playerTurn();
@@ -213,7 +225,8 @@ class Game extends AbstractPublisher{
 
                 } else if (position == -3){
                     for (Pawn pawns : initialSquares[2].getPawns()){
-                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                        if (players[turn].getChoice(pawns.getId()) == true){
+                            players[turn].makeMove(pawns.getId(), this);
                             notifyBoardUpdate();
                             playing = false;
                             playerTurn();
@@ -223,7 +236,8 @@ class Game extends AbstractPublisher{
 
                 } else if (position == -4){
                     for (Pawn pawns : initialSquares[3].getPawns()){
-                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                        if (players[turn].getChoice(pawns.getId()) == true){
+                            players[turn].makeMove(pawns.getId(), this);
                             notifyBoardUpdate();
                             playing = false;
                             playerTurn();
@@ -243,7 +257,8 @@ class Game extends AbstractPublisher{
 
                     for (Pawn pawns: gFinalSquares[index].getPawns()){
 
-                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                        if (players[turn].getChoice(pawns.getId()) == true){
+                            players[turn].makeMove(pawns.getId(), this);
                             notifyBoardUpdate();
                             playing = false;
                             playerTurn();
@@ -258,7 +273,8 @@ class Game extends AbstractPublisher{
 
                     for (Pawn pawns: yFinalSquares[index].getPawns()){
 
-                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                        if (players[turn].getChoice(pawns.getId()) == true){
+                            players[turn].makeMove(pawns.getId(), this);
                             notifyBoardUpdate();
                             playing = false;
                             playerTurn();
@@ -273,7 +289,8 @@ class Game extends AbstractPublisher{
 
                     for (Pawn pawns: bFinalSquares[index].getPawns()){
 
-                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                        if (players[turn].getChoice(pawns.getId()) == true){
+                            players[turn].makeMove(pawns.getId(), this);
                             notifyBoardUpdate();
                             playing = false;
                             playerTurn();
@@ -288,7 +305,8 @@ class Game extends AbstractPublisher{
 
                     for (Pawn pawns: rFinalSquares[index].getPawns()){
 
-                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                        if (players[turn].getChoice(pawns.getId()) == true){
+                            players[turn].makeMove(pawns.getId(), this);
                             notifyBoardUpdate();
                             playing = false;
                             playerTurn();
