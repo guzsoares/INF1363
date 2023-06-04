@@ -6,10 +6,12 @@ class Pawn {
     private int position;
 	private int steps;
     private final Color color;
+	private final int id;
     
-    public Pawn(Color color, int initialPosition){ // Construtor da classe Peao, onde é definida as propriedades do peão, como cor e posição inicial
+    public Pawn(Color color, int initialPosition, int id){ // Construtor da classe Peao, onde é definida as propriedades do peão, como cor e posição inicial
         this.color = color;
         this.position = initialPosition;
+		this.id = id;
     }
 
 	public boolean movePawn(int dieNumber, Square[] boardSquares,Square[][] finalSquares, Pawn[] pawnsOnBoard, Square[] initialSquares){
@@ -298,6 +300,10 @@ class Pawn {
 
 	public Pawn getPawn(){ // retorna o peao
 		return this;
+	}
+
+	public int getId(){
+		return this.id;
 	}
 
 	public void setSquare(Square[] boardSquares){ // metodo criada para testes

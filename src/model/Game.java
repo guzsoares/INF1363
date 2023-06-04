@@ -9,6 +9,7 @@ class Game extends AbstractPublisher{
     public Board board;
     public int turn = 0;
     private int plays = 0;
+    private boolean playing = false;
 
 
     public Game(){
@@ -40,8 +41,12 @@ class Game extends AbstractPublisher{
     }
 
     public void rollDie(){
-        die.rollDie();
-        notifySubscribersDie(getDieNumber());
+        if (playing == false){
+            playing = true;
+            die.rollDie();
+            notifySubscribersDie(getDieNumber());
+            notifySubscribersTurn(getCurrentPlayerColor());
+        }
     }
 
     public boolean isGameOver(){
@@ -76,8 +81,8 @@ class Game extends AbstractPublisher{
 
     public void playerTurn(){
         turn = (turn % 4);
+
         notifySubscribersTurn(getCurrentPlayerColor());
-        notifyBoardUpdate();
 
         if (plays == 0){
 
@@ -127,6 +132,8 @@ class Game extends AbstractPublisher{
 	}
 
     public Color getCurrentPlayerColor(){
+        turn = (turn % 4);
+
         switch(players[turn].getColor()){
             case VERDE:
             return Color.GREEN;
@@ -156,27 +163,97 @@ class Game extends AbstractPublisher{
     public int getDieNumber(){
         return die.getDieNumber();
     }
-    public void check_move(int Square) {
-    	System.out.println("O quadrado clicado foi "+Square);
-    	/*if(this.getGameBoard().getSquares()[Square].isEmpty() == false) {
-    		if(this.getPlays() == 3 && this.getDieNumber() == 6) {
-        		for(int i = 0; i < this.getGameBoard().getSquares()[Square].numPawns();i++) {
-        			if(this.getGameBoard().getSquares()[Square].getPawns().get(i).getColor() == this.players[turn/4].getColor()) {
-        				this.getGameBoard().getSquares()[Square].getPawns().get(i).setPosition(-(turn/4));
-        			}
-        		}
-        	}
-    		else {
-    			for(int i = 0; i < this.getGameBoard().getSquares()[Square].numPawns();i++) {
-        			if(this.getGameBoard().getSquares()[Square].getPawns().get(i).getColor() == this.players[turn/4].getColor()){
-        				if(this.getGameBoard().getSquares()[Square].getPawns().get(i).canMove(getDieNumber(),this.getGameBoard().getPawnsOnBoard(),this.getGameBoard().getSquares())) {
-        					this.getGameBoard().getSquares()[Square].getPawns().get(i).movePawn(getDieNumber(),this.getGameBoard().getSquares(),this.getGameBoard().getFinalSquares(),this.getGameBoard().getPawnsOnBoard(),this.getGameBoard().getInitialSquares());
-        				}
-        			}
-    			}
-    		}
-    	
-    	
-    	*/
-    	}
+
+        public void handleClick(int position){
+            turn = (turn % 4);
+            if (playing == false){
+                return;
+            }
+            Square[] boardSquares = board.getSquares();
+            Square[] initialSquares = board.getInitialSquares();
+            Square[][] finalSquares = board.getFinalSquares();
+
+            players[turn].updateChoices(this);
+            if (players[turn].verifyChoices() == false){
+                notifyBoardUpdate();
+                playing = false;
+                playerTurn();
+            }
+
+
+            if (position >= 0 && position <= 51){
+                if (boardSquares[position].numPawns() == 0){
+                    return;
+                }
+
+                for (Pawn pawns : boardSquares[position].getPawns()){
+                    if (pawns.getColor() == players[turn].getColor()){
+                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                            notifyBoardUpdate();
+                            playing = false;
+                            playerTurn();
+                            return;
+                        }
+                    }
+                }
+            }
+
+            if (position < 0){
+
+                if (position == -1){
+                    for (Pawn pawns : initialSquares[0].getPawns()){
+                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                            notifyBoardUpdate();
+                            playing = false;
+                            playerTurn();
+                            return;
+                        }
+                    }
+
+                } else if (position == -2){
+                    for (Pawn pawns : initialSquares[1].getPawns()){
+                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                            notifyBoardUpdate();
+                            playing = false;
+                            playerTurn();
+                            return;
+                        }
+                    }
+
+                } else if (position == -3){
+                    for (Pawn pawns : initialSquares[2].getPawns()){
+                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                            notifyBoardUpdate();
+                            playing = false;
+                            playerTurn();
+                            return;
+                        }
+                    }
+
+                } else if (position == -4){
+                    for (Pawn pawns : initialSquares[3].getPawns()){
+                        if (players[turn].makeMove(pawns.getId(), this) == true){
+                            notifyBoardUpdate();
+                            playing = false;
+                            playerTurn();
+                            return;
+                        }
+                    }
+
+                }
+            }
+
+            if (position > 99){
+
+                if (position >= 100 && position <= 105){
+                    Square[] gFinalSquares = finalSquares[0];
+                } else if (position >= 200 && position <= 205){
+                    Square[] gFinalSquares = finalSquares[0];
+                } else if (position >= 300 && position <= 305){
+                    Square[] gFinalSquares = finalSquares[0];
+                } else if (position >= 400 && position <= 405){
+                    Square[] gFinalSquares = finalSquares[0];
+                }
+            }
+        }
 }

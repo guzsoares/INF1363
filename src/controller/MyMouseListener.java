@@ -3,14 +3,17 @@ package controller;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import model.ModelAPI;
+
 public class MyMouseListener extends MouseAdapter {
+    private final ModelAPI modelAPI = ModelAPI.getInstance();
 
     @Override
     public void mouseClicked(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
 
-        System.out.println("Mouse clicked at square number "  + convertCoords(x, y));
+        modelAPI.handleClick(convertCoords(x, y));
     }
 
     int convertCoords(int x, int y){

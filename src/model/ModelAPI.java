@@ -25,8 +25,6 @@ public class ModelAPI {
 
     public void rollDie(){
         game.rollDie();
-
-        game.playerTurn();
     }
 
     public void addSubscriber(MenuSubscriber subscriber){
@@ -90,8 +88,7 @@ public class ModelAPI {
         }
         return pawnsColor;
     }
-    public void printClick(int squareClicked) {
-    	System.out.println("O quadrado clicado foi" + squareClicked);
-    	game.check_move(squareClicked);
+    public void handleClick(int squareClicked) {
+    	game.handleClick(squareClicked);
     }
 }

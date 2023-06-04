@@ -68,19 +68,19 @@ class Board {
         initialSquares[3].setSquareColor(Color.VERMELHO);
 
         for (int i = 0; i < 4; i++){
-            pawnsOnBoard[i] = new Pawn(Color.VERDE, -1);
+            pawnsOnBoard[i] = new Pawn(Color.VERDE, -1, i);
             initialSquares[0].addPawn(pawnsOnBoard[i]);
         }
         for (int i = 0; i < 4; i++){
-            pawnsOnBoard[i+4] = new Pawn(Color.AMARELO, -1);
+            pawnsOnBoard[i+4] = new Pawn(Color.AMARELO, -1, i);
             initialSquares[1].addPawn(pawnsOnBoard[i+4]);
         }
         for (int i = 0; i < 4; i++){
-            pawnsOnBoard[i+8] = new Pawn(Color.AZUL, -1);
+            pawnsOnBoard[i+8] = new Pawn(Color.AZUL, -1, i);
             initialSquares[2].addPawn(pawnsOnBoard[i+8]);
         }
         for (int i = 0; i < 4; i++){
-            pawnsOnBoard[i+12] = new Pawn(Color.VERMELHO, -1);
+            pawnsOnBoard[i+12] = new Pawn(Color.VERMELHO, -1, i);
             initialSquares[3].addPawn(pawnsOnBoard[i+12]);
         }
     }
