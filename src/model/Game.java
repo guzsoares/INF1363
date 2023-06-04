@@ -46,6 +46,13 @@ class Game extends AbstractPublisher{
             die.rollDie();
             notifySubscribersDie(getDieNumber());
             notifySubscribersTurn(getCurrentPlayerColor());
+
+            players[turn].updateChoices(this);
+            if (players[turn].verifyChoices() == false){
+                notifyBoardUpdate();
+                playing = false;
+                playerTurn();
+            }
         }
     }
 
@@ -172,13 +179,6 @@ class Game extends AbstractPublisher{
             Square[] boardSquares = board.getSquares();
             Square[] initialSquares = board.getInitialSquares();
             Square[][] finalSquares = board.getFinalSquares();
-
-            players[turn].updateChoices(this);
-            if (players[turn].verifyChoices() == false){
-                notifyBoardUpdate();
-                playing = false;
-                playerTurn();
-            }
 
 
             if (position >= 0 && position <= 51){
