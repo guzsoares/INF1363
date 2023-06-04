@@ -10,29 +10,7 @@ class Player {
 		this.color = color;
 		this.playerPawns = pawns;
 	}
-
-
-	public boolean playTurn(Game game){
-
-		if (verifyChoices() == false){
-			return false; // nao fez jogada
-		}
-		else if (verifyChoices() == true){
-
-			while (choices[choice] == false){
-				// redo choice
-			}
-
-
-			if(playerPawns[choice].movePawn(game.getDieNumber(), game.getGameBoard().getSquares(), game.getGameBoard().getFinalSquares(), game.getGameBoard().getPawnsOnBoard(), game.getGameBoard().getInitialSquares())){
-				return true; // fez jogada
-			}
-
-		}
-
-		return false; // nao fez jogada
-	}
-
+	
 	public void updateChoices(Game game){
 
 		for (int i = 0; i < 4; i++){

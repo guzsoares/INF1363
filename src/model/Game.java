@@ -93,9 +93,6 @@ class Game extends AbstractPublisher{
 
         if (plays == 0){
 
-            //players[turn].updateChoices(this);
-            //players[turn].playTurn(this);
-
             if (getDieNumber() != 6){
                 plays = 0;
                 turn++;
@@ -104,9 +101,6 @@ class Game extends AbstractPublisher{
             plays++;
 
         } else if (plays == 1){
-
-		    //players[turn].updateChoices(this);
-		    //players[turn].playTurn(this);
 
 		    if (getDieNumber() != 6){
                 plays = 0;
@@ -120,15 +114,12 @@ class Game extends AbstractPublisher{
 
         } else if (plays == 2){
 
-		    //players[turn].updateChoices(this);
-
 		    if (getDieNumber() == 6){
 			    //TODO: LAST PAWN MOVED MUST RETURN TO INITIAL HOUSE
                 plays = 0;
 			    turn++;
 			    return;
 		    } else {
-			    //players[turn].playTurn(this);
                 plays = 0;
 			    turn++;
 			    return;
