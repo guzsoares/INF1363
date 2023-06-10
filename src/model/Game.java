@@ -78,7 +78,7 @@ class Game extends AbstractPublisher{
         }
     }
     public void setGameOver(boolean state) {
-    	isGameOver = true;
+    	isGameOver = state;
     }
     public void isGameOver(){
         for (int i = 0; i < 4; i++){
@@ -340,8 +340,8 @@ class Game extends AbstractPublisher{
         		
         	while(true){
         	
-        			rollDie();
-        			System.out.println("Turno " + (turn%4));        		
+        			rollDie();   	
+        			System.out.println("turno "+ (turn%4));
         			if(players[turn%4].getNumChoices() > 1) {
         				turn = (turn % 4);
         	            players[turn].makeMove(players[turn].getFirstChoice(), this);

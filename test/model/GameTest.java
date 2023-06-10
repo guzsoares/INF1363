@@ -39,9 +39,7 @@ public class GameTest {
     	game.board.getFinalSquares()[0][5].addPawn(game.players[0].getPlayerPawns()[1]);
     	game.board.getFinalSquares()[0][5].addPawn(game.players[0].getPlayerPawns()[2]);
     	game.board.getFinalSquares()[0][5].addPawn(game.players[0].getPlayerPawns()[3]);
-    
     	game.isGameOver();
-    	
     	assertTrue("Jogo não acabou",game.getGameOver());
     }
 }
