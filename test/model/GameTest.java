@@ -35,11 +35,7 @@ public class GameTest {
     @Test
     public void test_game_ends() {
     	Game game = new Game();
-    	game.board.getFinalSquares()[0][5].addPawn(game.players[0].getPlayerPawns()[0]);
-    	game.board.getFinalSquares()[0][5].addPawn(game.players[0].getPlayerPawns()[1]);
-    	game.board.getFinalSquares()[0][5].addPawn(game.players[0].getPlayerPawns()[2]);
-    	game.board.getFinalSquares()[0][5].addPawn(game.players[0].getPlayerPawns()[3]);
-    	game.isGameOver();
+    	game.autogame();
     	assertTrue("Jogo não acabou",game.getGameOver());
     }
 }

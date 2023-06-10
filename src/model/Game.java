@@ -81,16 +81,17 @@ class Game extends AbstractPublisher{
     	isGameOver = state;
     }
     public void isGameOver(){
+    	setGameOver(false);
         for (int i = 0; i < 4; i++){
             if(board.getFinalSquares()[i][5].numPawns() == 4){
-            	this.setGameOver(true);
+            	setGameOver(true);
             }
         }
-        this.setGameOver(false);
+       
     }
 
     public boolean getGameOver(){
-        return this.isGameOver;
+        return isGameOver;
     }
   
 
