@@ -77,19 +77,22 @@ class Game extends AbstractPublisher{
 
         }
     }
-
+    public void setGameOver(boolean state) {
+    	isGameOver = true;
+    }
     public void isGameOver(){
         for (int i = 0; i < 4; i++){
             if(board.getFinalSquares()[i][5].numPawns() == 4){
-                this.isGameOver = true;
+            	this.setGameOver(true);
             }
         }
-        this.isGameOver = false;
+        this.setGameOver(false);
     }
 
     public boolean getGameOver(){
         return this.isGameOver;
     }
+  
 
     public Player[] playersResults(Player[] players){
         Player[] ranking = new Player[4];
@@ -114,7 +117,7 @@ class Game extends AbstractPublisher{
 
     public void playerTurn(){
         turn = (turn % 4);
-
+        isGameOver();
         notifySubscribersTurn(getCurrentPlayerColor());
 
         if (plays == 0){
@@ -333,4 +336,29 @@ class Game extends AbstractPublisher{
                 }
             }
         }
-}
+        public boolean autogame() {
+        		
+        	while(true){
+        	
+        			rollDie();
+        			System.out.println("Turno " + (turn%4));        		
+        			if(players[turn%4].getNumChoices() > 1) {
+        				turn = (turn % 4);
+        	            players[turn].makeMove(players[turn].getFirstChoice(), this);
+        	            notifyBoardUpdate();
+        	            playing = false; 
+        	            playerTurn();
+        	            
+        			}
+        			if(getGameOver() == true) {
+        				return getGameOver();
+        			}
+        			
+        			
+        		}
+       
+        }
+
+       }
+
+

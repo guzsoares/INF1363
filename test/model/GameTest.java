@@ -18,7 +18,7 @@ public class GameTest {
     @Test
     public void test_illegal_move(){
         Game game = new Game();
-        game.rollDie();
+        game.die.setDieNumber(5);
         boolean moved = game.players[0].makeMove(1, game);
         assertFalse("Peão realizou movimento ilegal", moved);
     }
@@ -31,5 +31,17 @@ public class GameTest {
         boolean moved = game.players[0].makeMove(1, game);
         System.out.println(game.players[0].getPlayerPawns()[1].getPosition());
         assertTrue("Peão não conseguiu mover fora da casa inicial", moved);
+    }
+    @Test
+    public void test_game_ends() {
+    	Game game = new Game();
+    	game.board.getFinalSquares()[0][5].addPawn(game.players[0].getPlayerPawns()[0]);
+    	game.board.getFinalSquares()[0][5].addPawn(game.players[0].getPlayerPawns()[1]);
+    	game.board.getFinalSquares()[0][5].addPawn(game.players[0].getPlayerPawns()[2]);
+    	game.board.getFinalSquares()[0][5].addPawn(game.players[0].getPlayerPawns()[3]);
+    
+    	game.isGameOver();
+    	
+    	assertTrue("Jogo não acabou",game.getGameOver());
     }
 }
