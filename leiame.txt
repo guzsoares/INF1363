@@ -1,3 +1,5 @@
 Gustavo Molina Soares - 2020209
 Leo Land Bairos Lomardo - 2020201
 Matheus Valejo Gomes Pereira - 2011536
+
+Método main está presente na classe InitGame.java, onde seu caminho é src/controller/InitGame.java
