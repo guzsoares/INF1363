@@ -12,6 +12,7 @@ class GameScreen extends JFrame{
 
     private BoardBuilder boardBuilder;
     private GameMenu gameMenu;
+    private ModelAPI modelAPI = ModelAPI.getInstance();
 
     public GameScreen() {
         this.gameMenu = new GameMenu();

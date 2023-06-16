@@ -14,28 +14,32 @@ class Game extends AbstractPublisher{
 
 
     public Game(){
-        players = new Player[4];
-        die = new Die();
-        board = new Board();
+        this.turn = 0;
+        this.plays = 0;
+        this.playing = false;
+        this.isGameOver = false;
+        this.players = new Player[4];
+        this.die = new Die();
+        this.board = new Board();
 
         for (int i = 0; i < 4; i++){
             Pawn[] playersPawns = new Pawn[4];
-            playersPawns[0] = board.getPawnOnIndex(4*i);
-            playersPawns[1] = board.getPawnOnIndex(4*i + 1);
-            playersPawns[2] = board.getPawnOnIndex(4*i + 2);
-            playersPawns[3] = board.getPawnOnIndex(4*i + 3);
+            playersPawns[0] = this.board.getPawnOnIndex(4*i);
+            playersPawns[1] = this.board.getPawnOnIndex(4*i + 1);
+            playersPawns[2] = this.board.getPawnOnIndex(4*i + 2);
+            playersPawns[3] = this.board.getPawnOnIndex(4*i + 3);
             switch(i) {
             	case(0):
-            		players[i] = new Player(model.Color.VERDE, playersPawns);
+            		this.players[i] = new Player(model.Color.VERDE, playersPawns);
             		break;
             	case(1):
-            		players[i] = new Player(model.Color.AMARELO, playersPawns);
+            		this.players[i] = new Player(model.Color.AMARELO, playersPawns);
             		break;
             	case(2):
-            		players[i] = new Player(model.Color.AZUL, playersPawns);
+            		this.players[i] = new Player(model.Color.AZUL, playersPawns);
             		break;
             	case(3):
-            		players[i] = new Player(model.Color.VERMELHO, playersPawns);
+            		this.players[i] = new Player(model.Color.VERMELHO, playersPawns);
             		break;
             }
         }
@@ -46,7 +50,7 @@ class Game extends AbstractPublisher{
             playing = true;
             die.rollDie();
             notifySubscribersDie(getDieNumber());
-            notifySubscribersTurn(getCurrentPlayerColor());
+            notifySubscribersTurn(getCurrentPlayerRealColor());
 
             players[turn].updateChoices(this);
 
@@ -59,7 +63,6 @@ class Game extends AbstractPublisher{
             }
             
             if (players[turn].verifyChoices() == false){
-                notifyBoardUpdate();
                 playing = false;
                 playerTurn();
                 return;
@@ -80,6 +83,7 @@ class Game extends AbstractPublisher{
     public void setGameOver(boolean state) {
     	isGameOver = state;
     }
+
     public void isGameOver(){
     	setGameOver(false);
         for (int i = 0; i < 4; i++){
@@ -92,6 +96,10 @@ class Game extends AbstractPublisher{
 
     public boolean getGameOver(){
         return isGameOver;
+    }
+
+    public int getTurn(){
+        return turn;
     }
   
 
@@ -119,7 +127,7 @@ class Game extends AbstractPublisher{
     public void playerTurn(){
         turn = (turn % 4);
         isGameOver();
-        notifySubscribersTurn(getCurrentPlayerColor());
+        notifySubscribersTurn(getCurrentPlayerRealColor());
 
         if (plays == 0){
 
@@ -158,7 +166,7 @@ class Game extends AbstractPublisher{
 			
 	}
 
-    public Color getCurrentPlayerColor(){
+    public Color getCurrentPlayerRealColor(){
         turn = (turn % 4);
 
         switch(players[turn].getColor()){
@@ -337,23 +345,28 @@ class Game extends AbstractPublisher{
                 }
             }
         }
-        public boolean autogame() {
-        		
-        	while(true){
+
+
+        public void autogame() {
+        	int errorCheck = 0;
+        	while(getGameOver() == false){
+
         	
         			rollDie();   	
-        			System.out.println("turno "+ (turn%4));
-        			if(players[turn%4].getNumChoices() > 1) {
+        			if(players[turn%4].getNumChoices() > 1 && playing == true) {
         				turn = (turn % 4);
         	            players[turn].makeMove(players[turn].getFirstChoice(), this);
         	            notifyBoardUpdate();
         	            playing = false; 
         	            playerTurn();
+                        errorCheck = 0;
         	            
         			}
-        			if(getGameOver() == true) {
-        				return getGameOver();
-        			}
+
+                    errorCheck++;
+                    if (errorCheck == 10){
+                        return;
+                    }
         			
         			
         		}
