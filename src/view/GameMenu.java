@@ -59,14 +59,7 @@ public class GameMenu implements MenuSubscriber{
         button.setBounds(25, 20, 200, 50);
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                modelAPI.createGame();
-                turnColor = Color.GRAY;
-                dieNumber = 0;
-                dieImage = null;
-                viewAPI.redraw();
-
-                modelAPI.addSubscriber(viewAPI.getMenuSubscriber());
-                modelAPI.addBoardSubscriber(viewAPI.getBoardSubscriber());
+                newGameAction();
             }
         });
         return button;
@@ -164,6 +157,17 @@ public class GameMenu implements MenuSubscriber{
 
     public void setNumber(int Number){
         this.dieNumber = Number;
+    }
+
+    public void newGameAction(){
+        modelAPI.createGame();
+        turnColor = Color.GRAY;
+        dieNumber = 0;
+        dieImage = null;
+        viewAPI.redraw();
+
+        modelAPI.addSubscriber(viewAPI.getMenuSubscriber());
+        modelAPI.addBoardSubscriber(viewAPI.getBoardSubscriber());
     }
 
 }

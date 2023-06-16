@@ -207,6 +207,10 @@ class Game extends AbstractPublisher{
                 autogame();
             }
 
+            if (isGameOver == true){
+                return;
+            }
+
             turn = (turn % 4);
             if (playing == false){
                 return;

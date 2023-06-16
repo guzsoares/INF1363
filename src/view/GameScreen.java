@@ -46,9 +46,7 @@ class GameScreen extends JFrame{
 
         int answer = JOptionPane.showOptionDialog(null, "Deseja jogar outra partida?", "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
         if (answer == JOptionPane.YES_OPTION) {
-            System.out.println("Usuário escolheu 'Sim'");
-        } else {
-            System.out.println("Usuário escolheu 'Não'");
+            gameMenu.newGameAction();
         }
     }
 
