@@ -11,7 +11,6 @@ class PawnShow {
     final int boardSize = 600;
     final int TAMANHO_QUADRADO = (boardSize) / 15;
     final int offset = 10;
-    private final int squareSize = 40;
 
     public void drawPawns(Graphics2D g2d){
         int[] numPawns = modelAPI.getInitialSquaresNumPawns();

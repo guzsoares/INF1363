@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.*;
-import java.awt.Color;
 
 public class AbstractPublisher implements MenuPublisher, BoardPublisher{
     private List<MenuSubscriber> subscribers;

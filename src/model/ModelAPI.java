@@ -43,8 +43,29 @@ public class ModelAPI {
         return game.getDieNumber();
     }
 
-    public Color getCurrentPlayerColor(){
-        return game.getCurrentPlayerColor();
+    public Color getCurrentPlayerRealColor(){
+        return game.getCurrentPlayerRealColor();
+    }
+
+    public String getCurrentPlayerColor(){
+
+        switch (game.getPlayers()[game.getTurn()].getColor()){
+
+            case VERDE:
+            return "Verde";
+
+            case AZUL:
+            return "Azul";
+
+            case VERMELHO:
+            return "Vermelho";
+
+            case AMARELO:
+            return "Amarelo";
+            
+            default:
+            return "Erro";
+        }
     }
 
     public int[] getInitialSquaresNumPawns(){

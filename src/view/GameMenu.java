@@ -18,8 +18,8 @@ public class GameMenu implements MenuSubscriber{
     private MenuSubscriber subscriber;
     private Image dieImage;
     private JPanel menuPanel;
-    private Color turnColor = Color.GREEN;
-    private int dieNumber;
+    private Color turnColor = Color.GRAY;
+    private int dieNumber = 0;
 
     public GameMenu(){
         this.subscriber = this;
@@ -32,6 +32,11 @@ public class GameMenu implements MenuSubscriber{
 
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
+                if (modelAPI.isGameOver() == true){
+                    return;
+                }
+
                 modelAPI.rollDie();
                 dieImage = dieShow.showDiceImage(dieNumber);
             }
@@ -54,7 +59,7 @@ public class GameMenu implements MenuSubscriber{
         button.setBounds(25, 20, 200, 50);
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Realizar criação de novo jogo!");
+                newGameAction();
             }
         });
         return button;
@@ -130,6 +135,10 @@ public class GameMenu implements MenuSubscriber{
 
     @Override
     public void updateTurn(Color color){
+        if (modelAPI.isGameOver() == true){
+            viewAPI.showMessage();
+            return;
+        }
         viewAPI.redraw();
         this.turnColor = color;
     }
@@ -148,6 +157,17 @@ public class GameMenu implements MenuSubscriber{
 
     public void setNumber(int Number){
         this.dieNumber = Number;
+    }
+
+    public void newGameAction(){
+        modelAPI.createGame();
+        turnColor = Color.GRAY;
+        dieNumber = 0;
+        dieImage = null;
+        viewAPI.redraw();
+
+        modelAPI.addSubscriber(viewAPI.getMenuSubscriber());
+        modelAPI.addBoardSubscriber(viewAPI.getBoardSubscriber());
     }
 
 }
