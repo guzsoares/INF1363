@@ -6,7 +6,6 @@ import controller.BoardSubscriber;
 import controller.MyMouseListener;
 
 import java.awt.*;
-import java.awt.event.MouseListener;
  
 class BoardBuilder implements BoardSubscriber{
     private JPanel boardPanel;

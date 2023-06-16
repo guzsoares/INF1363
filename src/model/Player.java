@@ -33,8 +33,28 @@ class Player {
 					}
 				}
 			}
-		} 
+		}
+		
+		if (game.getDieNumber() == 6){
+			for (int i = 0; i < 4; i++){
+				int pawnsPosition = playerPawns[i].getPosition();
+				
+				if (pawnsPosition < 0 || pawnsPosition > 51){
+					break;
+				}
 
+				if (game.getGameBoard().getSquares()[pawnsPosition].isBarrier() == true && playerPawns[i].canMove(game.getDieNumber(), game.getGameBoard().getPawnsOnBoard(), game.getGameBoard().getSquares())){
+						for (int j = 0; j < 4; j++){
+						choices[j] = false;
+						}
+
+						choices[i] = true;
+						setNumChoices(1);
+						break;
+					}
+
+				}
+			}
 
 		if (verifyChoices() == false){
 
@@ -139,3 +159,4 @@ class Player {
 		playerPawns[lastMove].setPosition(-1);
 	}
 }
+

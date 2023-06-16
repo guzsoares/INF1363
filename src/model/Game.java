@@ -11,6 +11,8 @@ class Game extends AbstractPublisher{
     private int plays = 0;
     private boolean playing = false;
     private boolean isGameOver = false;
+    
+    private boolean DEBUG = false;
 
 
     public Game(){
@@ -200,6 +202,11 @@ class Game extends AbstractPublisher{
     }
 
         public void handleClick(int position){
+
+            if (DEBUG == true){
+                autogame();
+            }
+
             turn = (turn % 4);
             if (playing == false){
                 return;
