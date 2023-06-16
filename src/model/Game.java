@@ -1,9 +1,17 @@
 package model;
-
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import controller.AbstractPublisher;
 import java.awt.Color;
+import java.io.Serializable;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-class Game extends AbstractPublisher{
+
+class Game extends AbstractPublisher implements Serializable{
     public Player[] players;
     public Die die;
     public Board board;
@@ -85,6 +93,7 @@ class Game extends AbstractPublisher{
         for (int i = 0; i < 4; i++){
             if(board.getFinalSquares()[i][5].numPawns() == 4){
             	setGameOver(true);
+            	return;
             }
         }
        
@@ -358,6 +367,46 @@ class Game extends AbstractPublisher{
         			
         		}
        
+        }
+        public void savegame() {
+        	try {
+        		FileOutputStream f = new FileOutputStream(new File("save.txt"));
+        		ObjectOutputStream o = new ObjectOutputStream(f);
+        		o.writeObject(this);
+        		o.close();
+        		FileInputStream fi = new FileInputStream(new File("save.txt"));
+        		ObjectInputStream oi = new ObjectInputStream(fi);
+        		fi.close();
+        		oi.close();
+        	}
+        	catch (FileNotFoundException e) {
+    			System.out.println("File not found");
+    		} catch (IOException e) {
+    			System.out.println("Error initializing stream");
+    		} 
+    		
+        }
+        public Game loadgame() {
+        	try {
+
+        		FileInputStream fi = new FileInputStream(new File("save.txt"));
+        		ObjectInputStream oi = new ObjectInputStream(fi);
+        		Object loaded = oi.readObject();
+        		oi.close();
+        		return (Game) loaded;
+        		
+        	}
+        	catch (FileNotFoundException e) {
+    			System.out.println("File not found");
+    		} catch (IOException e) {
+    			System.out.println("Error initializing stream");
+    		} 
+        	 catch (Exception ex) {
+                 ex.printStackTrace();
+                 return null;
+             }
+        	return null;
+    		
         }
 
        }
