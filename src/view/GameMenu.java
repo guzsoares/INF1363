@@ -50,7 +50,7 @@ public class GameMenu implements MenuSubscriber{
     }
     public JButton debugdieButton() {
         JButton button = new JButton("Lancar Dado debug");
-        button.setBounds(25, 450, 200, 50);
+        button.setBounds(25, 220, 200, 50);
 
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -78,15 +78,7 @@ public class GameMenu implements MenuSubscriber{
        return comboBox;
    }
   
-    public JLabel textLabel() {
-        JLabel label = new JLabel("Á Jogar:");
-        label.setBounds(55, 220, 200, 50);
-        Font font = label.getFont();
-        float tamanhoFonte = font.getSize() + 20;
-        Font novaFonte = font.deriveFont(tamanhoFonte);
-        label.setFont(novaFonte);
-        return label;
-    }
+
 
     public JButton newGameButton() {
         JButton button = new JButton("Novo Jogo");
@@ -144,15 +136,13 @@ public class GameMenu implements MenuSubscriber{
         menuPanel.add(newGameButton());
         menuPanel.add(loadGameButton());
         menuPanel.add(saveGameButton());
-        menuPanel.add(textLabel());
+        menuPanel.add(dieButton());
         if(modelAPI.getDebug() == true) {
         	cb = diceValueComboBox() ;
         	menuPanel.add(cb);
         	menuPanel.add(debugdieButton());
         }
-        else {
-        	menuPanel.add(dieButton());
-        }
+    
     }
 
     private void createMenuPanel() {
