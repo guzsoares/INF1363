@@ -1,9 +1,11 @@
 package model;
 
 import java.util.List;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-class Square{
+class Square implements Serializable{
+	private static final long serialVersionUID = 1L;
     private List<Pawn> pawns = new ArrayList<>();
     private SquareType squareType;
     private Color squareColor;

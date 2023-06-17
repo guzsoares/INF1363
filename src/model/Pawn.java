@@ -1,8 +1,10 @@
 package model;
 
+import java.io.Serializable;
 import java.util.List;
 
-class Pawn {
+class Pawn implements Serializable {
+	private static final long serialVersionUID = 1L;
     private int position;
 	private int steps;
     private final Color color;

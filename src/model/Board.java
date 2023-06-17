@@ -1,6 +1,9 @@
 package model;
 
-class Board {
+import java.io.Serializable;
+
+class Board implements Serializable {
+	private static final long serialVersionUID = 1L;
     private Pawn[] pawnsOnBoard = new Pawn[16];
     private Square[] playableSquares = new Square[52];
     private Square[][] finalSquares = new Square[4][6];

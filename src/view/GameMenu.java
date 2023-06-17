@@ -11,7 +11,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-
+import java.io.FileWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class GameMenu implements MenuSubscriber{
     private ModelAPI modelAPI = ModelAPI.getInstance();
@@ -81,7 +88,7 @@ public class GameMenu implements MenuSubscriber{
         JButton button = new JButton("Carregar Jogo");
         button.setBounds(25, 90, 200, 50);
         
-      /*  button.addActionListener(new ActionListener() {
+       button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = new JFileChooser();
                 int result = fileChooser.showOpenDialog(null);
@@ -89,14 +96,35 @@ public class GameMenu implements MenuSubscriber{
                 	 File f = fileChooser.getSelectedFile();
                 	 String filepath = f.getPath();
                     //TODO: FUNCAO DE CARREGAMENTO DE ARQUIVO
-                	
+                	try {
                     System.out.println(fileChooser.getSelectedFile());
+                    FileInputStream fi = new FileInputStream(new File(filepath));
+                    ObjectInputStream oi = new ObjectInputStream(fi);
+                    Object game = (Object) oi.readObject();
+                    ModelAPI.getInstance().setGame(game);
                     System.out.println("Carregar arquivo selecionado");
+                    fi.close();
+                    oi.close();
+                    
+                    viewAPI.redraw();
+                    modelAPI.addSubscriber(viewAPI.getMenuSubscriber());
+                    modelAPI.addBoardSubscriber(viewAPI.getBoardSubscriber());
+                    
+                	}
+                	 catch (FileNotFoundException e1) {
+             			System.out.println("File not found");
+             		} catch (IOException e1) {
+             			System.out.println("Error initializing stream");
+             		} catch (ClassNotFoundException e1) {
+						
+						e1.printStackTrace();
+					}
                 }
+            
             }
-        }*/
-    
-        
+       });
+       
+
         return button;
     }
     
@@ -109,9 +137,17 @@ public class GameMenu implements MenuSubscriber{
                 int option = fileChooser.showSaveDialog(button);
                 if (option == JFileChooser.APPROVE_OPTION) {
                     String filePath = fileChooser.getSelectedFile().getPath();
-                 
                     System.out.println("Jogo salvo em: " + filePath);
-                    
+                    try {
+                    FileOutputStream f = new FileOutputStream(new File(filePath + ".txt"));
+                    ObjectOutputStream o = new ObjectOutputStream(f);
+                    o.writeObject(ModelAPI.getGame());
+                    f.close();
+                    o.close();
+                    }
+            		catch (IOException e1) {
+            			System.out.println("Error initializing stream");
+            		}
                 }
             }
         });

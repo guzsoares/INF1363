@@ -1,9 +1,10 @@
 package model;
 import controller.AbstractPublisher;
 import java.awt.Color;
+import java.io.Serializable;
 
-
-class Game extends AbstractPublisher{
+class Game extends AbstractPublisher implements Serializable{
+	private static final long serialVersionUID = 1L;
     public Player[] players;
     public Die die;
     public Board board;

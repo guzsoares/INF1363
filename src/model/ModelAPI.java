@@ -6,7 +6,7 @@ import java.awt.Color;
 
 public class ModelAPI {
     private static ModelAPI instance;
-    private Game game;
+    private static Game game;
 
     public ModelAPI(){
         instance = this;
@@ -122,4 +122,11 @@ public class ModelAPI {
     public boolean getDebug() {
     	return game.getDEBUG();
     }
+    public static Game getGame() {
+    	return game;
+    }
+    public void setGame(Object g) {
+    	game = (Game) g;
+    }
+  
 }
