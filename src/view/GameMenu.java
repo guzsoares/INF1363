@@ -2,7 +2,7 @@ package view;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.JComboBox;
+
 import controller.MenuSubscriber;
 
 import model.ModelAPI;
@@ -42,40 +42,25 @@ public class GameMenu implements MenuSubscriber{
                     return;
                 }
 
+                if (cb.getSelectedItem() != "Aleatório"){
+                    combobox_val =  Integer.parseInt( (String) cb.getSelectedItem());
+                    modelAPI.DebugRoll(combobox_val);
+                    dieImage = dieShow.showDiceImage(combobox_val);
+                    return;
+                }
+
                 modelAPI.rollDie();
                 dieImage = dieShow.showDiceImage(dieNumber);
             }
         });
         return button;
     }
-    
-    public JButton debugdieButton() {
-        JButton button = new JButton("Lancar Dado debug");
-        button.setBounds(25, 220, 200, 50);
 
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                if (modelAPI.isGameOver() == true){
-                    return;
-                }
-                setComboboxnum((int)cb.getSelectedItem());
-                modelAPI.DebugRoll(combobox_val);
-                dieImage = dieShow.showDiceImage(dieNumber);
-            }
-        });
-        return button;
-    }
-    public void setComboboxnum(int a) {
- 	   combobox_val = a;
- 	   
-    }
-   public JComboBox<Integer> diceValueComboBox() {
-	   Integer[] diceValues = {1, 2, 3, 4, 5, 6}; // Valores possíveis do dado
-       JComboBox<Integer> comboBox = new JComboBox<>(diceValues);
+   public JComboBox<String> diceValueComboBox() {
+	   String[] diceValues = {"Aleatório", "1", "2", "3", "4", "5", "6"}; // Valores possíveis do dado
+       JComboBox<String> comboBox = new JComboBox<>(diceValues);
        comboBox.setBounds(25, 520, 200, 50);
-       
-       
+    
        return comboBox;
    }
   
@@ -132,18 +117,29 @@ public class GameMenu implements MenuSubscriber{
         });
         return button;
     }
+
     private void createMenu(JPanel menuPanel) {
         
         menuPanel.add(newGameButton());
         menuPanel.add(loadGameButton());
         menuPanel.add(saveGameButton());
+        menuPanel.add(textLabel());
         menuPanel.add(dieButton());
         if(modelAPI.getDebug() == true) {
         	cb = diceValueComboBox() ;
         	menuPanel.add(cb);
-        	menuPanel.add(debugdieButton());
         }
     
+    }
+
+     public JLabel textLabel() {
+        JLabel label = new JLabel("À Jogar:");
+        label.setBounds(55, 220, 200, 50);
+        Font font = label.getFont();
+        float tamanhoFonte = font.getSize() + 20;
+        Font novaFonte = font.deriveFont(tamanhoFonte);
+        label.setFont(novaFonte);
+        return label;
     }
 
     private void createMenuPanel() {
@@ -170,9 +166,6 @@ public class GameMenu implements MenuSubscriber{
       
     }
   
-	    
-  
-
     @Override
     public void updateDie(int newValue){
         this.dieNumber = newValue;
