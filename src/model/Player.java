@@ -16,6 +16,18 @@ class Player {
 		}
 	}
 
+	public boolean makeMove(int choice, Game game){
+
+		if (playerPawns[choice].movePawn(game.getDieNumber(), game.getGameBoard().getSquares(), game.getGameBoard().getFinalSquares(), game.getGameBoard().getPawnsOnBoard(), game.getGameBoard().getInitialSquares())){
+			game.updateInfo();
+			lastMove = choice;
+			game.isGameOver();
+			return true;
+		}
+
+		return false;
+	}
+
 	public void updateChoices(Game game){
 
 		for (int i = 0; i < 4; i++){
@@ -78,18 +90,6 @@ class Player {
 
 	}
 
-	public boolean makeMove(int choice, Game game){
-
-		if (playerPawns[choice].movePawn(game.getDieNumber(), game.getGameBoard().getSquares(), game.getGameBoard().getFinalSquares(), game.getGameBoard().getPawnsOnBoard(), game.getGameBoard().getInitialSquares())){
-			game.updateInfo();
-			lastMove = choice;
-			game.isGameOver();
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean verifyChoices(){
 		for (int i = 0; i < choices.length; i++){
 			if(choices[i] == true){
@@ -98,7 +98,33 @@ class Player {
 		}
 		return false;
 	}
-	
+
+	public void punishPlayer(Square[] boardSquares, Square[] initialSquares){
+
+		if (playerPawns[lastMove].getPosition() > 99 || playerPawns[lastMove].getPosition() == -1){
+			return;
+		}
+
+		boardSquares[playerPawns[lastMove].getPosition()].removePawn(playerPawns[lastMove]);
+		switch(playerPawns[lastMove].getColor()){
+			case AZUL:
+			initialSquares[2].addPawn(playerPawns[lastMove]);
+			break;
+			case VERMELHO:
+			initialSquares[3].addPawn(playerPawns[lastMove]);
+			break;
+			case AMARELO:
+			initialSquares[1].addPawn(playerPawns[lastMove]);
+			break;
+			case VERDE:
+			initialSquares[0].addPawn(playerPawns[lastMove]);
+			break;
+		}
+
+		playerPawns[lastMove].setSteps(0);
+		playerPawns[lastMove].setPosition(-1);
+	}
+
 	public int stepsCount(){
 		return playerPawns[0].getSteps() + playerPawns[1].getSteps() + playerPawns[2].getSteps() + playerPawns[3].getSteps();
 	}
@@ -131,32 +157,6 @@ class Player {
 
 	public void setNumChoices(int num){
 		this.numChoices = num;
-	}
-
-	public void punishPlayer(Square[] boardSquares, Square[] initialSquares){
-
-		if (playerPawns[lastMove].getPosition() > 99 || playerPawns[lastMove].getPosition() == -1){
-			return;
-		}
-
-		boardSquares[playerPawns[lastMove].getPosition()].removePawn(playerPawns[lastMove]);
-		switch(playerPawns[lastMove].getColor()){
-			case AZUL:
-			initialSquares[2].addPawn(playerPawns[lastMove]);
-			break;
-			case VERMELHO:
-			initialSquares[3].addPawn(playerPawns[lastMove]);
-			break;
-			case AMARELO:
-			initialSquares[1].addPawn(playerPawns[lastMove]);
-			break;
-			case VERDE:
-			initialSquares[0].addPawn(playerPawns[lastMove]);
-			break;
-		}
-
-		playerPawns[lastMove].setSteps(0);
-		playerPawns[lastMove].setPosition(-1);
 	}
 }
 

@@ -8,34 +8,6 @@ class Square{
     private SquareType squareType;
     private Color squareColor;
 
-    public boolean isEmpty() { // casa esta ocupada
-        return pawns.isEmpty();
-    }
-
-    public void setSquareType(SquareType squareType) {
-        this.squareType = squareType;
-    }
-
-    public SquareType getSquareType(){
-        return this.squareType;
-    }
-
-    public int numPawns() { // numero de peoes ocupando a casa
-        return pawns.size();
-    }
-
-    public List<Pawn> getPawns() { // lista de peoes na casa
-        return pawns;
-    }
-
-    public void addPawn(Pawn pawn) { // adicionar um peao na casa
-        pawns.add(pawn);
-    }
-
-    public void removePawn(Pawn pawn) { // remover um peao na casa
-        pawns.remove(pawn);
-    }
-
     public boolean isCommon(){ // verifica se a casa é comum
         if (this.squareType == SquareType.cComum){
             return true;
@@ -79,12 +51,40 @@ class Square{
         return false;
     }
 
+    public boolean isEmpty() { // casa esta ocupada
+        return pawns.isEmpty();
+    }
+
+    public int numPawns() { // numero de peoes ocupando a casa
+        return pawns.size();
+    }
+
+    public void addPawn(Pawn pawn) { // adicionar um peao na casa
+        pawns.add(pawn);
+    }
+
+    public void removePawn(Pawn pawn) { // remover um peao na casa
+        pawns.remove(pawn);
+    }
+
+    public List<Pawn> getPawns() { // lista de peoes na casa
+        return pawns;
+    }
+
+    public SquareType getSquareType(){
+        return this.squareType;
+    }
+
     public Color getSquareColor(){
         return this.squareColor;
     }
 
     public void setSquareColor(Color color){
         this.squareColor = color;
+    }
+
+        public void setSquareType(SquareType squareType) {
+        this.squareType = squareType;
     }
 
 }
