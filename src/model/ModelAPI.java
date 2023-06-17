@@ -26,7 +26,10 @@ public class ModelAPI {
     public void rollDie(){
         game.rollDie();
     }
-
+    
+    public void DebugRoll(int x) {
+    	game.roll_x(x);
+    }
     public boolean isGameOver(){
         return game.getGameOver();
     }
@@ -115,5 +118,8 @@ public class ModelAPI {
     }
     public void handleClick(int squareClicked) {
     	game.handleClick(squareClicked);
+    }
+    public boolean getDebug() {
+    	return game.getDEBUG();
     }
 }

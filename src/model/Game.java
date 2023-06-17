@@ -20,7 +20,7 @@ class Game extends AbstractPublisher implements Serializable{
     private boolean playing = false;
     private boolean isGameOver = false;
     
-    private boolean DEBUG = false;
+    private boolean DEBUG = true;
 
 
     public Game(){
@@ -90,10 +90,55 @@ class Game extends AbstractPublisher implements Serializable{
 
         }
     }
+    public void roll_x(int x){
+        if (playing == false){
+            playing = true;
+            die.setDieNumber(x);
+            notifySubscribersDie(getDieNumber());
+            notifySubscribersTurn(getCurrentPlayerRealColor());
+
+            players[turn].updateChoices(this);
+
+            if (plays == 2 && getDieNumber() == 6){
+                players[turn].punishPlayer(board.getSquares(), board.getInitialSquares());
+                notifyBoardUpdate();
+                playing = false;
+                playerTurn();
+                return;
+            }
+            
+            if (players[turn].verifyChoices() == false){
+                playing = false;
+                playerTurn();
+                return;
+            }
+
+            turn = (turn % 4);
+            if (players[turn].getNumChoices() == 1){
+                players[turn].makeMove(players[turn].getFirstChoice(), this);
+
+                notifyBoardUpdate();
+                playing = false;
+                playerTurn();
+                return;
+            }
+
+        }
+    }
     public void setGameOver(boolean state) {
     	isGameOver = state;
     }
-
+    public void setGame(Game load) {
+    	this.players = load.players;
+        this.die = load.die;
+        this.board = load.board;;
+        this.turn = load.turn;
+        this.plays = load.plays;
+        this.playing = load.playing;
+        this.isGameOver = load.isGameOver;
+        this.DEBUG = load.DEBUG;
+        
+    }
     public void isGameOver(){
     	setGameOver(false);
         for (int i = 0; i < 4; i++){
@@ -212,9 +257,7 @@ class Game extends AbstractPublisher implements Serializable{
 
         public void handleClick(int position){
 
-            if (DEBUG == true){
-                autogame();
-            }
+            
 
             if (isGameOver == true){
                 return;
@@ -392,16 +435,17 @@ class Game extends AbstractPublisher implements Serializable{
         		}
        
         }
-        public void savegame() {
+        public void savegame(String filepath,Game game) {
         	try {
-        		FileOutputStream f = new FileOutputStream(new File("save.txt"));
+        		
+        		FileOutputStream f = new FileOutputStream(filepath + ".txt");
         		ObjectOutputStream o = new ObjectOutputStream(f);
-        		o.writeObject(this);
+        	
+        		o.writeObject(game);
         		o.close();
-        		FileInputStream fi = new FileInputStream(new File("save.txt"));
-        		ObjectInputStream oi = new ObjectInputStream(fi);
-        		fi.close();
-        		oi.close();
+        	
+        		
+        	
         	}
         	catch (FileNotFoundException e) {
     			System.out.println("File not found");
@@ -410,15 +454,14 @@ class Game extends AbstractPublisher implements Serializable{
     		} 
     		
         }
-        public Game loadgame() {
+        public void loadgame(String FilePath) {
         	try {
 
-        		FileInputStream fi = new FileInputStream(new File("save.txt"));
+        		FileInputStream fi = new FileInputStream(new File(FilePath));
         		ObjectInputStream oi = new ObjectInputStream(fi);
         		Object loaded = oi.readObject();
         		oi.close();
-        		return (Game) loaded;
-        		
+        		setGame((Game)loaded);
         	}
         	catch (FileNotFoundException e) {
     			System.out.println("File not found");
@@ -427,10 +470,13 @@ class Game extends AbstractPublisher implements Serializable{
     		} 
         	 catch (Exception ex) {
                  ex.printStackTrace();
-                 return null;
+                
              }
-        	return null;
+        	
     		
+        }
+        public boolean getDEBUG() {
+        	return DEBUG;
         }
 
        }
