@@ -78,11 +78,12 @@ class Game extends AbstractPublisher{
         players[turn].updateChoices(this);
 
         if (plays == 2 && getDieNumber() == 6){
-            players[turn].punishPlayer(board.getSquares(), board.getInitialSquares());
-            notifyBoardUpdate();
-            playing = false;
-            playerTurn();
-            return;
+            if (players[turn].punishPlayer(board.getSquares(), board.getInitialSquares()) == true){
+                notifyBoardUpdate();
+                playing = false;
+                playerTurn();
+                return;
+            }
         }
             
         if (players[turn].verifyChoices() == false){

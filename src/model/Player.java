@@ -99,10 +99,10 @@ class Player {
 		return false;
 	}
 
-	public void punishPlayer(Square[] boardSquares, Square[] initialSquares){
+	public boolean punishPlayer(Square[] boardSquares, Square[] initialSquares){
 
 		if (playerPawns[lastMove].getPosition() > 99 || playerPawns[lastMove].getPosition() == -1){
-			return;
+			return false;
 		}
 
 		boardSquares[playerPawns[lastMove].getPosition()].removePawn(playerPawns[lastMove]);
@@ -123,6 +123,7 @@ class Player {
 
 		playerPawns[lastMove].setSteps(0);
 		playerPawns[lastMove].setPosition(-1);
+		return true;
 	}
 
 	public int stepsCount(){
