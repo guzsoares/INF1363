@@ -18,6 +18,7 @@ class Game extends AbstractPublisher{
     private int plays = 0;
     private boolean playing = false;
     private boolean isGameOver = false;
+    private int lastDieNum;
     
     private boolean DEBUG = true;
 
@@ -151,6 +152,17 @@ class Game extends AbstractPublisher{
         isGameOver();
         notifySubscribersTurn(getCurrentPlayerRealColor());
 
+        if (players[turn].hasExtra() == true){
+            playing = true;
+            return;
+        }
+
+        if (plays > 2){
+            plays = 0;
+            turn++;
+            return;
+        }
+
         if (plays == 0){
 
             if (getDieNumber() != 6){
@@ -202,11 +214,32 @@ class Game extends AbstractPublisher{
         Square[] initialSquares = board.getInitialSquares();
         Square[][] finalSquares = board.getFinalSquares();
 
-
         if (position >= 0 && position <= 51){
+
             if (boardSquares[position].numPawns() == 0){
                 return;
             }
+
+            if (players[turn].hasExtra() == true){
+            players[turn].updateChoices(this);
+
+            for (Pawn pawns : boardSquares[position].getPawns()){
+                if (pawns.getColor() == players[turn].getColor()){
+                    if (players[turn].getChoice(pawns.getId()) == true){
+                        int lastDieNumber = getDieNumber();
+                        die.setDieNumber(6);
+                        notifySubscribersDie(getDieNumber());
+                        players[turn].makeMove(pawns.getId(), this);
+                        notifyBoardUpdate();
+                        playing = false;
+                        die.setDieNumber(lastDieNumber);
+                        players[turn].resetExtra();
+                        playerTurn();
+                        return;
+                    }
+                }
+            }
+        }
 
             for (Pawn pawns : boardSquares[position].getPawns()){
                 if (pawns.getColor() == players[turn].getColor()){

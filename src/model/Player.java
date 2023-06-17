@@ -6,6 +6,7 @@ class Player {
 	private boolean[] choices = new	boolean[4];
 	private int numChoices = 0;
 	private int lastMove;
+	private boolean haveExtra = false;
 
 	public Player(Color color, Pawn[] pawns){
 		this.color = color;
@@ -22,6 +23,10 @@ class Player {
 			game.updateInfo();
 			lastMove = choice;
 			game.isGameOver();
+			if (playerPawns[choice].hasExtra() == true){
+				haveExtra = true;
+				playerPawns[choice].resetExtra();
+			}
 			return true;
 		}
 
@@ -130,6 +135,10 @@ class Player {
 		return playerPawns[0].getSteps() + playerPawns[1].getSteps() + playerPawns[2].getSteps() + playerPawns[3].getSteps();
 	}
 
+	public boolean hasExtra(){
+		return haveExtra;
+	}
+
 	public Color getColor() {
 		return this.color;
 	}
@@ -158,6 +167,10 @@ class Player {
 
 	public void setNumChoices(int num){
 		this.numChoices = num;
+	}
+
+	public void resetExtra(){
+		haveExtra = false;
 	}
 }
 

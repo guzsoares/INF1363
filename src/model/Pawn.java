@@ -7,6 +7,7 @@ class Pawn {
 	private int steps;
     private final Color color;
 	private final int id;
+	private boolean haveExtra = false;
     
     public Pawn(Color color, int initialPosition, int id){
         this.color = color;
@@ -43,6 +44,7 @@ class Pawn {
 		if (this.position < 52){
 			if (canCapture(boardSquares, newPosition)){
 				capturePawn(boardSquares, initialSquares, newPosition);
+				haveExtra = true;
 			}
 	
 			if (outInitialSquare(dieNumber, initialSquares, boardSquares, pawnsOnBoard)){
@@ -105,6 +107,10 @@ class Pawn {
 	}
 		this.setPosition(newPosition);
 		this.addSteps(dieNumber);
+
+		if (newPosition == 105 || newPosition == 205 || newPosition == 305 || newPosition == 405){
+			haveExtra = true;
+		}
 
 		return true;
 	}
@@ -318,6 +324,10 @@ class Pawn {
 		capturedPawn.setPosition(-1);
 	}
 
+	public boolean hasExtra(){
+		return haveExtra;
+	}
+
 	public void addSteps(int steps){ // adiciona o numero de passos
 		this.steps += steps;
 	}
@@ -354,5 +364,9 @@ class Pawn {
         this.position = newPosition;
 
     }
+
+	public void resetExtra(){
+		haveExtra = false;
+	}
 
 }
