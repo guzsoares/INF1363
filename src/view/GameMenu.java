@@ -48,6 +48,7 @@ public class GameMenu implements MenuSubscriber{
         });
         return button;
     }
+    
     public JButton debugdieButton() {
         JButton button = new JButton("Lancar Dado debug");
         button.setBounds(25, 220, 200, 50);

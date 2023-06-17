@@ -8,22 +8,13 @@ class Pawn {
     private final Color color;
 	private final int id;
     
-    public Pawn(Color color, int initialPosition, int id){ // Construtor da classe Peao, onde é definida as propriedades do peão, como cor e posição inicial
+    public Pawn(Color color, int initialPosition, int id){
         this.color = color;
         this.position = initialPosition;
 		this.id = id;
     }
 
 	public boolean movePawn(int dieNumber, Square[] boardSquares,Square[][] finalSquares, Pawn[] pawnsOnBoard, Square[] initialSquares){
-
-		/* Primeiro a função calcula o overflow (caso o peão esteja na reta final, a nova posição de acordo com o dado
-		 e ele realiza uma normalização no vetor para estar correspondente a casa do peão, depois a função vai verificar se 
-		 é possível mover esse peão, caso sim, ele verifica se está na casa inicial, caso sim, ele define a nova posição do 
-		 peão como sua casa de saída, se o peão puder realizar uma captura, ele captura o peão na casa destino e reseta seus
-		 status para os status iniciais do jogo
-
-		 A função realiza a mesma lógica para o tabuleiro nos quadrados que não são iniciais
-		 */
 
 		int overflow = (this.steps + dieNumber) - 51;
 		int newPosition = (position + dieNumber) % 52;

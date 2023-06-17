@@ -32,10 +32,4 @@ public class GameTest {
         System.out.println(game.players[0].getPlayerPawns()[1].getPosition());
         assertTrue("Peão não conseguiu mover fora da casa inicial", moved);
     }
-    @Test
-    public void test_game_ends() {
-    	Game game = new Game();
-    	game.autogame();
-    	assertTrue("Jogo não acabou",game.getGameOver());
-    }
 }

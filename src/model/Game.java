@@ -6,12 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import controller.AbstractPublisher;
 import java.awt.Color;
-import java.io.Serializable;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 
-class Game extends AbstractPublisher implements Serializable{
+class Game extends AbstractPublisher{
     public Player[] players;
     public Die die;
     public Board board;
@@ -59,75 +58,50 @@ class Game extends AbstractPublisher implements Serializable{
         if (playing == false){
             playing = true;
             die.rollDie();
-            notifySubscribersDie(getDieNumber());
-            notifySubscribersTurn(getCurrentPlayerRealColor());
-
-            players[turn].updateChoices(this);
-
-            if (plays == 2 && getDieNumber() == 6){
-                players[turn].punishPlayer(board.getSquares(), board.getInitialSquares());
-                notifyBoardUpdate();
-                playing = false;
-                playerTurn();
-                return;
-            }
-            
-            if (players[turn].verifyChoices() == false){
-                playing = false;
-                playerTurn();
-                return;
-            }
-
-            turn = (turn % 4);
-            if (players[turn].getNumChoices() == 1){
-                players[turn].makeMove(players[turn].getFirstChoice(), this);
-
-                notifyBoardUpdate();
-                playing = false;
-                playerTurn();
-                return;
-            }
-
+            play();
         }
     }
+
     public void roll_x(int x){
         if (playing == false){
             playing = true;
             die.setDieNumber(x);
-            notifySubscribersDie(getDieNumber());
-            notifySubscribersTurn(getCurrentPlayerRealColor());
-
-            players[turn].updateChoices(this);
-
-            if (plays == 2 && getDieNumber() == 6){
-                players[turn].punishPlayer(board.getSquares(), board.getInitialSquares());
-                notifyBoardUpdate();
-                playing = false;
-                playerTurn();
-                return;
-            }
-            
-            if (players[turn].verifyChoices() == false){
-                playing = false;
-                playerTurn();
-                return;
-            }
-
-            turn = (turn % 4);
-            if (players[turn].getNumChoices() == 1){
-                players[turn].makeMove(players[turn].getFirstChoice(), this);
-
-                notifyBoardUpdate();
-                playing = false;
-                playerTurn();
-                return;
-            }
+            play();
 
         }
     }
-    public void setGameOver(boolean state) {
-    	isGameOver = state;
+
+    public void play(){
+        notifySubscribersDie(getDieNumber());
+        notifySubscribersTurn(getCurrentPlayerRealColor());
+
+        players[turn].updateChoices(this);
+
+        if (plays == 2 && getDieNumber() == 6){
+            players[turn].punishPlayer(board.getSquares(), board.getInitialSquares());
+            notifyBoardUpdate();
+            playing = false;
+            playerTurn();
+            return;
+        }
+            
+        if (players[turn].verifyChoices() == false){
+            playing = false;
+            playerTurn();
+            return;
+        }
+
+        turn = (turn % 4);
+        if (players[turn].getNumChoices() == 1){
+            players[turn].makeMove(players[turn].getFirstChoice(), this);
+
+            notifyBoardUpdate();
+            playing = false;
+            playerTurn();
+            return;
+        }
     }
+
     public void setGame(Game load) {
     	this.players = load.players;
         this.die = load.die;
@@ -140,25 +114,16 @@ class Game extends AbstractPublisher implements Serializable{
         
     }
     public void isGameOver(){
-    	setGameOver(false);
+    	isGameOver = false;
         for (int i = 0; i < 4; i++){
             if(board.getFinalSquares()[i][5].numPawns() == 4){
-            	setGameOver(true);
+            	isGameOver = true;
             	return;
             }
         }
        
     }
-
-    public boolean getGameOver(){
-        return isGameOver;
-    }
-
-    public int getTurn(){
-        return turn;
-    }
   
-
     public Player[] playersResults(Player[] players){
         Player[] ranking = new Player[4];
 
@@ -222,24 +187,230 @@ class Game extends AbstractPublisher implements Serializable{
 			
 	}
 
-    public Color getCurrentPlayerRealColor(){
+    public void handleClick(int position){
+
+        if (isGameOver == true){
+            return;
+        }
+
         turn = (turn % 4);
+        if (playing == false){
+            return;
+        }
+        Square[] boardSquares = board.getSquares();
+        Square[] initialSquares = board.getInitialSquares();
+        Square[][] finalSquares = board.getFinalSquares();
 
-        switch(players[turn].getColor()){
-            case VERDE:
-            return Color.GREEN;
 
-            case AZUL:
-            return Color.BLUE;
+        if (position >= 0 && position <= 51){
+            if (boardSquares[position].numPawns() == 0){
+                return;
+            }
 
-            case VERMELHO:
-            return Color.RED;
+            for (Pawn pawns : boardSquares[position].getPawns()){
+                if (pawns.getColor() == players[turn].getColor()){
+                    if (players[turn].getChoice(pawns.getId()) == true){
+                        players[turn].makeMove(pawns.getId(), this);
+                        notifyBoardUpdate();
+                        playing = false;
+                        playerTurn();
+                        return;
+                    }
+                }
+            }
+        }
 
-            case AMARELO:
-            return Color.YELLOW;
+        if (position < 0){
+
+            if (position == -1){
+                for (Pawn pawns : initialSquares[0].getPawns()){
+                    if (players[turn].getChoice(pawns.getId()) == true){
+                        players[turn].makeMove(pawns.getId(), this);
+                        notifyBoardUpdate();
+                        playing = false;
+                        playerTurn();
+                        return;
+                    }
+                }
+
+            } else if (position == -2){
+                for (Pawn pawns : initialSquares[1].getPawns()){
+                    if (players[turn].getChoice(pawns.getId()) == true){
+                        players[turn].makeMove(pawns.getId(), this);
+                        notifyBoardUpdate();
+                        playing = false;
+                        playerTurn();
+                        return;
+                    }
+                }
+
+            } else if (position == -3){
+                for (Pawn pawns : initialSquares[2].getPawns()){
+                    if (players[turn].getChoice(pawns.getId()) == true){
+                        players[turn].makeMove(pawns.getId(), this);
+                        notifyBoardUpdate();
+                        playing = false;
+                        playerTurn();
+                        return;
+                    }
+                }
+
+            } else if (position == -4){
+                for (Pawn pawns : initialSquares[3].getPawns()){
+                    if (players[turn].getChoice(pawns.getId()) == true){
+                        players[turn].makeMove(pawns.getId(), this);
+                        notifyBoardUpdate();
+                        playing = false;
+                        playerTurn();
+                        return;
+                    }
+                }
+
+            }
+        }
+
+        if (position > 99){
+
+            if (position >= 100 && position <= 105){
+                Square[] gFinalSquares = finalSquares[0];
+
+                int index  = position - 100;
+
+                for (Pawn pawns: gFinalSquares[index].getPawns()){
+
+                    if (players[turn].getChoice(pawns.getId()) == true){
+                        players[turn].makeMove(pawns.getId(), this);
+                        notifyBoardUpdate();
+                        playing = false;
+                        playerTurn();
+                        return;
+                    }
+
+                }
+            } else if (position >= 200 && position <= 205){
+                Square[] yFinalSquares = finalSquares[1];
+
+                int index  = position - 200;
+
+                for (Pawn pawns: yFinalSquares[index].getPawns()){
+
+                    if (players[turn].getChoice(pawns.getId()) == true){
+                        players[turn].makeMove(pawns.getId(), this);
+                        notifyBoardUpdate();
+                        playing = false;
+                        playerTurn();
+                        return;
+                    }
+                    
+                }
+            } else if (position >= 300 && position <= 305){
+                Square[] bFinalSquares = finalSquares[2];
+
+                int index  = position - 300;
+
+                for (Pawn pawns: bFinalSquares[index].getPawns()){
+
+                    if (players[turn].getChoice(pawns.getId()) == true){
+                        players[turn].makeMove(pawns.getId(), this);
+                        notifyBoardUpdate();
+                        playing = false;
+                        playerTurn();
+                        return;
+                    }
+                    
+                }
+            } else if (position >= 400 && position <= 405){
+                Square[] rFinalSquares = finalSquares[3];
+
+                int index  = position - 400;
+
+                for (Pawn pawns: rFinalSquares[index].getPawns()){
+
+                    if (players[turn].getChoice(pawns.getId()) == true){
+                        players[turn].makeMove(pawns.getId(), this);
+                        notifyBoardUpdate();
+                        playing = false;
+                        playerTurn();
+                        return;
+                    }
+                    
+                }
+            }
+        }
+    }
+
+    public void savegame(String filepath,Game game) {
+        try {
             
-            default:
-            return Color.WHITE;
+            FileOutputStream f = new FileOutputStream(filepath + ".txt");
+            ObjectOutputStream o = new ObjectOutputStream(f);
+        
+            o.writeObject(game);
+            o.close();
+        
+            
+        
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("Error initializing stream");
+        } 
+        
+    }
+
+    public void loadgame(String FilePath) {
+        try {
+
+            FileInputStream fi = new FileInputStream(new File(FilePath));
+            ObjectInputStream oi = new ObjectInputStream(fi);
+            Object loaded = oi.readObject();
+            oi.close();
+            setGame((Game)loaded);
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        } catch (IOException e) {
+            System.out.println("Error initializing stream");
+        } 
+            catch (Exception ex) {
+                ex.printStackTrace();
+            
+            }
+        
+        
+    }
+
+    public boolean getDEBUG() {
+        return DEBUG;
+    }
+
+    public boolean getGameOver(){
+        return isGameOver;
+    }
+
+    public int getTurn(){
+        return turn;
+    }
+
+    public Color getCurrentPlayerRealColor(){
+    turn = (turn % 4);
+
+    switch(players[turn].getColor()){
+        case VERDE:
+        return Color.GREEN;
+
+        case AZUL:
+        return Color.BLUE;
+
+        case VERMELHO:
+        return Color.RED;
+
+        case AMARELO:
+        return Color.YELLOW;
+        
+        default:
+        return Color.WHITE;
         }
     }
 
@@ -255,230 +426,6 @@ class Game extends AbstractPublisher implements Serializable{
         return die.getDieNumber();
     }
 
-        public void handleClick(int position){
-
-            
-
-            if (isGameOver == true){
-                return;
-            }
-
-            turn = (turn % 4);
-            if (playing == false){
-                return;
-            }
-            Square[] boardSquares = board.getSquares();
-            Square[] initialSquares = board.getInitialSquares();
-            Square[][] finalSquares = board.getFinalSquares();
-
-
-            if (position >= 0 && position <= 51){
-                if (boardSquares[position].numPawns() == 0){
-                    return;
-                }
-
-                for (Pawn pawns : boardSquares[position].getPawns()){
-                    if (pawns.getColor() == players[turn].getColor()){
-                        if (players[turn].getChoice(pawns.getId()) == true){
-                            players[turn].makeMove(pawns.getId(), this);
-                            notifyBoardUpdate();
-                            playing = false;
-                            playerTurn();
-                            return;
-                        }
-                    }
-                }
-            }
-
-            if (position < 0){
-
-                if (position == -1){
-                    for (Pawn pawns : initialSquares[0].getPawns()){
-                        if (players[turn].getChoice(pawns.getId()) == true){
-                            players[turn].makeMove(pawns.getId(), this);
-                            notifyBoardUpdate();
-                            playing = false;
-                            playerTurn();
-                            return;
-                        }
-                    }
-
-                } else if (position == -2){
-                    for (Pawn pawns : initialSquares[1].getPawns()){
-                        if (players[turn].getChoice(pawns.getId()) == true){
-                            players[turn].makeMove(pawns.getId(), this);
-                            notifyBoardUpdate();
-                            playing = false;
-                            playerTurn();
-                            return;
-                        }
-                    }
-
-                } else if (position == -3){
-                    for (Pawn pawns : initialSquares[2].getPawns()){
-                        if (players[turn].getChoice(pawns.getId()) == true){
-                            players[turn].makeMove(pawns.getId(), this);
-                            notifyBoardUpdate();
-                            playing = false;
-                            playerTurn();
-                            return;
-                        }
-                    }
-
-                } else if (position == -4){
-                    for (Pawn pawns : initialSquares[3].getPawns()){
-                        if (players[turn].getChoice(pawns.getId()) == true){
-                            players[turn].makeMove(pawns.getId(), this);
-                            notifyBoardUpdate();
-                            playing = false;
-                            playerTurn();
-                            return;
-                        }
-                    }
-
-                }
-            }
-
-            if (position > 99){
-
-                if (position >= 100 && position <= 105){
-                    Square[] gFinalSquares = finalSquares[0];
-
-                    int index  = position - 100;
-
-                    for (Pawn pawns: gFinalSquares[index].getPawns()){
-
-                        if (players[turn].getChoice(pawns.getId()) == true){
-                            players[turn].makeMove(pawns.getId(), this);
-                            notifyBoardUpdate();
-                            playing = false;
-                            playerTurn();
-                            return;
-                        }
-
-                    }
-                } else if (position >= 200 && position <= 205){
-                    Square[] yFinalSquares = finalSquares[1];
-
-                    int index  = position - 200;
-
-                    for (Pawn pawns: yFinalSquares[index].getPawns()){
-
-                        if (players[turn].getChoice(pawns.getId()) == true){
-                            players[turn].makeMove(pawns.getId(), this);
-                            notifyBoardUpdate();
-                            playing = false;
-                            playerTurn();
-                            return;
-                        }
-                        
-                    }
-                } else if (position >= 300 && position <= 305){
-                    Square[] bFinalSquares = finalSquares[2];
-
-                    int index  = position - 300;
-
-                    for (Pawn pawns: bFinalSquares[index].getPawns()){
-
-                        if (players[turn].getChoice(pawns.getId()) == true){
-                            players[turn].makeMove(pawns.getId(), this);
-                            notifyBoardUpdate();
-                            playing = false;
-                            playerTurn();
-                            return;
-                        }
-                        
-                    }
-                } else if (position >= 400 && position <= 405){
-                    Square[] rFinalSquares = finalSquares[3];
-
-                    int index  = position - 400;
-
-                    for (Pawn pawns: rFinalSquares[index].getPawns()){
-
-                        if (players[turn].getChoice(pawns.getId()) == true){
-                            players[turn].makeMove(pawns.getId(), this);
-                            notifyBoardUpdate();
-                            playing = false;
-                            playerTurn();
-                            return;
-                        }
-                        
-                    }
-                }
-            }
-        }
-
-
-        public void autogame() {
-        	int errorCheck = 0;
-        	while(getGameOver() == false){
-
-        	
-        			rollDie();   	
-        			if(players[turn%4].getNumChoices() > 1 && playing == true) {
-        				turn = (turn % 4);
-        	            players[turn].makeMove(players[turn].getFirstChoice(), this);
-        	            notifyBoardUpdate();
-        	            playing = false; 
-        	            playerTurn();
-                        errorCheck = 0;
-        	            
-        			}
-
-                    errorCheck++;
-                    if (errorCheck == 10){
-                        return;
-                    }
-        			
-        			
-        		}
-       
-        }
-        public void savegame(String filepath,Game game) {
-        	try {
-        		
-        		FileOutputStream f = new FileOutputStream(filepath + ".txt");
-        		ObjectOutputStream o = new ObjectOutputStream(f);
-        	
-        		o.writeObject(game);
-        		o.close();
-        	
-        		
-        	
-        	}
-        	catch (FileNotFoundException e) {
-    			System.out.println("File not found");
-    		} catch (IOException e) {
-    			System.out.println("Error initializing stream");
-    		} 
-    		
-        }
-        public void loadgame(String FilePath) {
-        	try {
-
-        		FileInputStream fi = new FileInputStream(new File(FilePath));
-        		ObjectInputStream oi = new ObjectInputStream(fi);
-        		Object loaded = oi.readObject();
-        		oi.close();
-        		setGame((Game)loaded);
-        	}
-        	catch (FileNotFoundException e) {
-    			System.out.println("File not found");
-    		} catch (IOException e) {
-    			System.out.println("Error initializing stream");
-    		} 
-        	 catch (Exception ex) {
-                 ex.printStackTrace();
-                
-             }
-        	
-    		
-        }
-        public boolean getDEBUG() {
-        	return DEBUG;
-        }
-
-       }
+}
 
 
