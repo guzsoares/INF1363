@@ -1,13 +1,6 @@
 package model;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import controller.AbstractPublisher;
 import java.awt.Color;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 
 class Game extends AbstractPublisher{
@@ -18,7 +11,6 @@ class Game extends AbstractPublisher{
     private int plays = 0;
     private boolean playing = false;
     private boolean isGameOver = false;
-    private int lastDieNum;
     
     private boolean DEBUG = true;
 
@@ -104,17 +96,6 @@ class Game extends AbstractPublisher{
         }
     }
 
-    public void setGame(Game load) {
-    	this.players = load.players;
-        this.die = load.die;
-        this.board = load.board;;
-        this.turn = load.turn;
-        this.plays = load.plays;
-        this.playing = load.playing;
-        this.isGameOver = load.isGameOver;
-        this.DEBUG = load.DEBUG;
-        
-    }
     public void isGameOver(){
     	isGameOver = false;
         for (int i = 0; i < 4; i++){
@@ -123,7 +104,6 @@ class Game extends AbstractPublisher{
             	return;
             }
         }
-       
     }
   
     public Player[] playersResults(Player[] players){
@@ -143,10 +123,6 @@ class Game extends AbstractPublisher{
         return ranking;
     }
 
-    public void updateInfo(){
-        board.updatePawnsOnBoard(players);
-    }
-
     public void playerTurn(){
         turn = (turn % 4);
         isGameOver();
@@ -162,7 +138,7 @@ class Game extends AbstractPublisher{
             turn++;
             return;
         }
-
+        
         if (plays == 0){
 
             if (getDieNumber() != 6){
@@ -170,20 +146,17 @@ class Game extends AbstractPublisher{
                 turn++;
                 return;
             }
-            plays++;
 
+            plays++;
         } else if (plays == 1){
 
 		    if (getDieNumber() != 6){
                 plays = 0;
-			    turn++;
-                
+			    turn++; 
 			    return;
 		    }
 
             plays++;
-            
-
         } else if (plays == 2){
 
 		    if (getDieNumber() == 6){
@@ -195,9 +168,7 @@ class Game extends AbstractPublisher{
 			    turn++;
 			    return;
 		    }
-
         }
-			
 	}
 
     public void handleClick(int position){
@@ -207,9 +178,11 @@ class Game extends AbstractPublisher{
         }
 
         turn = (turn % 4);
+
         if (playing == false){
             return;
         }
+
         Square[] boardSquares = board.getSquares();
         Square[] initialSquares = board.getInitialSquares();
         Square[][] finalSquares = board.getFinalSquares();
@@ -240,14 +213,10 @@ class Game extends AbstractPublisher{
                 }
             }
         }
-
             for (Pawn pawns : boardSquares[position].getPawns()){
                 if (pawns.getColor() == players[turn].getColor()){
                     if (players[turn].getChoice(pawns.getId()) == true){
-                        players[turn].makeMove(pawns.getId(), this);
-                        notifyBoardUpdate();
-                        playing = false;
-                        playerTurn();
+                        moveFunction(pawns);
                         return;
                     }
                 }
@@ -255,14 +224,10 @@ class Game extends AbstractPublisher{
         }
 
         if (position < 0){
-
             if (position == -1){
                 for (Pawn pawns : initialSquares[0].getPawns()){
                     if (players[turn].getChoice(pawns.getId()) == true){
-                        players[turn].makeMove(pawns.getId(), this);
-                        notifyBoardUpdate();
-                        playing = false;
-                        playerTurn();
+                        moveFunction(pawns);
                         return;
                     }
                 }
@@ -270,10 +235,7 @@ class Game extends AbstractPublisher{
             } else if (position == -2){
                 for (Pawn pawns : initialSquares[1].getPawns()){
                     if (players[turn].getChoice(pawns.getId()) == true){
-                        players[turn].makeMove(pawns.getId(), this);
-                        notifyBoardUpdate();
-                        playing = false;
-                        playerTurn();
+                        moveFunction(pawns);
                         return;
                     }
                 }
@@ -281,10 +243,7 @@ class Game extends AbstractPublisher{
             } else if (position == -3){
                 for (Pawn pawns : initialSquares[2].getPawns()){
                     if (players[turn].getChoice(pawns.getId()) == true){
-                        players[turn].makeMove(pawns.getId(), this);
-                        notifyBoardUpdate();
-                        playing = false;
-                        playerTurn();
+                        moveFunction(pawns);
                         return;
                     }
                 }
@@ -292,10 +251,7 @@ class Game extends AbstractPublisher{
             } else if (position == -4){
                 for (Pawn pawns : initialSquares[3].getPawns()){
                     if (players[turn].getChoice(pawns.getId()) == true){
-                        players[turn].makeMove(pawns.getId(), this);
-                        notifyBoardUpdate();
-                        playing = false;
-                        playerTurn();
+                        moveFunction(pawns);
                         return;
                     }
                 }
@@ -304,115 +260,72 @@ class Game extends AbstractPublisher{
         }
 
         if (position > 99){
-
             if (position >= 100 && position <= 105){
                 Square[] gFinalSquares = finalSquares[0];
-
                 int index  = position - 100;
-
+                
                 for (Pawn pawns: gFinalSquares[index].getPawns()){
-
                     if (players[turn].getChoice(pawns.getId()) == true){
-                        players[turn].makeMove(pawns.getId(), this);
-                        notifyBoardUpdate();
-                        playing = false;
-                        playerTurn();
+                        moveFunction(pawns);
                         return;
                     }
 
                 }
             } else if (position >= 200 && position <= 205){
                 Square[] yFinalSquares = finalSquares[1];
-
                 int index  = position - 200;
 
                 for (Pawn pawns: yFinalSquares[index].getPawns()){
-
                     if (players[turn].getChoice(pawns.getId()) == true){
-                        players[turn].makeMove(pawns.getId(), this);
-                        notifyBoardUpdate();
-                        playing = false;
-                        playerTurn();
+                        moveFunction(pawns);
                         return;
                     }
-                    
                 }
             } else if (position >= 300 && position <= 305){
                 Square[] bFinalSquares = finalSquares[2];
-
                 int index  = position - 300;
 
                 for (Pawn pawns: bFinalSquares[index].getPawns()){
-
                     if (players[turn].getChoice(pawns.getId()) == true){
-                        players[turn].makeMove(pawns.getId(), this);
-                        notifyBoardUpdate();
-                        playing = false;
-                        playerTurn();
+                        moveFunction(pawns);
                         return;
                     }
-                    
                 }
             } else if (position >= 400 && position <= 405){
                 Square[] rFinalSquares = finalSquares[3];
-
                 int index  = position - 400;
 
                 for (Pawn pawns: rFinalSquares[index].getPawns()){
-
                     if (players[turn].getChoice(pawns.getId()) == true){
-                        players[turn].makeMove(pawns.getId(), this);
-                        notifyBoardUpdate();
-                        playing = false;
-                        playerTurn();
+                        moveFunction(pawns);
                         return;
                     }
-                    
                 }
             }
         }
     }
 
-    public void savegame(String filepath,Game game) {
-        try {
-            
-            FileOutputStream f = new FileOutputStream(filepath + ".txt");
-            ObjectOutputStream o = new ObjectOutputStream(f);
-        
-            o.writeObject(game);
-            o.close();
-        
-            
-        
-        }
-        catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        } catch (IOException e) {
-            System.out.println("Error initializing stream");
-        } 
-        
+    private void moveFunction(Pawn pawns){
+        players[turn].makeMove(pawns.getId(), this);
+        notifyBoardUpdate();
+        playing = false;
+        playerTurn();
     }
 
-    public void loadgame(String FilePath) {
-        try {
-
-            FileInputStream fi = new FileInputStream(new File(FilePath));
-            ObjectInputStream oi = new ObjectInputStream(fi);
-            Object loaded = oi.readObject();
-            oi.close();
-            setGame((Game)loaded);
+    public boolean savegame(String filepath,Game game) {
+        if (playing == true){
+            return false;
         }
-        catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        } catch (IOException e) {
-            System.out.println("Error initializing stream");
-        } 
-            catch (Exception ex) {
-                ex.printStackTrace();
-            
-            }
-        
-        
+
+        return true;
+    }
+
+    public boolean loadgame(String FilePath) {
+        return true;
+    }
+
+    public void updateInfo(){
+        board.updatePawnsOnBoard(players);
     }
 
     public boolean getDEBUG() {
