@@ -213,11 +213,11 @@ class Game extends AbstractPublisher implements Serializable{
                         int lastDieNumber = getDieNumber();
                         die.setDieNumber(6);
                         notifySubscribersDie(getDieNumber());
+                        players[turn].resetExtra();
                         players[turn].makeMove(pawns.getId(), this);
                         notifyBoardUpdate();
                         playing = false;
                         die.setDieNumber(lastDieNumber);
-                        players[turn].resetExtra();
                         playerTurn();
                         return;
                     }
