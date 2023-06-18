@@ -43,9 +43,20 @@ class Pawn implements Serializable {
 			}
 		}
 
+		if (this.position < 52){
+			if (canCapture(boardSquares, newPosition) && this.steps + dieNumber < 51){
+				capturePawn(boardSquares, initialSquares, newPosition);
+				haveExtra = true;
+			}
+
+			if (outInitialSquare(dieNumber, initialSquares, boardSquares, pawnsOnBoard)){
+				return true;
+			}
+		}
+
 		if (this.position >= 0){
 
-		if (this.steps + dieNumber > 51 && this.steps < 51){
+		if (this.steps + dieNumber > 51 && this.steps <= 51){
 			switch(this.color){
 				case AZUL:
 				boardSquares[position].removePawn(this);
@@ -68,7 +79,7 @@ class Pawn implements Serializable {
 				newPosition = 99 + overflow;
 				break;
 			}
-		} else if (this.steps >= 51) {
+		} else if (this.steps >= 52) {
 			switch(this.color){
 				case AZUL:
 				finalSquares[2][this.steps - 51].removePawn(this);
@@ -96,16 +107,6 @@ class Pawn implements Serializable {
 			boardSquares[newPosition].addPawn(this);
 		}
 
-		if (this.position < 52){
-			if (canCapture(boardSquares, newPosition)){
-				capturePawn(boardSquares, initialSquares, newPosition);
-				haveExtra = true;
-			}
-	
-			if (outInitialSquare(dieNumber, initialSquares, boardSquares, pawnsOnBoard)){
-				return true;
-			}
-		}
 	}
 		this.setPosition(newPosition);
 		this.addSteps(dieNumber);
@@ -158,6 +159,23 @@ class Pawn implements Serializable {
 			
 			if (futurePosition > 51){
 				futurePosition = futurePosition % 52;
+			}
+
+			if (this.steps + dieNumber > 51 && this.steps <= 51){
+
+				int arrival = 52 - this.steps;
+
+				for (int i = 0; i < arrival; i++){
+					int checkPosition = position + 1;
+					checkPosition = checkPosition % 52;
+
+				if (boardSquares[checkPosition].isBarrier()){
+					// caso seja uma barreira 
+					return false;
+				}
+				checkPosition++;
+			}
+				return true;
 			}
 
 			// caso exista barreira no caminho (return false)
@@ -237,7 +255,7 @@ class Pawn implements Serializable {
 			return false;
 		}
 
-		if (boardSquares[newPosition].numPawns() == 1){
+		if (boardSquares[newPosition].numPawns() == 1 ){
 			if (this.position == -1){
 				// condicional para verificar se o peão está saindo da casa inicial dele
 			}
