@@ -4,9 +4,9 @@ import javax.swing.*;
 
 import java.awt.*;
 
-class GameScreen extends JFrame{
-    public final int xScreen = 850;
-    public final int yScreen = 628;
+class GameScreen extends JFrame{ 
+    public final int xScreen = 865;
+    public final int yScreen = 640;
 
     private BoardBuilder boardBuilder;
     private GameMenu gameMenu;
