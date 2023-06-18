@@ -1,10 +1,8 @@
 package model;
 
-import java.io.Serializable;
 import java.util.Random;
 
-class Die implements Serializable {
-	private static final long serialVersionUID = 1L;
+class Die{
     private int dieNumber;
     private Random random = new Random();
     
