@@ -6,7 +6,7 @@ import java.awt.Color;
 
 public class ModelAPI {
     private static ModelAPI instance;
-    private static Game game;
+    private Game game;
 
     public ModelAPI(){
         instance = this;
@@ -122,8 +122,26 @@ public class ModelAPI {
     public boolean getDebug() {
     	return game.getDEBUG();
     }
-    public static Game getGame() {
+    public Game getGame() {
     	return game;
+    }
+    public int getTurn() {
+    	return game.getTurn();
+    }
+    public void setTurn(int turno) {
+    	game.setTurn(turno);
+    }
+    public int getPlayersPawnsPosition(int i,int j) {
+    	return game.getPlayers()[i].getPlayerPawns()[j].getPosition();
+    }
+    public void setPlayersPawnsPosition(int i, int j,int pos) {
+    	game.getPlayers()[i].getPlayerPawns()[j].setPosition(pos);
+    }
+    public int getPlayersPawnsSteps(int i, int j) {
+    	return game.getPlayers()[i].getPlayerPawns()[j].getSteps();
+    }
+    public void setPlayersPawnsSteps(int i, int j,int steps) {
+    	game.getPlayers()[i].getPlayerPawns()[j].setSteps(steps);;
     }
     public void setGame(Object g) {
     	game = (Game) g;

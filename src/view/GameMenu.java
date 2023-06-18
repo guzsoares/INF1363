@@ -98,28 +98,39 @@ public class GameMenu implements MenuSubscriber{
                     //TODO: FUNCAO DE CARREGAMENTO DE ARQUIVO
                 	try {
                     System.out.println(fileChooser.getSelectedFile());
-                    FileInputStream fi = new FileInputStream(new File(filepath));
-                    ObjectInputStream oi = new ObjectInputStream(fi);
-                    Object game = (Object) oi.readObject();
-                    ModelAPI.getInstance().setGame(game);
+                    BufferedReader fr = new BufferedReader(new FileReader(filepath));
+                    String line = fr.readLine();
                     System.out.println("Carregar arquivo selecionado");
-                    fi.close();
-                    oi.close();
+                    newGameAction();
+                    while(line != null) {
+                    	modelAPI.setTurn(Integer.parseInt(line));
+                    	line = fr.readLine();
+                    	updateTurn(modelAPI.getCurrentPlayerRealColor());
+                    	line = fr.readLine();
+                    	for(int a = 0;a<4;a++){
+                    		for(int b = 0; b<4;b++) {
+                    			modelAPI.setPlayersPawnsPosition(a,b,Integer.parseInt(line));
+                    			line = fr.readLine();
+                    			modelAPI.setPlayersPawnsSteps(a,b,Integer.parseInt(line));
+                    			line = fr.readLine();
+                    		}
+                    	}
+                    	modelAPI.addSubscriber(viewAPI.getMenuSubscriber());
+                        modelAPI.addBoardSubscriber(viewAPI.getBoardSubscriber());
+                    }
                     
                     viewAPI.redraw();
                     modelAPI.addSubscriber(viewAPI.getMenuSubscriber());
                     modelAPI.addBoardSubscriber(viewAPI.getBoardSubscriber());
+                    fr.close();               
+                   
                     
                 	}
                 	 catch (FileNotFoundException e1) {
              			System.out.println("File not found");
              		} catch (IOException e1) {
              			System.out.println("Error initializing stream");
-             		} catch (ClassNotFoundException e1) {
-						
-						e1.printStackTrace();
-					}
-                }
+             		}                 }
             
             }
        });
@@ -139,11 +150,25 @@ public class GameMenu implements MenuSubscriber{
                     String filePath = fileChooser.getSelectedFile().getPath();
                     System.out.println("Jogo salvo em: " + filePath);
                     try {
-                    FileOutputStream f = new FileOutputStream(new File(filePath + ".txt"));
-                    ObjectOutputStream o = new ObjectOutputStream(f);
-                    o.writeObject(ModelAPI.getGame());
-                    f.close();
-                    o.close();
+                   
+                    FileWriter fw = new FileWriter(filePath + ".txt");
+                    fw.write(String.valueOf(modelAPI.getTurn()) + '\n');
+                    fw.write(modelAPI.getCurrentPlayerColor() + '\n');
+                    for(int i = 0;i<4;i++) {
+                    	for(int j = 0; j<4;j++) {
+                    		System.out.println(modelAPI.getPlayersPawnsPosition(i,j));
+                    		if(modelAPI.getPlayersPawnsPosition(i,j) <0) {
+                    			fw.write("-1"+'\n');
+                    			fw.write("0"+'\n');
+                    		}
+                    		else {                   		
+                    		fw.write(String.valueOf(modelAPI.getPlayersPawnsPosition(i,j))+ '\n');
+                    		fw.write(String.valueOf(modelAPI.getPlayersPawnsSteps(i,j))+ '\n');
+                    		}
+                    	}
+                    	
+                    }
+                    fw.close();
                     }
             		catch (IOException e1) {
             			System.out.println("Error initializing stream");

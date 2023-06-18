@@ -373,6 +373,9 @@ class Game extends AbstractPublisher implements Serializable{
     public int getDieNumber(){
         return die.getDieNumber();
     }
+    public void setTurn(int turno) {
+    	turn = turno;
+    }
 
 }
 
