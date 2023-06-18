@@ -190,7 +190,7 @@ class PawnShow {
 
         for (int i = 0; i < array.length - 1; i++) {
             for (int j = i + 1; j < array.length; j++) {
-                if (array[i] == array[j] && array[i] > 0 && array[i] < 52) {
+                if (array[i] == array[j] && array[i] > 0 && array[i] >= 0 && array[i] != 105 && array[i] != 205 && array[i] != 305 && array[i] != 405) {
                     duplicateIndices.add(i); // Adiciona o índice ao resultado
                     duplicateIndices.add(j);
                 }

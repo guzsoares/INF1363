@@ -2,6 +2,9 @@ package model;
 import controller.AbstractPublisher;
 import java.awt.Color;
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 class Game extends AbstractPublisher implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -12,6 +15,7 @@ class Game extends AbstractPublisher implements Serializable{
     private int plays = 0;
     private boolean playing = false;
     private boolean isGameOver = false;
+    private Player winner;
     
     private boolean DEBUG = true;
 
@@ -50,6 +54,7 @@ class Game extends AbstractPublisher implements Serializable{
 
     public void rollDie(){
         if (playing == false){
+            System.out.println(playersResults(players));
             playing = true;
             die.rollDie();
             play();
@@ -107,21 +112,18 @@ class Game extends AbstractPublisher implements Serializable{
         }
     }
   
-    public Player[] playersResults(Player[] players){
+    public String playersResults(Player[] players){
         Player[] ranking = new Player[4];
 
         ranking = players;
 
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 3 - i; j++) {
-                if (ranking[j].stepsCount() < ranking[j + 1].stepsCount()) {
-                    Player temp = ranking[j];
-                    ranking[j] = ranking[j + 1];
-                    ranking[j + 1] = temp;
-                }
-            }
-        }
-        return ranking;
+        Arrays.sort(ranking, Comparator.comparingInt(Player::stepsCount).reversed());
+
+        winner = ranking[0];
+
+        String result = "1 - " + ranking[0].getColor() + "\n2 - "  + ranking[1].getColor() + "\n3 - "  + ranking[2].getColor() + "\n4 - "   + ranking[3].getColor();
+
+        return result;
     }
 
     public void playerTurn(){
@@ -131,6 +133,14 @@ class Game extends AbstractPublisher implements Serializable{
 
         if (players[turn].hasExtra() == true){
             playing = true;
+
+            players[turn].updateChoices(this);
+
+            if (players[turn].verifyChoices() == false){
+                playing = false;
+                players[turn].resetExtra();
+                playerTurn();
+            }
             return;
         }
 
@@ -370,6 +380,11 @@ class Game extends AbstractPublisher implements Serializable{
     public int getDieNumber(){
         return die.getDieNumber();
     }
+
+    public Player getWinner(){
+        return winner;
+    }
+
     public void setTurn(int turno) {
     	turn = turno;
     }

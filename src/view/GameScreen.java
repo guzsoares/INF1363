@@ -47,11 +47,17 @@ class GameScreen extends JFrame{
         int answer = JOptionPane.showOptionDialog(null, "Deseja jogar outra partida?", "Confirmação", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
         if (answer == JOptionPane.YES_OPTION) {
             gameMenu.newGameAction();
+        } else {
+            return;
         }
     }
 
-    public void showWarning(){
-        JOptionPane.showMessageDialog(null, "Não pode iniciar salvamento de jogo no meio de um turno, por favor termine seu turno antes de salvar!" );
+    public void showWarning(String warning){
+        JOptionPane.showMessageDialog(null, warning);
+    }
+
+    public void showRanking(String ranking){
+        JOptionPane.showMessageDialog(null, ranking);
     }
 
     public GameMenu getGameMenu(){

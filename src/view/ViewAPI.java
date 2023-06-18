@@ -29,11 +29,15 @@ public class ViewAPI {
     }
 
     public void showMessage(){
-        gameView.showMessage(modelAPI.getCurrentPlayerColor());
+        gameView.showMessage(modelAPI.getWinner());
     }
 
-    public void showWarning(){
-        gameView.showWarning();
+    public void showRanking(){
+        gameView.showRanking(modelAPI.playersResults());
+    }
+
+    public void showWarning(String warning){
+        gameView.showWarning(warning);
     }
 
     public MenuSubscriber getMenuSubscriber() {

@@ -50,6 +50,26 @@ public class ModelAPI {
         return game.getCurrentPlayerRealColor();
     }
 
+    public String getWinner(){
+        switch (game.getWinner().getColor()){
+
+            case VERDE:
+            return "Verde";
+
+            case AZUL:
+            return "Azul";
+
+            case VERMELHO:
+            return "Vermelho";
+
+            case AMARELO:
+            return "Amarelo";
+            
+            default:
+            return "Erro";
+        }
+    }
+
     public String getCurrentPlayerColor(){
 
         switch (game.getPlayers()[game.getTurn()].getColor()){
@@ -120,6 +140,19 @@ public class ModelAPI {
     	game.handleClick(squareClicked);
     }
 
+    public String playersResults(){
+        return game.playersResults(game.getPlayers());
+    }
+
+    public void removeAllPawns(){
+        game.getGameBoard().removeAllPawns();
+    }
+
+    public void reloadPawns(){
+        game.updateInfo();
+        game.getGameBoard().reloadPawns();
+    }
+
     public int getPlays(){
         return game.getPlays();
     }
@@ -131,38 +164,37 @@ public class ModelAPI {
     public boolean getDebug() {
     	return game.getDEBUG();
     }
+
     public Game getGame() {
-    	return game;
+    	
+        return game;
     }
     public int getTurn() {
     	return game.getTurn();
     }
-    public void setTurn(int turno) {
-    	game.setTurn(turno);
-    }
 
-    public void removeAllPawns(){
-        game.getGameBoard().removeAllPawns();
-    }
-
-    public void reloadPawns(){
-        game.updateInfo();
-        game.getGameBoard().reloadPawns();
-    }
     public int getPlayersPawnsPosition(int i,int j) {
     	return game.getPlayers()[i].getPlayerPawns()[j].getPosition();
     }
+
     public void setPlayersPawnsPosition(int i, int j,int pos) {
     	game.getPlayers()[i].getPlayerPawns()[j].setPosition(pos);
     }
+
     public int getPlayersPawnsSteps(int i, int j) {
     	return game.getPlayers()[i].getPlayerPawns()[j].getSteps();
     }
+
     public void setPlayersPawnsSteps(int i, int j,int steps) {
     	game.getPlayers()[i].getPlayerPawns()[j].setSteps(steps);;
     }
+
     public void setGame(Object g) {
     	game = (Game) g;
+    }
+    
+    public void setTurn(int turno) {
+    	game.setTurn(turno);
     }
   
 }

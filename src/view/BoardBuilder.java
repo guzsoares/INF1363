@@ -210,7 +210,6 @@ class BoardBuilder implements BoardSubscriber{
 
     @Override
     public void updateBoard(){
-        //System.out.println("Tabuleiro atualizado");
         viewAPI.redraw();
     }
 }

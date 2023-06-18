@@ -1,7 +1,6 @@
 package view;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controller.MenuSubscriber;
 
@@ -11,14 +10,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
-import java.io.FileWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 public class GameMenu implements MenuSubscriber{
     private ModelAPI modelAPI = ModelAPI.getInstance();
@@ -30,7 +21,8 @@ public class GameMenu implements MenuSubscriber{
     private Color turnColor = Color.GRAY;
     private int dieNumber = 0;
     private int combobox_val;
-    private JComboBox cb;
+    private JComboBox<String> cb;
+    private boolean checkMessage = false;
 
     public GameMenu(){
         this.subscriber = this;
@@ -94,11 +86,24 @@ public class GameMenu implements MenuSubscriber{
                 int result = fileChooser.showOpenDialog(null);
                 if (result == JFileChooser.APPROVE_OPTION) {
                 	 File f = fileChooser.getSelectedFile();
+                     String fileName = f.getName();
+                    if (!fileName.toLowerCase().endsWith(".txt")){
+                        viewAPI.showWarning("Arquivo não permitido! Por favor carregar um arquivo .txt");
+                        return;
+                    }
+                     
                 	 String filepath = f.getPath();
                 	try {
                     System.out.println(fileChooser.getSelectedFile());
                     BufferedReader fr = new BufferedReader(new FileReader(filepath));
                     String line = fr.readLine();
+                    if (!line.equals("ludo")){
+                        viewAPI.showWarning("Arquivo selecionado não é um jogo salvo de Ludo");
+                        newGameAction();
+                        fr.close();
+                        return;
+                    }
+                    line = fr.readLine();
                     System.out.println("Carregar arquivo selecionado");
                     newGameAction();
                     modelAPI.removeAllPawns();
@@ -146,7 +151,7 @@ public class GameMenu implements MenuSubscriber{
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (modelAPI.getPlaying() == true || modelAPI.getPlays() > 0){
-                    viewAPI.showWarning();
+                    viewAPI.showWarning("Não pode iniciar salvamento de jogo no meio de um turno, por favor termine seu turno antes de salvar!");
                     return;
                 }
             	JFileChooser fileChooser = new JFileChooser();
@@ -157,6 +162,7 @@ public class GameMenu implements MenuSubscriber{
                     try {
                    
                     FileWriter fw = new FileWriter(filePath + ".txt");
+                    fw.write("ludo" + "\n");
                     fw.write(String.valueOf(modelAPI.getTurn()) + '\n');
                     fw.write(modelAPI.getCurrentPlayerColor() + '\n');
                     for(int i = 0;i<4;i++) {
@@ -240,12 +246,14 @@ public class GameMenu implements MenuSubscriber{
 
     @Override
     public void updateTurn(Color color){
-        if (modelAPI.isGameOver() == true){
+        viewAPI.redraw();
+        this.turnColor = color;
+        if (modelAPI.isGameOver() == true && checkMessage == false){
+            checkMessage = true;
+            viewAPI.showRanking();
             viewAPI.showMessage();
             return;
         }
-        viewAPI.redraw();
-        this.turnColor = color;
     }
 
     public MenuSubscriber getSubscriber(){
@@ -265,6 +273,7 @@ public class GameMenu implements MenuSubscriber{
     }
 
     public void newGameAction(){
+        checkMessage = false;
         modelAPI.createGame();
         turnColor = Color.GRAY;
         dieNumber = 0;

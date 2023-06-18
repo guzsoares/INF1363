@@ -43,17 +43,6 @@ class Pawn implements Serializable {
 			}
 		}
 
-		if (this.position < 52){
-			if (canCapture(boardSquares, newPosition)){
-				capturePawn(boardSquares, initialSquares, newPosition);
-				haveExtra = true;
-			}
-	
-			if (outInitialSquare(dieNumber, initialSquares, boardSquares, pawnsOnBoard)){
-				return true;
-			}
-		}
-
 		if (this.position >= 0){
 
 		if (this.steps + dieNumber > 51 && this.steps < 51){
@@ -105,6 +94,17 @@ class Pawn implements Serializable {
 		} else {
 			boardSquares[position].removePawn(this);
 			boardSquares[newPosition].addPawn(this);
+		}
+
+		if (this.position < 52){
+			if (canCapture(boardSquares, newPosition)){
+				capturePawn(boardSquares, initialSquares, newPosition);
+				haveExtra = true;
+			}
+	
+			if (outInitialSquare(dieNumber, initialSquares, boardSquares, pawnsOnBoard)){
+				return true;
+			}
 		}
 	}
 		this.setPosition(newPosition);
