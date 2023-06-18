@@ -42,9 +42,9 @@ class Pawn implements Serializable {
 				break;
 			}
 		}
-
+		
 		if (this.position < 52){
-			if (canCapture(boardSquares, newPosition) && this.steps + dieNumber < 51){
+			if (canCapture(boardSquares, newPosition) && this.steps + dieNumber <= 51){
 				capturePawn(boardSquares, initialSquares, newPosition);
 				haveExtra = true;
 			}

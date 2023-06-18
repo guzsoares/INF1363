@@ -54,7 +54,6 @@ class Game extends AbstractPublisher implements Serializable{
 
     public void rollDie(){
         if (playing == false){
-            System.out.println(playersResults(players));
             playing = true;
             die.rollDie();
             play();
