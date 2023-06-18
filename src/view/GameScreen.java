@@ -50,6 +50,10 @@ class GameScreen extends JFrame{
         }
     }
 
+    public void showWarning(){
+        JOptionPane.showMessageDialog(null, "Não pode iniciar salvamento de jogo no meio de um turno, por favor termine seu turno antes de salvar!" );
+    }
+
     public GameMenu getGameMenu(){
         return this.gameMenu;
     }

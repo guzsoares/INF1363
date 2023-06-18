@@ -10,29 +10,8 @@ class Square implements Serializable{
     private SquareType squareType;
     private Color squareColor;
 
-    public boolean isCommon(){ // verifica se a casa é comum
-        if (this.squareType == SquareType.cComum){
-            return true;
-        }
-        return false;
-    }
-
     public boolean isAbrigo(){ // verifica se a casa é abrigo
         if (this.squareType == SquareType.cAbrigo){
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isRetaFinal(){ // verifica se a casa é abrigo
-        if (this.squareType == SquareType.rFinal){
-            return true;
-        }
-        return false;
-    }
-
-    public boolean isFinal(){ // verifica se a casa é final
-        if (this.squareType == SquareType.cFinal){
             return true;
         }
         return false;
@@ -44,7 +23,6 @@ class Square implements Serializable{
         }
         return false;
     }
-
 
     public boolean isBarrier(){
         if (numPawns() == 2 && pawns.get(0).getColor() == pawns.get(1).getColor() && isSaida() == false) {
@@ -71,10 +49,6 @@ class Square implements Serializable{
 
     public List<Pawn> getPawns() { // lista de peoes na casa
         return pawns;
-    }
-
-    public SquareType getSquareType(){
-        return this.squareType;
     }
 
     public Color getSquareColor(){

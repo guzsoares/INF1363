@@ -1,9 +1,6 @@
 package model;
 
-import java.io.Serializable;
-
-class Player implements Serializable {
-	private static final long serialVersionUID = 1L;
+class Player {
     private Color color;
 	private Pawn[] playerPawns;
 	private boolean[] choices = new	boolean[4];

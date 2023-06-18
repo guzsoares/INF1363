@@ -32,6 +32,10 @@ public class ViewAPI {
         gameView.showMessage(modelAPI.getCurrentPlayerColor());
     }
 
+    public void showWarning(){
+        gameView.showWarning();
+    }
+
     public MenuSubscriber getMenuSubscriber() {
         return gameView.getGameMenu().getSubscriber();
     }

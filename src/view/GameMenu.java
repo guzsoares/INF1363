@@ -95,13 +95,13 @@ public class GameMenu implements MenuSubscriber{
                 if (result == JFileChooser.APPROVE_OPTION) {
                 	 File f = fileChooser.getSelectedFile();
                 	 String filepath = f.getPath();
-                    //TODO: FUNCAO DE CARREGAMENTO DE ARQUIVO
                 	try {
                     System.out.println(fileChooser.getSelectedFile());
                     BufferedReader fr = new BufferedReader(new FileReader(filepath));
                     String line = fr.readLine();
                     System.out.println("Carregar arquivo selecionado");
                     newGameAction();
+                    modelAPI.removeAllPawns();
                     while(line != null) {
                     	modelAPI.setTurn(Integer.parseInt(line));
                     	line = fr.readLine();
@@ -115,6 +115,7 @@ public class GameMenu implements MenuSubscriber{
                     			line = fr.readLine();
                     		}
                     	}
+                        modelAPI.reloadPawns();
                     	modelAPI.addSubscriber(viewAPI.getMenuSubscriber());
                         modelAPI.addBoardSubscriber(viewAPI.getBoardSubscriber());
                     }
@@ -144,6 +145,10 @@ public class GameMenu implements MenuSubscriber{
         button.setBounds(25, 160, 200, 50);
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                if (modelAPI.getPlaying() == true || modelAPI.getPlays() > 0){
+                    viewAPI.showWarning();
+                    return;
+                }
             	JFileChooser fileChooser = new JFileChooser();
                 int option = fileChooser.showSaveDialog(button);
                 if (option == JFileChooser.APPROVE_OPTION) {

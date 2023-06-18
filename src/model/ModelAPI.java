@@ -119,6 +119,15 @@ public class ModelAPI {
     public void handleClick(int squareClicked) {
     	game.handleClick(squareClicked);
     }
+
+    public int getPlays(){
+        return game.getPlays();
+    }
+
+     public boolean getPlaying(){
+        return game.getPlaying();
+    }
+
     public boolean getDebug() {
     	return game.getDEBUG();
     }
@@ -130,6 +139,15 @@ public class ModelAPI {
     }
     public void setTurn(int turno) {
     	game.setTurn(turno);
+    }
+
+    public void removeAllPawns(){
+        game.getGameBoard().removeAllPawns();
+    }
+
+    public void reloadPawns(){
+        game.updateInfo();
+        game.getGameBoard().reloadPawns();
     }
     public int getPlayersPawnsPosition(int i,int j) {
     	return game.getPlayers()[i].getPlayerPawns()[j].getPosition();

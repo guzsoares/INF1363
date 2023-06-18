@@ -313,18 +313,6 @@ class Game extends AbstractPublisher implements Serializable{
         playerTurn();
     }
 
-    public boolean savegame(String filepath,Game game) {
-        if (playing == true){
-            return false;
-        }
-
-        return true;
-    }
-
-    public boolean loadgame(String FilePath) {
-        return true;
-    }
-
     public void updateInfo(){
         board.updatePawnsOnBoard(players);
     }
@@ -338,7 +326,16 @@ class Game extends AbstractPublisher implements Serializable{
     }
 
     public int getTurn(){
+        turn = turn % 4;
         return turn;
+    }
+
+    public int getPlays(){
+        return plays;
+    }
+
+    public boolean getPlaying(){
+        return playing;
     }
 
     public Color getCurrentPlayerRealColor(){

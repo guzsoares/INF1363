@@ -121,6 +121,68 @@ class Board implements Serializable {
 
     }
 
+    public void removeAllPawns(){
+        initialSquares[0].removePawn(pawnsOnBoard[1]);
+        initialSquares[0].removePawn(pawnsOnBoard[2]);
+        initialSquares[0].removePawn(pawnsOnBoard[3]);
+
+        initialSquares[1].removePawn(pawnsOnBoard[5]);
+        initialSquares[1].removePawn(pawnsOnBoard[6]);
+        initialSquares[1].removePawn(pawnsOnBoard[7]);
+
+        initialSquares[2].removePawn(pawnsOnBoard[9]);
+        initialSquares[2].removePawn(pawnsOnBoard[10]);
+        initialSquares[2].removePawn(pawnsOnBoard[11]);
+
+        initialSquares[3].removePawn(pawnsOnBoard[13]);
+        initialSquares[3].removePawn(pawnsOnBoard[14]);
+        initialSquares[3].removePawn(pawnsOnBoard[15]);
+
+        playableSquares[0].removePawn(pawnsOnBoard[0]);
+        playableSquares[13].removePawn(pawnsOnBoard[4]);
+        playableSquares[26].removePawn(pawnsOnBoard[8]);
+        playableSquares[39].removePawn(pawnsOnBoard[12]);
+    }
+
+    public void reloadPawns(){
+        for (int i = 0; i < 16; i++){
+            if (pawnsOnBoard[i].getPosition() < 0){
+                if (i < 4 && pawnsOnBoard[i].getPosition() == -1){
+                    initialSquares[0].addPawn(pawnsOnBoard[i]);
+                } else if (i < 8 && pawnsOnBoard[i].getPosition() == -1){
+                    initialSquares[1].addPawn(pawnsOnBoard[i]);
+                }else if (i < 12 && pawnsOnBoard[i].getPosition() == -1){
+                    initialSquares[2].addPawn(pawnsOnBoard[i]);
+                }else if (i < 16 && pawnsOnBoard[i].getPosition() == -1){
+                    initialSquares[3].addPawn(pawnsOnBoard[i]);
+                }
+            } else if (pawnsOnBoard[i].getPosition() >= 0 && pawnsOnBoard[i].getPosition() <= 51){
+                playableSquares[pawnsOnBoard[i].getPosition()].addPawn(pawnsOnBoard[i]);
+            } else if (pawnsOnBoard[i].getPosition() > 99){
+
+                if (pawnsOnBoard[i].getPosition() >= 100 && pawnsOnBoard[i].getPosition() <= 105){
+                    int newPos = pawnsOnBoard[i].getPosition() - 100;
+                    finalSquares[0][newPos].addPawn(pawnsOnBoard[i]);
+                }
+
+                else if (pawnsOnBoard[i].getPosition() >= 200 && pawnsOnBoard[i].getPosition() <= 205){
+                    int newPos = pawnsOnBoard[i].getPosition() - 200;
+                    finalSquares[1][newPos].addPawn(pawnsOnBoard[i]);
+                }
+
+                else if (pawnsOnBoard[i].getPosition() >= 300 && pawnsOnBoard[i].getPosition() <= 305){
+                    int newPos = pawnsOnBoard[i].getPosition() - 300;
+                    finalSquares[2][newPos].addPawn(pawnsOnBoard[i]);
+                }
+
+                else if (pawnsOnBoard[i].getPosition() >= 400 && pawnsOnBoard[i].getPosition() <= 405){
+                    int newPos = pawnsOnBoard[i].getPosition() - 400;
+                    finalSquares[3][newPos].addPawn(pawnsOnBoard[i]);
+                }
+            }
+        }
+    }
+
     public Pawn[] getPawnsOnBoard(){
         return this.pawnsOnBoard;
     }
