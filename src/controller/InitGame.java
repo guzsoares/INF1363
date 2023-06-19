@@ -5,8 +5,8 @@ import view.ViewAPI;
 
 class InitGame {
     public static void main(String[] args) {
-        ModelAPI modelAPI = new ModelAPI();
-        ViewAPI viewAPI = new ViewAPI();
+        ModelAPI modelAPI = ModelAPI.getInstance();
+        ViewAPI viewAPI = ViewAPI.getInstance();
         modelAPI.createGame();
         viewAPI.createView();
 

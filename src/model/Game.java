@@ -6,8 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-class Game extends AbstractPublisher implements Serializable{
-	private static final long serialVersionUID = 1L;
+class Game extends AbstractPublisher{
     public Player[] players;
     public Die die;
     public Board board;

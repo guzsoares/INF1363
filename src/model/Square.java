@@ -4,8 +4,7 @@ import java.util.List;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-class Square implements Serializable{
-	private static final long serialVersionUID = 1L;
+class Square{
     private List<Pawn> pawns = new ArrayList<>();
     private SquareType squareType;
     private Color squareColor;
